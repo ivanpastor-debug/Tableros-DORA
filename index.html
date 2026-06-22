@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tableros DORA · Productividad</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root{
+  --bg:#0a0e17; --bg2:#0f1420; --card:#141b2b; --card2:#1a2333;
+  --line:#222c41; --text:#e8ecf4; --muted:#8a95ab; --muted2:#5d6678;
+  --accent:#6366f1; --accent2:#a855f7; --grad:linear-gradient(135deg,#6366f1,#a855f7);
+  --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --info:#38bdf8;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+[data-theme="light"]{
+  --bg:#f4f6fb; --bg2:#eef1f8; --card:#ffffff; --card2:#f7f9fd;
+  --line:#e3e8f2; --text:#1a2030; --muted:#5a647a; --muted2:#98a1b5;
+  --shadow:0 8px 24px rgba(40,50,90,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:-apple-system,'Segoe UI',Roboto,Inter,system-ui,sans-serif;
+  background:radial-gradient(1200px 600px at 80% -10%,rgba(99,102,241,.10),transparent 60%),
+             radial-gradient(900px 500px at -10% 10%,rgba(168,85,247,.08),transparent 55%),
+             var(--bg);
+  color:var(--text); min-height:100vh; transition:background .3s,color .3s;
+}
+.wrap{max-width:1320px;margin:0 auto;padding:22px 24px 60px}
+header{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--grad);
+  display:grid;place-items:center;font-weight:800;color:#fff;font-size:18px;box-shadow:var(--shadow)}
+.brand h1{font-size:19px;font-weight:700;letter-spacing:-.3px;line-height:1.1}
+.brand .sub{font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--card);
+  border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;color:var(--muted)}
+.pill b{color:var(--text)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(16,185,129,.15)}
+select,.btn{
+  background:var(--card);border:1px solid var(--line);color:var(--text);
+  border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer;
+  transition:.15s;outline:none}
+select:hover,.btn:hover{border-color:var(--accent)}
+.btn.icon{width:42px;display:grid;place-items:center;padding:0;height:42px;font-size:17px}
+.project-title{display:flex;align-items:baseline;gap:12px;margin:6px 2px 16px;flex-wrap:wrap}
+.project-title h2{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+  padding:4px 10px;border-radius:7px;background:var(--card2);border:1px solid var(--line);color:var(--muted)}
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:16px}
+.card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);
+  border-radius:18px;padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi .label{font-size:12.5px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:7px}
+.kpi .val{font-size:34px;font-weight:800;letter-spacing:-1px;margin-top:8px;line-height:1}
+.kpi .val small{font-size:16px;font-weight:700;color:var(--muted)}
+.kpi .foot{font-size:12px;color:var(--muted2);margin-top:8px}
+.kpi .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px}
+.bar-mini{height:6px;border-radius:4px;background:var(--line);margin-top:12px;overflow:hidden}
+.bar-mini > i{display:block;height:100%;border-radius:4px;background:var(--grad);transition:width 1s ease}
+.charts{grid-template-columns:1.2fr .8fr}
+.charts-2{grid-template-columns:1fr 1fr}
+.card h3{font-size:14.5px;font-weight:700;margin-bottom:4px}
+.card .hint{font-size:12px;color:var(--muted);margin-bottom:12px}
+.chart{width:100%;height:300px}
+.chart.tall{height:330px}
+@media(max-width:900px){.charts,.charts-2{grid-template-columns:1fr}}
+.legendrow{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
+.legendrow span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:3px}
+footer{margin-top:30px;text-align:center;color:var(--muted2);font-size:12px}
+.fade{animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">D</div>
+      <div>
+        <h1>Tableros DORA</h1>
+        <div class="sub">Productividad y métricas de entrega · Linktic</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <span class="pill"><span class="dot"></span> Corte <b id="corte">—</b></span>
+    <select id="proySel" aria-label="Proyecto"></select>
+    <button class="btn icon" id="themeBtn" title="Tema claro/oscuro">◐</button>
+  </header>
+
+  <div id="content"></div>
+
+  <footer>
+    Generado <span id="gen">—</span> · <span id="filas">—</span> registros HU×día ·
+    fuente: snapshots Azure DevOps homologados
+  </footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
