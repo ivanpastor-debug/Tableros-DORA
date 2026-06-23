@@ -151,8 +151,13 @@ function renderProject(p) {
     <div id="pivWrap" class="pivwrap"></div>
   </div>
   <div class="card fade" style="margin-top:16px">
-    <h3>Entradas vs. salidas de HU por etapa</h3>
-    <div class="hint">Cada punto = un día. Bajo la diagonal la etapa <b>acumula</b> (entran más de las que salen); sobre la diagonal <b>drena</b>.</div>
+    <h3>Variación de HU por etapa en el tiempo</h3>
+    <div class="hint">Por día y etapa: <b>entradas hacia arriba (+)</b> y <b>salidas hacia abajo (−)</b>. Filtra por rango de fechas y por etapa.</div>
+    <div class="filterbar">
+      <label>Desde <input type="date" id="flIni"></label>
+      <label>Hasta <input type="date" id="flFin"></label>
+      <label>Etapa <select id="flProc">${"<option value='__all__'>Todas las etapas</option>" + PROCS.map(pr => `<option value="${pr.key}">${pr.label}</option>`).join("")}</select></label>
+    </div>
     <div id="cFlujo" class="chart tall"></div>
   </div>`;
   $("#content").innerHTML = head + kpis + charts + flujoUI;
@@ -223,37 +228,53 @@ function buildPivot(p, mode) {
   return h + `</tbody></table>`;
 }
 
-/* dispersión entradas (x) vs salidas (y) por etapa; un punto por día */
+/* variación de HU por etapa en el tiempo: entradas (+) arriba, salidas (−) abajo.
+   Filtros: rango de fechas (flIni/flFin) y etapa (flProc). */
 function drawFlujo(el, p) {
   const c = mkChart(el), ax = axisBase();
   const fl = p.flujo || [];
-  const series = PROCS.map(pr => ({
-    name: pr.label, type: "scatter", color: pr.color, symbolSize: 10,
-    itemStyle: { opacity: .8 }, emphasis: { focus: "series" },
-    data: fl.map(f => {
-      const e = f.entradas[pr.key] || 0, s = f.salidas[pr.key] || 0;
-      return (e || s) ? { value: [e, s], fecha: f.fecha } : null;
-    }).filter(Boolean),
-  })).filter(se => se.data.length);
-  const maxv = Math.max(1, ...series.flatMap(se => se.data.map(d => Math.max(d.value[0], d.value[1]))));
-  c.setOption({
-    tooltip: {
-      ...ax.tooltip, trigger: "item",
-      formatter: (x) => {
-        const [e, s] = x.data.value, n = e - s;
-        return `${x.seriesName} · ${x.data.fecha}<br/>Entradas: <b>${e}</b><br/>Salidas: <b>${s}</b><br/>Neto: <b>${n >= 0 ? "+" : ""}${n}</b>`;
+  if (!fl.length) { el.innerHTML = `<div class="hint" style="padding:20px">Sin movimientos de etapa registrados.</div>`; return; }
+  const dmin = fl[0].fecha, dmax = fl[fl.length - 1].fecha;
+  const fi = $("#flIni"), ff = $("#flFin"), fp = $("#flProc");
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
+
+  function apply() {
+    let a = fi.value || dmin, b = ff.value || dmax;
+    if (a > b) { const t = a; a = b; b = t; }
+    const rows = fl.filter(f => f.fecha >= a && f.fecha <= b);
+    const dates = rows.map(f => f.fecha);
+    const procs = fp.value === "__all__" ? PROCS : PROCS.filter(pr => pr.key === fp.value);
+    const series = [];
+    procs.forEach(pr => {
+      series.push({ name: pr.label, type: "bar", stack: "ent", color: pr.color,
+        data: rows.map(f => f.entradas[pr.key] || 0) });
+      series.push({ name: pr.label, type: "bar", stack: "sal", color: pr.color, itemStyle: { opacity: .5 },
+        data: rows.map(f => -(f.salidas[pr.key] || 0)) });
+    });
+    c.setOption({
+      tooltip: {
+        trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" },
+        formatter: (pp) => {
+          const d = pp[0].axisValue, f = rows.find(r => r.fecha === d);
+          let s = `<b>${d}</b>`;
+          procs.forEach(pr => {
+            const e = f.entradas[pr.key] || 0, sa = f.salidas[pr.key] || 0;
+            if (e || sa) s += `<br/><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${pr.color};margin-right:5px"></span>${pr.label}: <b>+${e}</b> / <b>−${sa}</b> &nbsp;(neto ${e - sa >= 0 ? "+" : ""}${e - sa})`;
+          });
+          return s;
+        },
       },
-    },
-    legend: { type: "scroll", data: series.map(se => se.name), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "circle" },
-    grid: { left: 8, right: 18, top: 38, bottom: 6, containLabel: true },
-    xAxis: { type: "value", name: "Entradas", min: 0, max: maxv, nameLocation: "end", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
-    yAxis: { type: "value", name: "Salidas", min: 0, max: maxv, nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
-    series: [...series, {
-      type: "line", name: "y=x", silent: true, showSymbol: false, animation: false,
-      lineStyle: { type: "dashed", color: cssv("--muted2"), width: 1 },
-      data: [[0, 0], [maxv, maxv]], tooltip: { show: false },
-    }],
-  });
+      legend: { type: "scroll", data: procs.map(pr => pr.label), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "roundRect" },
+      grid: { left: 8, right: 16, top: 38, bottom: 6, containLabel: true },
+      xAxis: { type: "category", data: dates, axisLine: { lineStyle: { color: ax.line } },
+        axisLabel: { color: ax.textColor, fontSize: 10, formatter: (v) => v.slice(5) } },
+      yAxis: { type: "value", name: "Entradas (+) / Salidas (−)", nameTextStyle: { color: ax.textColor, fontSize: 10 },
+        splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+      series,
+    }, true);
+  }
+  fi.onchange = ff.onchange = fp.onchange = apply;
+  apply();
 }
 
 function drawArea(el, p) {
