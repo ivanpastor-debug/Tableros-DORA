@@ -150,25 +150,41 @@ function setupProdPersona(cod) {
   fi.onchange = ff.onchange = apply;
   apply();
 }
-/* portafolio: DISPERSIÓN — X = proyectos, Y = productividad persona-día, color por proceso */
-function drawProdComp(el) {
-  const c = mkChart(el), ax = axisBase();
+/* portafolio: líneas de dispersión en el tiempo — X = fechas, una línea por proyecto, con filtro
+   Desde/Hasta propio (productividad del proyecto = salidas REQ+DEV+QA ÷ personas de esas áreas, por día) */
+function setupProdComp() {
+  const el = $("#cProdComp"); if (!el) return;
   const ps = DATA.proyectos.filter(p => RECURSOS && RECURSOS.proyectos && RECURSOS.proyectos[p.codigo]);
-  const names = ps.map(p => p.codigo);
-  const lblMap = Object.fromEntries(ps.map(p => [p.codigo, etiqueta2l(p)]));
-  const series = PROD_PROCS.map(([key, l, co]) => ({
-    name: l, type: "scatter", color: co, symbolSize: 15, itemStyle: { opacity: .85 }, emphasis: { focus: "series" },
-    data: ps.map((p, i) => { const pd = prodPersonaDia(p.codigo); const v = pd && pd[key].val != null ? +pd[key].val.toFixed(3) : null; return v == null ? null : [i, v]; }).filter(Boolean),
-  }));
-  c.setOption({
-    tooltip: { trigger: "item", ...ax.tooltip, formatter: (x) => `${names[x.value[0]]} · ${x.seriesName}<br/><b>${x.value[1].toFixed(3).replace(".", ",")}</b> HU/persona/día` },
-    legend: { data: PROD_PROCS.map(p => p[1]), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "circle" },
-    grid: { left: 8, right: 16, top: 34, bottom: 6, containLabel: true },
-    xAxis: { type: "category", data: names, boundaryGap: true, axisLine: { lineStyle: { color: ax.line } }, axisTick: { alignWithLabel: true },
-      axisLabel: { color: ax.textColor, fontSize: 10, interval: 0, lineHeight: 13, formatter: (v) => lblMap[v] || v } },
-    yAxis: { type: "value", name: "HU/persona/día", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
-    series,
-  });
+  let dmin = null, dmax = null;
+  ps.forEach(p => (p.flujo || []).forEach(f => { if (dmin == null || f.fecha < dmin) dmin = f.fecha; if (dmax == null || f.fecha > dmax) dmax = f.fecha; }));
+  if (dmin == null) return;
+  const c = mkChart(el), ax = axisBase();
+  const fi = $("#pcIni"), ff = $("#pcFin");
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
+  function apply() {
+    let a = fi.value || dmin, b = ff.value || dmax; if (a > b) { const t = a; a = b; b = t; }
+    const series = ps.map((p, i) => {
+      const rec = RECURSOS.proyectos[p.codigo];
+      const rows = (p.flujo || []).filter(f => f.fecha >= a && f.fecha <= b);
+      const data = rows.map(f => {
+        const snap = snapRec(rec, RECURSOS.fechas, f.fecha) || { por_area: {} };
+        let sal = 0, per = 0;
+        for (const proc in PROC_AREA) { sal += (f.salidas[proc] || 0); const pa = snap.por_area[PROC_AREA[proc]]; per += pa ? pa.n : 0; }
+        return [f.fecha, per ? +(sal / per).toFixed(3) : 0];
+      });
+      return { name: etiqueta(p), type: "line", smooth: true, showSymbol: true, symbol: "circle", symbolSize: 6, connectNulls: true, lineStyle: { width: 2 }, color: PALETTE[i % PALETTE.length], data };
+    });
+    c.setOption({
+      tooltip: { trigger: "axis", ...ax.tooltip, valueFormatter: (v) => v == null ? "—" : v.toFixed(3).replace(".", ",") + " HU/pers." },
+      legend: { type: "scroll", data: series.map(s => s.name), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "roundRect" },
+      grid: { left: 8, right: 18, top: 38, bottom: 6, containLabel: true },
+      xAxis: { type: "time", axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: (val) => echarts.format.formatTime("dd/MM", val) } },
+      yAxis: { type: "value", name: "HU/persona/día", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+      series,
+    }, true);
+  }
+  fi.onchange = ff.onchange = apply;
+  apply();
 }
 
 $("#themeBtn").onclick = () => {
@@ -600,8 +616,12 @@ function renderPortfolio() {
     <div id="cProd" class="chart tall"></div>
   </div>` + (RECURSOS ? `
   <div class="card fade" style="margin-top:16px">
-    <h3>⚙️ Productividad persona-día por proceso · comparativo (dispersión)</h3>
-    <div class="hint">Cada punto = un proyecto · eje X proyectos, eje Y productividad (HU/persona/día) · color por proceso</div>
+    <h3>⚙️ Productividad persona-día por proyecto · en el tiempo</h3>
+    <div class="hint">Una línea por proyecto · eje X fechas, eje Y productividad (HU gestionadas ÷ personas REQ+DEV+QA) · filtra el rango de fechas</div>
+    <div class="filterbar">
+      <label>Desde <input type="date" id="pcIni"></label>
+      <label>Hasta <input type="date" id="pcFin"></label>
+    </div>
     <div id="cProdComp" class="chart tall"></div>
   </div>` : "");
   const recursos = recursosCard(RECURSOS ? RECURSOS.portafolio : null, "Portafolio",
@@ -620,7 +640,7 @@ function renderPortfolio() {
   drawCompare($("#cCmp"), rows);
   drawVolume($("#cVol"), rows);
   drawProductividad($("#cProd"), allp, a, b);
-  if (RECURSOS) drawProdComp($("#cProdComp"));
+  if (RECURSOS) setupProdComp();
 }
 
 /* estado (punto de serie) vigente a la fecha d: último corte con fecha <= d, o null */
