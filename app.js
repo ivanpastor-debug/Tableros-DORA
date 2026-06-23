@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -9,13 +9,17 @@ const cssv = (n) => getComputedStyle(document.body).getPropertyValue(n).trim();
 const fmt = (n) => n == null ? "—" : new Intl.NumberFormat("es-CO").format(Math.round(n));
 const pct = (n) => n == null ? "—" : (n * 100).toFixed(1).replace(".", ",") + "%";
 const pct0 = (n) => n == null ? "—" : Math.round(n * 100) + "%";
+/* moneda COP compacta (millones) para los cuadros de costo internos */
+const fmtMoney = (n) => n == null ? "—" : (n >= 1e6
+  ? "$" + (n / 1e6).toLocaleString("es-CO", { maximumFractionDigits: 1 }) + " M"
+  : "$" + new Intl.NumberFormat("es-CO").format(Math.round(n)));
 /* etiqueta homologada de proyecto (igual que el menú desplegable) */
 const shorten = (s, n = 16) => (s && s.length > n ? s.slice(0, n - 1) + "…" : (s || ""));
 const etiqueta = (p) => `${p.codigo} · ${p.nombre}`;            // largo (ejes horizontales / tooltips)
 const etiqueta2l = (p) => `${p.codigo}\n${shorten(p.nombre, 14)}`; // 2 líneas (ejes de barras verticales)
 
 /* ---------- carga ---------- */
-fetch("data.json").then(r => r.json()).then(d => {
+fetch("data.json").then(r => r.json()).then(async d => {
   DATA = d;
   PROCS = d.procesos; // [{key,label,color}]
   $("#corte").textContent = d.corte;
@@ -27,12 +31,44 @@ fetch("data.json").then(r => r.json()).then(d => {
     act.textContent = (gp[0] && gp[0] !== d.corte) ? `${gp[0]} ${gp[1] || ""}`.trim() : (gp[1] || "—");
     const pill = act.closest(".pill"); if (pill) pill.title = `Última actualización: ${d.generado} (hora Colombia)`;
   }
+  // recursos/costos = archivo INTERNO (gitignored); ausente en la versión pública -> sección oculta
+  try { const rr = await fetch("data_recursos.json"); RECURSOS = rr.ok ? await rr.json() : null; }
+  catch (_) { RECURSOS = null; }
   const sel = $("#proySel");
   sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` +
     d.proyectos.map(p => `<option value="${p.codigo}">${p.codigo} · ${p.nombre}</option>`).join("");
   sel.onchange = () => render(sel.value);
   render("__all__");
 }).catch(e => { $("#content").innerHTML = `<div class="card">Error cargando datos: ${e}</div>`; });
+
+/* tarjeta de recursos del equipo (solo si hay datos internos) */
+function recursosCard(r, titulo, nota) {
+  if (!r) return "";
+  const a = r.por_area || {};
+  const chip = (lbl, val, col) => val ? `<span class="rchip"><span class="rdot" style="background:${col}"></span>${lbl} <b>${val}</b></span>` : "";
+  const box = (lbl, val, col) => `<div class="costbox" style="--c:${col}"><div class="cbl">${lbl}</div><div class="cbv" title="$${new Intl.NumberFormat("es-CO").format(Math.round(val))}">${fmtMoney(val)}</div><div class="cbs">mensual</div></div>`;
+  return `<div class="card fade rcard" style="margin-top:16px">
+    <h3>👥 Recursos del equipo${titulo ? " · " + titulo : ""} <span class="tag" style="background:#94a3b820;color:#94a3b8;border-color:#94a3b840">INTERNO</span></h3>
+    <div class="hint">Planta homologada${nota ? " · " + nota : ""} · valores mensuales estimados</div>
+    <div class="rrow">
+      <div class="rbig"><div class="rbign">${r.personas}</div><div class="rbigl">personas</div></div>
+      <div class="rchips">
+        ${chip("Requerimientos", a.REQUERIMIENTOS, "#6366f1")}
+        ${chip("Desarrollo", a.DESARROLLO, "#38bdf8")}
+        ${chip("QA", a["PRUEBAS QA Y TESTER"], "#f59e0b")}
+        ${chip("Transversal", a.TRANSVERSAL, "#a855f7")}
+        ${chip("Mesa de Ayuda", a["MESA DE AYUDA"], "#f472b6")}
+        ${chip("Ausente", a.AUSENTE, "#5d6678")}
+      </div>
+    </div>
+    <div class="costrow">
+      ${box("Costo mínimo", r.costo.menor, "#38bdf8")}
+      ${box("Costo medio", r.costo.medio, "#10b981")}
+      ${box("Costo máximo", r.costo.mayor, "#ef4444")}
+    </div>
+    <div class="hint" style="margin-top:11px">💲 Costos sobre <b>${Math.round((r.cobertura || 0) * 100)}%</b> del equipo con banda salarial (${r.con_banda}/${r.personas}). Completa <code>Global/homologacion_cargos.csv</code> para llegar al 100%.</div>
+  </div>`;
+}
 
 $("#themeBtn").onclick = () => {
   const el = document.documentElement;
@@ -169,7 +205,9 @@ function renderProject(p) {
     </div>
     <div id="cFlujo" class="chart tall"></div>
   </div>`;
-  $("#content").innerHTML = head + kpis + charts + flujoUI;
+  const recursos = recursosCard(RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null, null,
+    RECURSOS ? "foto " + RECURSOS.planta_archivo : null);
+  $("#content").innerHTML = head + kpis + charts + recursos + flujoUI;
   countUp();
   drawArea($("#cArea"), p);
   drawDonut($("#cDonut"), p);
@@ -445,7 +483,9 @@ function renderPortfolio() {
     <div class="hint">HU a producción / día hábil · recalculada dentro del rango <b>Desde–Hasta</b> de arriba</div>
     <div id="cProd" class="chart tall"></div>
   </div>`;
-  $("#content").innerHTML = head + kpis + charts;
+  const recursos = recursosCard(RECURSOS ? RECURSOS.portafolio : null, "Portafolio",
+    RECURSOS ? "consolidado (sin doble-conteo de plantas compartidas)" : null);
+  $("#content").innerHTML = head + kpis + recursos + charts;
 
   // filtros (gobiernan todo el portafolio) — el estado vive en PORT_INI/PORT_FIN
   const fi = $("#fIni"), ff = $("#fFin");
