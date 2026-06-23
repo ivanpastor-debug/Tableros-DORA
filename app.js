@@ -41,17 +41,20 @@ fetch("data.json").then(r => r.json()).then(async d => {
   render("__all__");
 }).catch(e => { $("#content").innerHTML = `<div class="card">Error cargando datos: ${e}</div>`; });
 
-/* tarjeta de recursos del equipo (info general por proyecto) */
-function recursosCard(r, titulo, nota) {
-  if (!r) return "";
-  const a = r.por_area || {};
+/* recursos: snapshot del equipo activo a una fecha (serie en breakpoints) */
+function snapRec(resObj, fechas, dateStr) {
+  if (!resObj || !resObj.serie) return resObj || null;
+  let i = 0;
+  for (let j = 0; j < fechas.length; j++) { if (fechas[j] <= dateStr) i = j; else break; }
+  return resObj.serie[i];
+}
+function recursosBody(s) {
+  if (!s) return "";
+  const a = s.por_area || {};
   const chip = (lbl, val, col) => val ? `<span class="rchip"><span class="rdot" style="background:${col}"></span>${lbl} <b>${val}</b></span>` : "";
   const box = (lbl, val, col) => `<div class="costbox" style="--c:${col}"><div class="cbl">${lbl}</div><div class="cbv" title="$${new Intl.NumberFormat("es-CO").format(Math.round(val))}">${fmtMoney(val)}</div><div class="cbs">mensual</div></div>`;
-  return `<div class="card fade rcard" style="margin-top:16px">
-    <h3>👥 Recursos del equipo${titulo ? " · " + titulo : ""}</h3>
-    <div class="hint">Planta homologada${nota ? " · " + nota : ""} · valor mensual estimado del equipo</div>
-    <div class="rrow">
-      <div class="rbig"><div class="rbign">${r.personas}</div><div class="rbigl">personas</div></div>
+  return `<div class="rrow">
+      <div class="rbig"><div class="rbign">${s.personas}</div><div class="rbigl">personas</div></div>
       <div class="rchips">
         ${chip("Requerimientos", a.REQUERIMIENTOS, "#6366f1")}
         ${chip("Desarrollo", a.DESARROLLO, "#38bdf8")}
@@ -63,12 +66,27 @@ function recursosCard(r, titulo, nota) {
     </div>
     <div class="rsub">💲 Costo mensual del equipo (banda salarial)</div>
     <div class="costrow">
-      ${box("Mínimo", r.costo.menor, "#38bdf8")}
-      ${box("Medio", r.costo.medio, "#10b981")}
-      ${box("Máximo", r.costo.mayor, "#ef4444")}
-    </div>
-    <div class="hint" style="margin-top:11px">Estimado sobre <b>${Math.round((r.cobertura || 0) * 100)}%</b> del equipo con banda asignada (${r.con_banda}/${r.personas}).</div>
+      ${box("Mínimo", s.costo.menor, "#38bdf8")}
+      ${box("Medio", s.costo.medio, "#10b981")}
+      ${box("Máximo", s.costo.mayor, "#ef4444")}
+    </div>`;
+}
+function recursosCard(resObj, titulo, nota) {
+  if (!resObj || !RECURSOS) return "";
+  const def = RECURSOS.fecha_ref || "";
+  return `<div class="card fade rcard" style="margin-top:16px">
+    <h3>👥 Recursos del equipo${titulo ? " · " + titulo : ""}</h3>
+    <div class="hint">${nota ? nota + " · " : ""}equipo activo a la fecha seleccionada · valor mensual estimado</div>
+    <div class="filterbar"><label>Fecha de consulta <input type="date" id="recFecha"></label></div>
+    <div id="recBody">${recursosBody(snapRec(resObj, RECURSOS.fechas, def))}</div>
   </div>`;
+}
+function setupRecursos(resObj) {
+  const fi = $("#recFecha");
+  if (!fi || !RECURSOS || !resObj) return;
+  const F = RECURSOS.fechas, ref = RECURSOS.fecha_ref;
+  fi.min = F[0]; fi.max = F[F.length - 1]; fi.value = ref;
+  fi.onchange = () => { $("#recBody").innerHTML = recursosBody(snapRec(resObj, F, fi.value || ref)); };
 }
 
 $("#themeBtn").onclick = () => {
@@ -206,10 +224,11 @@ function renderProject(p) {
     </div>
     <div id="cFlujo" class="chart tall"></div>
   </div>`;
-  const recursos = recursosCard(RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null, null,
-    RECURSOS ? "foto " + RECURSOS.planta_archivo : null);
+  const recObj = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null;
+  const recursos = recursosCard(recObj, null, RECURSOS ? "Planta " + RECURSOS.planta_archivo : null);
   $("#content").innerHTML = head + kpis + recursos + charts + flujoUI;
   countUp();
+  setupRecursos(recObj);
   drawArea($("#cArea"), p);
   drawDonut($("#cDonut"), p);
   drawLine($("#cLine"), p);
@@ -487,6 +506,7 @@ function renderPortfolio() {
   const recursos = recursosCard(RECURSOS ? RECURSOS.portafolio : null, "Portafolio",
     RECURSOS ? "consolidado (sin doble-conteo de plantas compartidas)" : null);
   $("#content").innerHTML = head + kpis + recursos + charts;
+  if (RECURSOS) setupRecursos(RECURSOS.portafolio);
 
   // filtros (gobiernan todo el portafolio) — el estado vive en PORT_INI/PORT_FIN
   const fi = $("#fIni"), ff = $("#fFin");
