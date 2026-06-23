@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], prodChart = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -226,46 +226,86 @@ function drawGauge(el, p, k) {
 
 /* ---------- vista portafolio ---------- */
 function renderPortfolio() {
-  const ps = DATA.proyectos;
-  const tot = ps.reduce((a, p) => a + p.kpis.hu_total, 0);
-  const prod = ps.reduce((a, p) => a + p.kpis.hu_prod, 0);
-  const wsum = ps.reduce((a, p) => a + (p.kpis.pct_avance != null ? p.kpis.pct_avance * p.kpis.hu_total : 0), 0);
-  const wden = ps.reduce((a, p) => a + (p.kpis.pct_avance != null ? p.kpis.hu_total : 0), 0);
-  const avAvance = wden ? wsum / wden : null;
+  const allp = DATA.proyectos;
+  const [dmin, dmax] = domainFechas(allp);
+  if (PORT_INI == null) PORT_INI = dmin;
+  if (PORT_FIN == null) PORT_FIN = dmax;
+  let a = PORT_INI, b = PORT_FIN;
+  if (a > b) { const t = a; a = b; b = t; }
+  const full = (a === dmin && b === dmax);
 
-  const head = `<div class="project-title fade">
-    <h2>Portafolio</h2><span class="tag">${ps.length} proyectos</span></div>`;
+  // estado de cada proyecto "a la fecha b" (último corte <= b); solo los activos a esa fecha
+  const rows = allp.map(p => {
+    const s = snapAt(p, b);
+    if (!s) return null;
+    return {
+      codigo: p.codigo, nombre: p.nombre,
+      hu_total: s.total, prod: s.prod, pendientes: s.total - s.prod,
+      pct_prod: s.total ? s.prod / s.total : null,
+      pct_avance: (s.avance == null ? null : s.avance),
+    };
+  }).filter(Boolean);
+
+  const tot = rows.reduce((x, r) => x + r.hu_total, 0);
+  const prod = rows.reduce((x, r) => x + r.prod, 0);
+  const wsum = rows.reduce((x, r) => x + (r.pct_avance != null ? r.pct_avance * r.hu_total : 0), 0);
+  const wden = rows.reduce((x, r) => x + (r.pct_avance != null ? r.hu_total : 0), 0);
+  const avAvance = wden ? wsum / wden : null;
+  const pctProdG = tot ? prod / tot : null;
+  const alFecha = full ? "al corte" : "al " + b;
+
+  const head = `<div class="project-title fade" style="justify-content:space-between;gap:14px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <h2>Portafolio</h2><span class="tag">${rows.length} proyectos</span>
+      <span class="tag">${full ? "todo el periodo" : "estado " + alFecha}</span>
+    </div>
+    <div class="filterbar" style="margin:0">
+      <label>Desde <input type="date" id="fIni"></label>
+      <label>Hasta <input type="date" id="fFin"></label>
+      <button class="btn" id="fReset" style="padding:8px 12px;font-size:13px;font-weight:600">↺ Todo</button>
+    </div>
+  </div>`;
   const kpis = `<div class="grid kpis">
-    ${kpi("Proyectos activos", "▦", "#6366f1", `<span data-count="${ps.length}">0</span>`, "en medición")}
-    ${kpi("HU Totales", "∑", "#38bdf8", `<span data-count="${tot}">0</span>`, "en todo el portafolio")}
-    ${kpi("En Producción", "✓", "#10b981", `<span data-count="${prod}">0</span>`, `de ${fmt(tot)} HU`, prod / tot)}
-    ${kpi("% Producción global", "◎", "#a855f7", `<span data-count="${(prod / tot) * 100}" data-dec="1" data-suf="%">0</span>`, "agregado", prod / tot)}
+    ${kpi("Proyectos activos", "▦", "#6366f1", `<span data-count="${rows.length}">0</span>`, full ? "en medición" : "con datos " + alFecha)}
+    ${kpi("HU Totales", "∑", "#38bdf8", `<span data-count="${tot}">0</span>`, "en el portafolio")}
+    ${kpi("En Producción", "✓", "#10b981", `<span data-count="${prod}">0</span>`, `de ${fmt(tot)} HU`, pctProdG)}
+    ${kpi("% Producción global", "◎", "#a855f7", pctProdG == null ? "—" : `<span data-count="${pctProdG * 100}" data-dec="1" data-suf="%">0</span>`, "agregado", pctProdG)}
     ${kpi("% Avance medio", "◔", "#f59e0b", avAvance == null ? "—" : `<span data-count="${avAvance * 100}" data-dec="0" data-suf="%">0</span>`, "ponderado por HU", avAvance)}
   </div>`;
 
   const charts = `<div class="grid charts-2">
     <div class="card fade"><h3>Avance y producción por proyecto</h3>
-      <div class="hint">Comparativa del portafolio · clic para ver detalle</div>
+      <div class="hint">Comparativa ${alFecha} · clic para ver detalle</div>
       <div id="cCmp" class="chart tall"></div></div>
     <div class="card fade"><h3>Volumen de HU por proyecto</h3>
-      <div class="hint">Tamaño relativo de cada proyecto</div>
+      <div class="hint">Tamaño relativo ${alFecha}</div>
       <div id="cVol" class="chart tall"></div></div>
   </div>
   <div class="card fade" style="margin-top:16px">
     <h3>Productividad por proyecto en el tiempo</h3>
-    <div class="hint">HU puestas en producción por día hábil · se <b>recalcula</b> dentro del rango de fechas elegido</div>
-    <div class="filterbar">
-      <label>Desde <input type="date" id="fIni"></label>
-      <label>Hasta <input type="date" id="fFin"></label>
-      <button class="btn" id="fReset" style="padding:8px 12px;font-size:13px;font-weight:600">↺ Todo el periodo</button>
-    </div>
+    <div class="hint">HU a producción / día hábil · recalculada dentro del rango <b>Desde–Hasta</b> de arriba</div>
     <div id="cProd" class="chart tall"></div>
   </div>`;
   $("#content").innerHTML = head + kpis + charts;
+
+  // filtros (gobiernan todo el portafolio) — el estado vive en PORT_INI/PORT_FIN
+  const fi = $("#fIni"), ff = $("#fFin");
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = a; ff.value = b;
+  fi.onchange = () => { PORT_INI = fi.value || dmin; render("__all__"); };
+  ff.onchange = () => { PORT_FIN = ff.value || dmax; render("__all__"); };
+  $("#fReset").onclick = () => { PORT_INI = dmin; PORT_FIN = dmax; render("__all__"); };
+
   countUp();
-  drawCompare($("#cCmp"), ps);
-  drawVolume($("#cVol"), ps);
-  drawProductividad($("#cProd"), ps);
+  drawCompare($("#cCmp"), rows);
+  drawVolume($("#cVol"), rows);
+  drawProductividad($("#cProd"), allp, a, b);
+}
+
+/* estado (punto de serie) vigente a la fecha d: último corte con fecha <= d, o null */
+function snapAt(p, d) {
+  let best = null;
+  for (const s of p.serie) { if (s.fecha <= d) best = s; else break; }
+  return best;
 }
 
 /* dominio de fechas (min/max) entre todas las series de proyecto */
@@ -305,44 +345,32 @@ function calcSerieProd(ps, a, b) {
   return { legend, series };
 }
 
-function drawProductividad(el, ps) {
-  prodChart = mkChart(el);
-  const ax = axisBase();
-  const [dmin, dmax] = domainFechas(ps);
-  const fi = $("#fIni"), ff = $("#fFin");
-  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
-
-  function apply() {
-    let a = fi.value || dmin, b = ff.value || dmax;
-    if (a > b) { const t = a; a = b; b = t; }       // tolera rango invertido
-    const { legend, series } = calcSerieProd(ps, a, b);
-    prodChart.setOption({
-      tooltip: {
-        trigger: "axis", ...ax.tooltip,
-        valueFormatter: (v) => v == null ? "—" : v.toFixed(2).replace(".", ",") + " HU/día",
-      },
-      legend: { type: "scroll", data: legend, textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "roundRect" },
-      grid: { left: 8, right: 18, top: 38, bottom: 6, containLabel: true },
-      xAxis: {
-        type: "time", axisLine: { lineStyle: { color: ax.line } },
-        axisLabel: { color: ax.textColor, fontSize: 10, formatter: (val) => echarts.format.formatTime("dd/MM", val) },
-      },
-      yAxis: {
-        type: "value", name: "HU/día hábil", nameTextStyle: { color: ax.textColor, fontSize: 10 },
-        splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor },
-      },
-      series,
-    }, true);  // notMerge: refleja el cambio de nº de series al filtrar
-  }
-  fi.onchange = apply; ff.onchange = apply;
-  $("#fReset").onclick = () => { fi.value = dmin; ff.value = dmax; apply(); };
-  apply();
+function drawProductividad(el, allp, a, b) {
+  const c = mkChart(el), ax = axisBase();
+  const { legend, series } = calcSerieProd(allp, a, b);
+  c.setOption({
+    tooltip: {
+      trigger: "axis", ...ax.tooltip,
+      valueFormatter: (v) => v == null ? "—" : v.toFixed(2).replace(".", ",") + " HU/día",
+    },
+    legend: { type: "scroll", data: legend, textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "roundRect" },
+    grid: { left: 8, right: 18, top: 38, bottom: 6, containLabel: true },
+    xAxis: {
+      type: "time", axisLine: { lineStyle: { color: ax.line } },
+      axisLabel: { color: ax.textColor, fontSize: 10, formatter: (val) => echarts.format.formatTime("dd/MM", val) },
+    },
+    yAxis: {
+      type: "value", name: "HU/día hábil", nameTextStyle: { color: ax.textColor, fontSize: 10 },
+      splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor },
+    },
+    series,
+  });
 }
 
-function drawCompare(el, ps) {
+function drawCompare(el, rows) {
   const c = mkChart(el), ax = axisBase();
-  const names = ps.map(p => p.codigo);
-  const lblMap = Object.fromEntries(ps.map(p => [p.codigo, etiqueta2l(p)]));
+  const names = rows.map(r => r.codigo);
+  const lblMap = Object.fromEntries(rows.map(r => [r.codigo, etiqueta2l(r)]));
   c.setOption({
     tooltip: { trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" },
       valueFormatter: (v) => (v == null ? "—" : (v).toFixed(0) + "%") },
@@ -355,26 +383,26 @@ function drawCompare(el, ps) {
     yAxis: { type: "value", max: 100, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: "{value}%" } },
     series: [
       { name: "% Producción", type: "bar", color: "#10b981", barWidth: 14, itemStyle: { borderRadius: [4, 4, 0, 0] },
-        data: ps.map(p => p.kpis.pct_prod != null ? +(p.kpis.pct_prod * 100).toFixed(0) : 0) },
+        data: rows.map(r => r.pct_prod != null ? +(r.pct_prod * 100).toFixed(0) : 0) },
       { name: "% Avance", type: "bar", color: "#a855f7", barWidth: 14, itemStyle: { borderRadius: [4, 4, 0, 0] },
-        data: ps.map(p => p.kpis.pct_avance != null ? +(p.kpis.pct_avance * 100).toFixed(0) : null) },
+        data: rows.map(r => r.pct_avance != null ? +(r.pct_avance * 100).toFixed(0) : null) },
     ],
   });
-  c.on("click", (e) => { $("#proySel").value = ps[e.dataIndex].codigo; render(ps[e.dataIndex].codigo); });
+  c.on("click", (e) => { const cod = rows[e.dataIndex].codigo; $("#proySel").value = cod; render(cod); });
 }
 
-function drawVolume(el, ps) {
+function drawVolume(el, rows) {
   const c = mkChart(el), ax = axisBase();
-  const sorted = [...ps].sort((a, b) => a.kpis.hu_total - b.kpis.hu_total);
+  const sorted = [...rows].sort((a, b) => a.hu_total - b.hu_total);
   c.setOption({
     tooltip: { trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" } },
     legend: { data: ["En producción", "Pendientes"], textStyle: { color: ax.textColor, fontSize: 11 }, top: 0 },
     grid: { left: 8, right: 20, top: 34, bottom: 6, containLabel: true },
     xAxis: { type: "value", splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
-    yAxis: { type: "category", data: sorted.map(p => etiqueta(p)), axisLabel: { color: ax.textColor, fontSize: 11 }, axisLine: { lineStyle: { color: ax.line } } },
+    yAxis: { type: "category", data: sorted.map(r => etiqueta(r)), axisLabel: { color: ax.textColor, fontSize: 11 }, axisLine: { lineStyle: { color: ax.line } } },
     series: [
-      { name: "En producción", type: "bar", stack: "h", color: "#10b981", data: sorted.map(p => p.kpis.hu_prod) },
-      { name: "Pendientes", type: "bar", stack: "h", color: "#6366f1", itemStyle: { borderRadius: [0, 4, 4, 0] }, data: sorted.map(p => p.kpis.hu_pendientes) },
+      { name: "En producción", type: "bar", stack: "h", color: "#10b981", data: sorted.map(r => r.prod) },
+      { name: "Pendientes", type: "bar", stack: "h", color: "#6366f1", itemStyle: { borderRadius: [0, 4, 4, 0] }, data: sorted.map(r => r.pendientes) },
     ],
   });
   c.on("click", (e) => { const cod = sorted[e.dataIndex].codigo; $("#proySel").value = cod; render(cod); });
