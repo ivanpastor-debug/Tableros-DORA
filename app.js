@@ -208,7 +208,7 @@ function renderProject(p) {
   </div>`;
   const recursos = recursosCard(RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null, null,
     RECURSOS ? "foto " + RECURSOS.planta_archivo : null);
-  $("#content").innerHTML = head + kpis + charts + recursos + flujoUI;
+  $("#content").innerHTML = head + kpis + recursos + charts + flujoUI;
   countUp();
   drawArea($("#cArea"), p);
   drawDonut($("#cDonut"), p);
