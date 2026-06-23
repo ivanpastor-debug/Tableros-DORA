@@ -99,6 +99,9 @@ function renderProject(p) {
     ${kpi("HU Totales", "▦", "#6366f1",
       `<span data-count="${k.hu_total}">0</span>`,
       `${fmt(k.hu_pendientes)} pendientes de producción`)}
+    ${kpi("HU Removidas", "✕", "#94a3b8",
+      `<span data-count="${k.removidas || 0}">0</span>`,
+      "Removido/Cancelado · fuera del conteo")}
     ${kpi("En Producción", "✓", "#10b981",
       `<span data-count="${k.hu_prod}">0</span>`,
       `de ${fmt(k.hu_total)} HU`, k.pct_prod)}
@@ -183,6 +186,7 @@ function buildPivot(p, mode) {
   const fmap = Object.fromEntries((p.flujo || []).map(f => [f.fecha, f]));
   const sum6 = (s) => PROCS.reduce((a, pr) => a + (s[pr.key] || 0), 0);
   const hasSH = p.serie.some(s => (s.total - sum6(s)) > 0);
+  const hasRem = p.serie.some(s => (s.removidas || 0) > 0);
 
   // valor de una etapa 'key' en la fecha índice i, según la métrica
   const val = (key, i) => {
@@ -198,6 +202,12 @@ function buildPivot(p, mode) {
     const now = p.serie[i].total - sum6(p.serie[i]);
     if (mode === "count") return now;
     return i === 0 ? null : now - (p.serie[i - 1].total - sum6(p.serie[i - 1]));
+  };
+  const remVal = (i) => {                      // fila "removidas" (fuera del conteo)
+    if (mode === "ent" || mode === "sal") return null;   // el flujo no rastrea EXCLUIR
+    const now = p.serie[i].removidas || 0;
+    if (mode === "count") return now;
+    return i === 0 ? null : now - (p.serie[i - 1].removidas || 0);
   };
   const totVal = (i) => {
     const s = p.serie[i];
@@ -224,7 +234,11 @@ function buildPivot(p, mode) {
     h += `<tr><th><span class="sw-i" style="background:#5d6678"></span>Sin homologar</th>` +
       dates.map((d, i) => cell(shVal(i))).join("") + `</tr>`;
   }
-  h += `<tr class="tot"><th>Total HU</th>` + dates.map((d, i) => cell(totVal(i))).join("") + `</tr>`;
+  if (hasRem) {
+    h += `<tr><th><span class="sw-i" style="background:#94a3b8"></span>Removidas</th>` +
+      dates.map((d, i) => cell(remVal(i))).join("") + `</tr>`;
+  }
+  h += `<tr class="tot"><th>Total HU<br><span style="font-weight:400;font-size:10px;color:var(--muted)">(sin removidas)</span></th>` + dates.map((d, i) => cell(totVal(i))).join("") + `</tr>`;
   return h + `</tbody></table>`;
 }
 
@@ -377,6 +391,7 @@ function renderPortfolio() {
     return {
       codigo: p.codigo, nombre: p.nombre,
       hu_total: s.total, prod: s.prod, pendientes: s.total - s.prod,
+      removidas: s.removidas || 0,
       pct_prod: s.total ? s.prod / s.total : null,
       pct_avance: (s.avance == null ? null : s.avance),
     };
@@ -384,6 +399,7 @@ function renderPortfolio() {
 
   const tot = rows.reduce((x, r) => x + r.hu_total, 0);
   const prod = rows.reduce((x, r) => x + r.prod, 0);
+  const removidas = rows.reduce((x, r) => x + r.removidas, 0);
   const wsum = rows.reduce((x, r) => x + (r.pct_avance != null ? r.pct_avance * r.hu_total : 0), 0);
   const wden = rows.reduce((x, r) => x + (r.pct_avance != null ? r.hu_total : 0), 0);
   const avAvance = wden ? wsum / wden : null;
@@ -403,7 +419,8 @@ function renderPortfolio() {
   </div>`;
   const kpis = `<div class="grid kpis">
     ${kpi("Proyectos activos", "▦", "#6366f1", `<span data-count="${rows.length}">0</span>`, full ? "en medición" : "con datos " + alFecha)}
-    ${kpi("HU Totales", "∑", "#38bdf8", `<span data-count="${tot}">0</span>`, "en el portafolio")}
+    ${kpi("HU Totales", "∑", "#38bdf8", `<span data-count="${tot}">0</span>`, "sin removidas")}
+    ${kpi("HU Removidas", "✕", "#94a3b8", `<span data-count="${removidas}">0</span>`, "Removido/Cancelado · fuera del conteo")}
     ${kpi("En Producción", "✓", "#10b981", `<span data-count="${prod}">0</span>`, `de ${fmt(tot)} HU`, pctProdG)}
     ${kpi("% Producción global", "◎", "#a855f7", pctProdG == null ? "—" : `<span data-count="${pctProdG * 100}" data-dec="1" data-suf="%">0</span>`, "agregado", pctProdG)}
     ${kpi("% Avance medio", "◔", "#f59e0b", avAvance == null ? "—" : `<span data-count="${avAvance * 100}" data-dec="0" data-suf="%">0</span>`, "ponderado por HU", avAvance)}
