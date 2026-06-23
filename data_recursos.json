@@ -1,0 +1,186 @@
+{
+ "generado": "2026-06-23 15:33",
+ "planta_archivo": "Planta proyectos_230626.xlsx",
+ "areas": [
+  "REQUERIMIENTOS",
+  "DESARROLLO",
+  "PRUEBAS QA Y TESTER",
+  "MESA DE AYUDA",
+  "TRANSVERSAL",
+  "AUSENTE"
+ ],
+ "cobertura_costos": 0.615,
+ "proyectos": {
+  "397": {
+   "personas": 34,
+   "por_area": {
+    "REQUERIMIENTOS": 2,
+    "DESARROLLO": 10,
+    "PRUEBAS QA Y TESTER": 11,
+    "MESA DE AYUDA": 0,
+    "TRANSVERSAL": 10,
+    "AUSENTE": 1
+   },
+   "con_banda": 28,
+   "sin_banda": 6,
+   "cobertura": 0.824,
+   "costo": {
+    "menor": 267642601.3333333,
+    "medio": 288642601.3333333,
+    "mayor": 309642601.3333333
+   }
+  },
+  "416": {
+   "personas": 93,
+   "por_area": {
+    "REQUERIMIENTOS": 10,
+    "DESARROLLO": 38,
+    "PRUEBAS QA Y TESTER": 26,
+    "MESA DE AYUDA": 4,
+    "TRANSVERSAL": 15,
+    "AUSENTE": 0
+   },
+   "con_banda": 86,
+   "sin_banda": 7,
+   "cobertura": 0.925,
+   "costo": {
+    "menor": 736917208.9999999,
+    "medio": 801417208.9999999,
+    "mayor": 865917208.9999999
+   }
+  },
+  "421": {
+   "personas": 241,
+   "por_area": {
+    "REQUERIMIENTOS": 7,
+    "DESARROLLO": 25,
+    "PRUEBAS QA Y TESTER": 10,
+    "MESA DE AYUDA": 143,
+    "TRANSVERSAL": 52,
+    "AUSENTE": 4
+   },
+   "con_banda": 86,
+   "sin_banda": 155,
+   "cobertura": 0.357,
+   "costo": {
+    "menor": 624030002.6666667,
+    "medio": 688530002.6666667,
+    "mayor": 753030002.6666667
+   }
+  },
+  "453": {
+   "personas": 26,
+   "por_area": {
+    "REQUERIMIENTOS": 4,
+    "DESARROLLO": 7,
+    "PRUEBAS QA Y TESTER": 7,
+    "MESA DE AYUDA": 0,
+    "TRANSVERSAL": 8,
+    "AUSENTE": 0
+   },
+   "con_banda": 20,
+   "sin_banda": 6,
+   "cobertura": 0.769,
+   "costo": {
+    "menor": 193641753.0,
+    "medio": 208641753.0,
+    "mayor": 223641753.0
+   }
+  },
+  "419-DEP": {
+   "personas": 60,
+   "por_area": {
+    "REQUERIMIENTOS": 10,
+    "DESARROLLO": 20,
+    "PRUEBAS QA Y TESTER": 8,
+    "MESA DE AYUDA": 0,
+    "TRANSVERSAL": 20,
+    "AUSENTE": 2
+   },
+   "con_banda": 52,
+   "sin_banda": 8,
+   "cobertura": 0.867,
+   "costo": {
+    "menor": 402820404.6666666,
+    "medio": 441820404.6666666,
+    "mayor": 480820404.6666666
+   }
+  },
+  "419-RAMA": {
+   "personas": 60,
+   "por_area": {
+    "REQUERIMIENTOS": 10,
+    "DESARROLLO": 20,
+    "PRUEBAS QA Y TESTER": 8,
+    "MESA DE AYUDA": 0,
+    "TRANSVERSAL": 20,
+    "AUSENTE": 2
+   },
+   "con_banda": 52,
+   "sin_banda": 8,
+   "cobertura": 0.867,
+   "costo": {
+    "menor": 402820404.6666666,
+    "medio": 441820404.6666666,
+    "mayor": 480820404.6666666
+   }
+  },
+  "004": {
+   "personas": 47,
+   "por_area": {
+    "REQUERIMIENTOS": 5,
+    "DESARROLLO": 11,
+    "PRUEBAS QA Y TESTER": 4,
+    "MESA DE AYUDA": 9,
+    "TRANSVERSAL": 18,
+    "AUSENTE": 0
+   },
+   "con_banda": 36,
+   "sin_banda": 11,
+   "cobertura": 0.766,
+   "costo": {
+    "menor": 250616823.0,
+    "medio": 277616823.0,
+    "mayor": 304616823.0
+   }
+  },
+  "355": {
+   "personas": 93,
+   "por_area": {
+    "REQUERIMIENTOS": 10,
+    "DESARROLLO": 38,
+    "PRUEBAS QA Y TESTER": 26,
+    "MESA DE AYUDA": 4,
+    "TRANSVERSAL": 15,
+    "AUSENTE": 0
+   },
+   "con_banda": 86,
+   "sin_banda": 7,
+   "cobertura": 0.925,
+   "costo": {
+    "menor": 736917208.9999999,
+    "medio": 801417208.9999999,
+    "mayor": 865917208.9999999
+   }
+  }
+ },
+ "portafolio": {
+  "personas": 501,
+  "por_area": {
+   "REQUERIMIENTOS": 38,
+   "DESARROLLO": 111,
+   "PRUEBAS QA Y TESTER": 66,
+   "MESA DE AYUDA": 156,
+   "TRANSVERSAL": 123,
+   "AUSENTE": 7
+  },
+  "con_banda": 308,
+  "sin_banda": 193,
+  "cobertura": 0.615,
+  "costo": {
+   "menor": 2475668793.666667,
+   "medio": 2706668793.666667,
+   "mayor": 2937668793.6666665
+  }
+ }
+}

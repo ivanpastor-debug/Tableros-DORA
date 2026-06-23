@@ -41,15 +41,15 @@ fetch("data.json").then(r => r.json()).then(async d => {
   render("__all__");
 }).catch(e => { $("#content").innerHTML = `<div class="card">Error cargando datos: ${e}</div>`; });
 
-/* tarjeta de recursos del equipo (solo si hay datos internos) */
+/* tarjeta de recursos del equipo (info general por proyecto) */
 function recursosCard(r, titulo, nota) {
   if (!r) return "";
   const a = r.por_area || {};
   const chip = (lbl, val, col) => val ? `<span class="rchip"><span class="rdot" style="background:${col}"></span>${lbl} <b>${val}</b></span>` : "";
   const box = (lbl, val, col) => `<div class="costbox" style="--c:${col}"><div class="cbl">${lbl}</div><div class="cbv" title="$${new Intl.NumberFormat("es-CO").format(Math.round(val))}">${fmtMoney(val)}</div><div class="cbs">mensual</div></div>`;
   return `<div class="card fade rcard" style="margin-top:16px">
-    <h3>👥 Recursos del equipo${titulo ? " · " + titulo : ""} <span class="tag" style="background:#94a3b820;color:#94a3b8;border-color:#94a3b840">INTERNO</span></h3>
-    <div class="hint">Planta homologada${nota ? " · " + nota : ""} · valores mensuales estimados</div>
+    <h3>👥 Recursos del equipo${titulo ? " · " + titulo : ""}</h3>
+    <div class="hint">Planta homologada${nota ? " · " + nota : ""} · valor mensual estimado del equipo</div>
     <div class="rrow">
       <div class="rbig"><div class="rbign">${r.personas}</div><div class="rbigl">personas</div></div>
       <div class="rchips">
@@ -61,12 +61,13 @@ function recursosCard(r, titulo, nota) {
         ${chip("Ausente", a.AUSENTE, "#5d6678")}
       </div>
     </div>
+    <div class="rsub">💲 Costo mensual del equipo (banda salarial)</div>
     <div class="costrow">
-      ${box("Costo mínimo", r.costo.menor, "#38bdf8")}
-      ${box("Costo medio", r.costo.medio, "#10b981")}
-      ${box("Costo máximo", r.costo.mayor, "#ef4444")}
+      ${box("Mínimo", r.costo.menor, "#38bdf8")}
+      ${box("Medio", r.costo.medio, "#10b981")}
+      ${box("Máximo", r.costo.mayor, "#ef4444")}
     </div>
-    <div class="hint" style="margin-top:11px">💲 Costos sobre <b>${Math.round((r.cobertura || 0) * 100)}%</b> del equipo con banda salarial (${r.con_banda}/${r.personas}). Completa <code>Global/homologacion_cargos.csv</code> para llegar al 100%.</div>
+    <div class="hint" style="margin-top:11px">Estimado sobre <b>${Math.round((r.cobertura || 0) * 100)}%</b> del equipo con banda asignada (${r.con_banda}/${r.personas}).</div>
   </div>`;
 }
 
