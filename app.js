@@ -21,6 +21,12 @@ fetch("data.json").then(r => r.json()).then(d => {
   $("#corte").textContent = d.corte;
   $("#gen").textContent = d.generado;
   $("#filas").textContent = fmt(d.total_filas);
+  // hora de la última actualización junto al corte (muestra la fecha si difiere del corte)
+  const gp = (d.generado || "").split(" "), act = $("#actualizado");
+  if (act) {
+    act.textContent = (gp[0] && gp[0] !== d.corte) ? `${gp[0]} ${gp[1] || ""}`.trim() : (gp[1] || "—");
+    const pill = act.closest(".pill"); if (pill) pill.title = `Última actualización: ${d.generado} (hora Colombia)`;
+  }
   const sel = $("#proySel");
   sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` +
     d.proyectos.map(p => `<option value="${p.codigo}">${p.codigo} · ${p.nombre}</option>`).join("");
