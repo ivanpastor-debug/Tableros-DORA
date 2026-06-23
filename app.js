@@ -1,6 +1,8 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [];
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], prodChart = null;
+/* paleta por proyecto (gráfico de productividad en el tiempo) */
+const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
 const $ = (s) => document.querySelector(s);
 const cssv = (n) => getComputedStyle(document.body).getPropertyValue(n).trim();
@@ -248,11 +250,93 @@ function renderPortfolio() {
     <div class="card fade"><h3>Volumen de HU por proyecto</h3>
       <div class="hint">Tamaño relativo de cada proyecto</div>
       <div id="cVol" class="chart tall"></div></div>
+  </div>
+  <div class="card fade" style="margin-top:16px">
+    <h3>Productividad por proyecto en el tiempo</h3>
+    <div class="hint">HU puestas en producción por día hábil · se <b>recalcula</b> dentro del rango de fechas elegido</div>
+    <div class="filterbar">
+      <label>Desde <input type="date" id="fIni"></label>
+      <label>Hasta <input type="date" id="fFin"></label>
+      <button class="btn" id="fReset" style="padding:8px 12px;font-size:13px;font-weight:600">↺ Todo el periodo</button>
+    </div>
+    <div id="cProd" class="chart tall"></div>
   </div>`;
   $("#content").innerHTML = head + kpis + charts;
   countUp();
   drawCompare($("#cCmp"), ps);
   drawVolume($("#cVol"), ps);
+  drawProductividad($("#cProd"), ps);
+}
+
+/* dominio de fechas (min/max) entre todas las series de proyecto */
+function domainFechas(ps) {
+  let min = null, max = null;
+  ps.forEach(p => p.serie.forEach(s => {
+    if (min == null || s.fecha < min) min = s.fecha;
+    if (max == null || s.fecha > max) max = s.fecha;
+  }));
+  return [min, max];
+}
+
+/* productividad por ventana [a,b]: por cada proyecto, en cada corte d dentro del rango,
+   (HU en prod en d − HU en prod en la base) / (días hábiles en d − días hábiles en la base),
+   donde la base es el último corte con fecha <= a. Recalcular = "redimensionar la información". */
+function calcSerieProd(ps, a, b) {
+  const legend = [], series = [];
+  ps.forEach((p, i) => {
+    const sr = p.serie.filter(s => s.dias_hab != null);
+    if (!sr.length) return;
+    let base = { prod: 0, dias_hab: 0 };          // si 'a' es anterior al inicio -> desde el arranque
+    for (const s of sr) { if (s.fecha <= a) base = s; else break; }
+    const data = [];
+    for (const s of sr) {
+      if (s.fecha < a || s.fecha > b) continue;
+      const dw = s.dias_hab - base.dias_hab, pw = s.prod - base.prod;
+      data.push([s.fecha, dw > 0 ? +(pw / dw).toFixed(3) : null]);
+    }
+    if (!data.length) return;
+    const name = etiqueta(p);
+    legend.push(name);
+    series.push({
+      name, type: "line", smooth: true, showSymbol: true, symbol: "circle", symbolSize: 6,
+      connectNulls: true, lineStyle: { width: 2 }, color: PALETTE[i % PALETTE.length], data,
+    });
+  });
+  return { legend, series };
+}
+
+function drawProductividad(el, ps) {
+  prodChart = mkChart(el);
+  const ax = axisBase();
+  const [dmin, dmax] = domainFechas(ps);
+  const fi = $("#fIni"), ff = $("#fFin");
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
+
+  function apply() {
+    let a = fi.value || dmin, b = ff.value || dmax;
+    if (a > b) { const t = a; a = b; b = t; }       // tolera rango invertido
+    const { legend, series } = calcSerieProd(ps, a, b);
+    prodChart.setOption({
+      tooltip: {
+        trigger: "axis", ...ax.tooltip,
+        valueFormatter: (v) => v == null ? "—" : v.toFixed(2).replace(".", ",") + " HU/día",
+      },
+      legend: { type: "scroll", data: legend, textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "roundRect" },
+      grid: { left: 8, right: 18, top: 38, bottom: 6, containLabel: true },
+      xAxis: {
+        type: "time", axisLine: { lineStyle: { color: ax.line } },
+        axisLabel: { color: ax.textColor, fontSize: 10, formatter: (val) => echarts.format.formatTime("dd/MM", val) },
+      },
+      yAxis: {
+        type: "value", name: "HU/día hábil", nameTextStyle: { color: ax.textColor, fontSize: 10 },
+        splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor },
+      },
+      series,
+    }, true);  // notMerge: refleja el cambio de nº de series al filtrar
+  }
+  fi.onchange = apply; ff.onchange = apply;
+  $("#fReset").onclick = () => { fi.value = dmin; ff.value = dmax; apply(); };
+  apply();
 }
 
 function drawCompare(el, ps) {

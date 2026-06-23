@@ -46,6 +46,13 @@ select,.btn{
   transition:.15s;outline:none}
 select:hover,.btn:hover{border-color:var(--accent)}
 .btn.icon{width:42px;display:grid;place-items:center;padding:0;height:42px;font-size:17px}
+input[type=date]{background:var(--card);border:1px solid var(--line);color:var(--text);
+  border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;outline:none;
+  font-family:inherit;cursor:pointer;color-scheme:dark}
+[data-theme="light"] input[type=date]{color-scheme:light}
+input[type=date]:hover{border-color:var(--accent)}
+.filterbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.filterbar label{font-size:12px;color:var(--muted);font-weight:600;display:inline-flex;align-items:center;gap:6px}
 .project-title{display:flex;align-items:baseline;gap:12px;margin:6px 2px 16px;flex-wrap:wrap}
 .project-title h2{font-size:26px;font-weight:800;letter-spacing:-.5px}
 .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
