@@ -101,7 +101,11 @@ table.piv tr.tot th{background:var(--card2)}
 .rbigl{font-size:11px;opacity:.9;margin-top:5px;text-transform:uppercase;letter-spacing:.5px}
 .rchips{display:flex;gap:10px;flex-wrap:wrap}
 .rchip{display:inline-flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--line);
-  border-radius:999px;padding:8px 14px;font-size:13px;color:var(--muted)}
+  border-radius:999px;padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;transition:.15s;user-select:none}
+.rchip:hover{border-color:var(--accent)}
+.rchip.on{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+.rchip.on b{color:#fff}
+.rchip.rclear{color:var(--muted);font-weight:700}
 .rchip b{color:var(--text);font-size:16px}
 .rdot{width:10px;height:10px;border-radius:3px;display:inline-block}
 .costrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}

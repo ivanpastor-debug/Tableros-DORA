@@ -41,52 +41,116 @@ fetch("data.json").then(r => r.json()).then(async d => {
   render("__all__");
 }).catch(e => { $("#content").innerHTML = `<div class="card">Error cargando datos: ${e}</div>`; });
 
-/* recursos: snapshot del equipo activo a una fecha (serie en breakpoints) */
+/* recursos: equipo activo a una fecha (serie en breakpoints) + selección de área dinámica */
+let REC_STATE = null;
+const AREA_LBL = { "REQUERIMIENTOS": "Requerimientos", "DESARROLLO": "Desarrollo", "PRUEBAS QA Y TESTER": "QA", "TRANSVERSAL": "Transversal", "MESA DE AYUDA": "Mesa de Ayuda", "AUSENTE": "Ausente" };
+const AREA_COL = { "REQUERIMIENTOS": "#6366f1", "DESARROLLO": "#38bdf8", "PRUEBAS QA Y TESTER": "#f59e0b", "TRANSVERSAL": "#a855f7", "MESA DE AYUDA": "#f472b6", "AUSENTE": "#5d6678" };
+const AREA_ORDER = ["REQUERIMIENTOS", "DESARROLLO", "PRUEBAS QA Y TESTER", "TRANSVERSAL", "MESA DE AYUDA", "AUSENTE"];
+
 function snapRec(resObj, fechas, dateStr) {
-  if (!resObj || !resObj.serie) return resObj || null;
+  if (!resObj || !resObj.serie) return null;
   let i = 0;
   for (let j = 0; j < fechas.length; j++) { if (fechas[j] <= dateStr) i = j; else break; }
   return resObj.serie[i];
 }
-function recursosBody(s) {
+function recursosBody(s, areaSel) {
   if (!s) return "";
-  const a = s.por_area || {};
-  const chip = (lbl, val, col) => val ? `<span class="rchip"><span class="rdot" style="background:${col}"></span>${lbl} <b>${val}</b></span>` : "";
+  const pa = s.por_area || {};
+  const totalN = AREA_ORDER.reduce((a, k) => a + ((pa[k] && pa[k].n) || 0), 0);
+  const sumC = (i) => AREA_ORDER.reduce((a, k) => a + ((pa[k] && pa[k].c && pa[k].c[i]) || 0), 0);
+  const sel = (areaSel && pa[areaSel]) ? pa[areaSel] : null;
+  const n = sel ? sel.n : totalN;
+  const c = sel ? sel.c : [sumC(0), sumC(1), sumC(2)];
+  const chip = (k) => (pa[k] && pa[k].n) ? `<span class="rchip${areaSel === k ? " on" : ""}" onclick="recSelArea('${k}')"><span class="rdot" style="background:${AREA_COL[k]}"></span>${AREA_LBL[k]} <b>${pa[k].n}</b></span>` : "";
   const box = (lbl, val, col) => `<div class="costbox" style="--c:${col}"><div class="cbl">${lbl}</div><div class="cbv" title="$${new Intl.NumberFormat("es-CO").format(Math.round(val))}">${fmtMoney(val)}</div><div class="cbs">mensual</div></div>`;
   return `<div class="rrow">
-      <div class="rbig"><div class="rbign">${s.personas}</div><div class="rbigl">personas</div></div>
-      <div class="rchips">
-        ${chip("Requerimientos", a.REQUERIMIENTOS, "#6366f1")}
-        ${chip("Desarrollo", a.DESARROLLO, "#38bdf8")}
-        ${chip("QA", a["PRUEBAS QA Y TESTER"], "#f59e0b")}
-        ${chip("Transversal", a.TRANSVERSAL, "#a855f7")}
-        ${chip("Mesa de Ayuda", a["MESA DE AYUDA"], "#f472b6")}
-        ${chip("Ausente", a.AUSENTE, "#5d6678")}
-      </div>
+      <div class="rbig"><div class="rbign">${n}</div><div class="rbigl">${sel ? AREA_LBL[areaSel] : "personas"}</div></div>
+      <div class="rchips">${AREA_ORDER.map(chip).join("")}${areaSel ? `<span class="rchip rclear" onclick="recSelArea('${areaSel}')">✕ ver todas</span>` : ""}</div>
     </div>
-    <div class="rsub">💲 Costo mensual del equipo (banda salarial)</div>
+    <div class="rsub">💲 Costo mensual ${sel ? "· " + AREA_LBL[areaSel] : "del equipo"} (banda salarial)</div>
     <div class="costrow">
-      ${box("Mínimo", s.costo.menor, "#38bdf8")}
-      ${box("Medio", s.costo.medio, "#10b981")}
-      ${box("Máximo", s.costo.mayor, "#ef4444")}
+      ${box("Mínimo", c[0], "#38bdf8")}
+      ${box("Medio", c[1], "#10b981")}
+      ${box("Máximo", c[2], "#ef4444")}
     </div>`;
+}
+function recSelArea(k) {
+  if (!REC_STATE) return;
+  REC_STATE.area = (REC_STATE.area === k) ? null : k;
+  $("#recBody").innerHTML = recursosBody(snapRec(REC_STATE.resObj, RECURSOS.fechas, REC_STATE.date), REC_STATE.area);
 }
 function recursosCard(resObj, titulo, nota) {
   if (!resObj || !RECURSOS) return "";
   const def = RECURSOS.fecha_ref || "";
   return `<div class="card fade rcard" style="margin-top:16px">
     <h3>👥 Recursos del equipo${titulo ? " · " + titulo : ""}</h3>
-    <div class="hint">${nota ? nota + " · " : ""}equipo activo a la fecha seleccionada · valor mensual estimado</div>
+    <div class="hint">${nota ? nota + " · " : ""}equipo activo a la fecha · <b>clic en un área</b> para redimensionar el costo</div>
     <div class="filterbar"><label>Fecha de consulta <input type="date" id="recFecha"></label></div>
-    <div id="recBody">${recursosBody(snapRec(resObj, RECURSOS.fechas, def))}</div>
+    <div id="recBody">${recursosBody(snapRec(resObj, RECURSOS.fechas, def), null)}</div>
   </div>`;
 }
 function setupRecursos(resObj) {
   const fi = $("#recFecha");
   if (!fi || !RECURSOS || !resObj) return;
   const F = RECURSOS.fechas, ref = RECURSOS.fecha_ref;
+  REC_STATE = { resObj, date: ref, area: null };
   fi.min = F[0]; fi.max = F[F.length - 1]; fi.value = ref;
-  fi.onchange = () => { $("#recBody").innerHTML = recursosBody(snapRec(resObj, F, fi.value || ref)); };
+  fi.onchange = () => { REC_STATE.date = fi.value || ref; $("#recBody").innerHTML = recursosBody(snapRec(resObj, F, REC_STATE.date), REC_STATE.area); };
+}
+
+/* productividad persona-día por proceso: HU gestionadas (salidas) / día hábil / personas del área */
+const PROC_AREA = { REQUERIMIENTOS: "REQUERIMIENTOS", DESARROLLO: "DESARROLLO", QA: "PRUEBAS QA Y TESTER" };
+function prodPersonaDia(cod) {
+  const p = DATA.proyectos.find(x => x.codigo === cod);
+  const rec = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[cod] : null;
+  if (!p || !rec) return null;
+  const snap = snapRec(rec, RECURSOS.fechas, RECURSOS.fecha_ref);
+  const dias = p.kpis.dias_transcurridos;
+  const out = {};
+  for (const proc in PROC_AREA) {
+    const salidas = (p.flujo || []).reduce((s, f) => s + ((f.salidas && f.salidas[proc]) || 0), 0);
+    const personas = snap && snap.por_area[PROC_AREA[proc]] ? snap.por_area[PROC_AREA[proc]].n : 0;
+    out[proc] = { salidas, personas, dias, val: (dias && personas) ? salidas / dias / personas : null };
+  }
+  return out;
+}
+function drawProdPersona(el, cod) {
+  const c = mkChart(el), ax = axisBase();
+  const pd = prodPersonaDia(cod);
+  if (!pd) return;
+  const procs = [["REQUERIMIENTOS", "Requerimientos", "#6366f1"], ["DESARROLLO", "Desarrollo", "#38bdf8"], ["QA", "QA", "#f59e0b"]];
+  c.setOption({
+    tooltip: {
+      trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" },
+      formatter: (ps) => { const k = procs[ps[0].dataIndex][0], d = pd[k];
+        return `${procs[ps[0].dataIndex][1]}<br/>Productividad: <b>${d.val != null ? d.val.toFixed(3).replace(".", ",") : "—"}</b> HU/persona/día<br/>${d.salidas} gestiones · ${d.personas} personas · ${d.dias} días háb.`; },
+    },
+    grid: { left: 8, right: 16, top: 18, bottom: 6, containLabel: true },
+    xAxis: { type: "category", data: procs.map(p => p[1]), axisLabel: { color: ax.textColor }, axisLine: { lineStyle: { color: ax.line } } },
+    yAxis: { type: "value", name: "HU/persona/día", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+    series: [{ type: "bar", barWidth: "45%", itemStyle: { borderRadius: [6, 6, 0, 0] },
+      data: procs.map(p => ({ value: +(pd[p[0]].val || 0).toFixed(3), itemStyle: { color: p[2] } })),
+      label: { show: true, position: "top", color: ax.textColor, formatter: (x) => x.value.toFixed(2).replace(".", ",") } }],
+  });
+}
+function drawProdComp(el) {
+  const c = mkChart(el), ax = axisBase();
+  const ps = DATA.proyectos.filter(p => RECURSOS && RECURSOS.proyectos && RECURSOS.proyectos[p.codigo]);
+  const names = ps.map(p => p.codigo);
+  const lblMap = Object.fromEntries(ps.map(p => [p.codigo, etiqueta2l(p)]));
+  const series = [["REQUERIMIENTOS", "Requerimientos", "#6366f1"], ["DESARROLLO", "Desarrollo", "#38bdf8"], ["QA", "QA", "#f59e0b"]].map(([k, l, co]) => ({
+    name: l, type: "bar", color: co, itemStyle: { borderRadius: [3, 3, 0, 0] },
+    data: ps.map(p => { const pd = prodPersonaDia(p.codigo); return pd && pd[k].val != null ? +pd[k].val.toFixed(3) : 0; }),
+  }));
+  c.setOption({
+    tooltip: { trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" }, valueFormatter: (v) => v == null ? "—" : v.toFixed(3).replace(".", ",") },
+    legend: { data: ["Requerimientos", "Desarrollo", "QA"], textStyle: { color: ax.textColor, fontSize: 11 }, top: 0 },
+    grid: { left: 8, right: 14, top: 34, bottom: 6, containLabel: true },
+    xAxis: { type: "category", data: names, axisLine: { lineStyle: { color: ax.line } },
+      axisLabel: { color: ax.textColor, fontSize: 10, interval: 0, lineHeight: 13, formatter: (v) => lblMap[v] || v } },
+    yAxis: { type: "value", name: "HU/persona/día", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+    series,
+  });
 }
 
 $("#themeBtn").onclick = () => {
@@ -226,7 +290,13 @@ function renderProject(p) {
   </div>`;
   const recObj = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null;
   const recursos = recursosCard(recObj, null, RECURSOS ? "Planta " + RECURSOS.planta_archivo : null);
-  $("#content").innerHTML = head + kpis + recursos + charts + flujoUI;
+  const prodUI = recObj ? `
+  <div class="card fade" style="margin-top:16px">
+    <h3>⚙️ Productividad persona-día por proceso</h3>
+    <div class="hint">HU gestionadas (salidas del proceso) ÷ días hábiles ÷ personas del área · plantilla actual</div>
+    <div id="cProdPD" class="chart"></div>
+  </div>` : "";
+  $("#content").innerHTML = head + kpis + recursos + charts + flujoUI + prodUI;
   countUp();
   setupRecursos(recObj);
   drawArea($("#cArea"), p);
@@ -235,6 +305,7 @@ function renderProject(p) {
   drawGauge($("#cGauge"), p, k);
   setupPivot(p);
   drawFlujo($("#cFlujo"), p);
+  if (recObj) drawProdPersona($("#cProdPD"), p.codigo);
 }
 
 /* tabla dinámica: filas = etapas, columnas = fechas, métrica seleccionable */
@@ -502,7 +573,12 @@ function renderPortfolio() {
     <h3>Productividad por proyecto en el tiempo</h3>
     <div class="hint">HU a producción / día hábil · recalculada dentro del rango <b>Desde–Hasta</b> de arriba</div>
     <div id="cProd" class="chart tall"></div>
-  </div>`;
+  </div>` + (RECURSOS ? `
+  <div class="card fade" style="margin-top:16px">
+    <h3>⚙️ Productividad persona-día por proceso · comparativo</h3>
+    <div class="hint">HU gestionadas ÷ día hábil ÷ personas, por proceso y proyecto · plantilla actual</div>
+    <div id="cProdComp" class="chart tall"></div>
+  </div>` : "");
   const recursos = recursosCard(RECURSOS ? RECURSOS.portafolio : null, "Portafolio",
     RECURSOS ? "consolidado (sin doble-conteo de plantas compartidas)" : null);
   $("#content").innerHTML = head + kpis + recursos + charts;
@@ -519,6 +595,7 @@ function renderPortfolio() {
   drawCompare($("#cCmp"), rows);
   drawVolume($("#cVol"), rows);
   drawProductividad($("#cProd"), allp, a, b);
+  if (RECURSOS) drawProdComp($("#cProdComp"));
 }
 
 /* estado (punto de serie) vigente a la fecha d: último corte con fecha <= d, o null */
