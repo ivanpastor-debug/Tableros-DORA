@@ -290,8 +290,8 @@ function renderProject(p) {
     <div class="card fade"><h3>Tendencia de producción</h3>
       <div class="hint">Total de HU vs. puestas en producción</div>
       <div id="cLine" class="chart"></div></div>
-    <div class="card fade"><h3>Productividad</h3>
-      <div class="hint">Ritmo actual vs. requerido para cumplir el cierre</div>
+    <div class="card fade"><h3>Productividad · real vs. requerida</h3>
+      <div class="hint">Arco externo = real (verde si cumple / rojo si va por debajo) · arco interno = requerida (cierre QA)</div>
       <div id="cGauge" class="chart"></div></div>
   </div>`;
 
@@ -522,30 +522,33 @@ function drawLine(el, p) {
 function drawGauge(el, p, k) {
   const c = mkChart(el), ax = axisBase();
   const act = k.prod_actual || 0, esp = k.prod_esperada;
-  const max = Math.max(act, esp || 0, 1) * 1.25;
+  const max = Math.max(act, esp || 0, 1) * 1.2;
   const onTrack = esp == null || act >= esp;
-  const cReal = onTrack ? "#10b981" : "#f59e0b", cEsp = "#a855f7";
-  // doble aguja: Real (verde/ámbar) y Requerida (morada) en el mismo dial
-  const data = [{ value: +act.toFixed(2), name: "Real", itemStyle: { color: cReal } }];
-  if (esp != null) data.push({ value: +esp.toFixed(2), name: "Requerida", itemStyle: { color: cEsp } });
+  const cReal = esp == null ? "#38bdf8" : (onTrack ? "#10b981" : "#ef4444"); // real: verde cumple / rojo por debajo
+  const cEsp = "#a855f7";                                                     // requerida: morado
+  // dos arcos concéntricos: externo = real, interno = requerida -> comparación visual directa
+  const ring = (val, color, radius) => ({
+    type: "gauge", startAngle: 210, endAngle: -30, min: 0, max: +max.toFixed(2),
+    radius, center: ["50%", "52%"], silent: true,
+    progress: { show: true, width: 15, roundCap: true, itemStyle: { color } },
+    axisLine: { lineStyle: { width: 15, color: [[1, cssv("--card2")]] } },
+    pointer: { show: false }, axisTick: { show: false }, splitLine: { show: false },
+    axisLabel: { show: false }, anchor: { show: false }, title: { show: false }, detail: { show: false },
+    data: [{ value: +val.toFixed(2) }],
+  });
+  const series = [ring(act, cReal, "92%")];
+  if (esp != null) series.push(ring(esp, cEsp, "66%"));
   c.setOption({
-    tooltip: { ...ax.tooltip, formatter: (x) => `${x.name}: <b>${x.value.toFixed(2)}</b> HU/día` },
-    series: [{
-      type: "gauge", min: 0, max: +max.toFixed(1), startAngle: 200, endAngle: -20,
-      radius: "88%", center: ["50%", "56%"],
-      axisLine: { lineStyle: { width: 12, color: [[1, cssv("--line")]] } },
-      pointer: { width: 6, length: "62%", itemStyle: { color: "inherit" } },   // toma el color de cada dato
-      axisTick: { show: false }, splitLine: { length: 9, lineStyle: { color: cssv("--line") } },
-      axisLabel: { color: ax.textColor, fontSize: 9, distance: 12 },
-      anchor: { show: true, size: 14, itemStyle: { color: cssv("--text") } },
-      title: { show: false }, detail: { show: false },
-      data,
-    }],
+    series,
     graphic: [
-      { type: "text", left: "center", bottom: 24,
-        style: { text: `● Real: ${act.toFixed(2)} HU/día`, fill: cReal, fontSize: 13, fontWeight: 700 } },
-      esp != null ? { type: "text", left: "center", bottom: 5,
-        style: { text: `● Requerida: ${esp.toFixed(2)} HU/día`, fill: cEsp, fontSize: 12, fontWeight: 600 } } : null,
+      { type: "text", left: "center", top: "38%", style: { text: act.toFixed(2), fontSize: 30, fontWeight: 800, fill: cReal, textAlign: "center" } },
+      { type: "text", left: "center", top: "55%", style: { text: "HU/día reales", fontSize: 11, fill: ax.textColor, textAlign: "center" } },
+      esp != null
+        ? { type: "text", left: "center", bottom: 26, style: { text: `● Requerida: ${esp.toFixed(2)} HU/día`, fontSize: 12.5, fontWeight: 600, fill: cEsp, textAlign: "center" } }
+        : { type: "text", left: "center", bottom: 16, style: { text: "sin meta de cierre QA", fontSize: 11, fill: ax.textColor, textAlign: "center" } },
+      esp != null
+        ? { type: "text", left: "center", bottom: 8, style: { text: onTrack ? "✓ Al día con lo requerido" : "⚠ Por debajo de lo requerido", fontSize: 12.5, fontWeight: 700, fill: cReal, textAlign: "center" } }
+        : null,
     ].filter(Boolean),
   });
 }
