@@ -133,12 +133,127 @@ function renderProject(p) {
       <div id="cGauge" class="chart"></div></div>
   </div>`;
 
-  $("#content").innerHTML = head + kpis + charts;
+  const flujoUI = `
+  <div class="card fade" style="margin-top:16px">
+    <h3>Tabla consolidada · HU por etapa y fecha</h3>
+    <div class="hint">Conteo de HU en cada etapa por día (tipo tabla dinámica). Cambia la métrica para ver variaciones o gestiones.</div>
+    <div class="filterbar">
+      <label>Métrica
+        <select id="tblMode">
+          <option value="count">Conteo (HU en la etapa)</option>
+          <option value="delta">Δ Variación día a día</option>
+          <option value="ent">Entradas (gestión)</option>
+          <option value="sal">Salidas (gestión)</option>
+        </select>
+      </label>
+      <span class="hint" style="margin:0">▸ filas = etapas · columnas = fechas (desliza →)</span>
+    </div>
+    <div id="pivWrap" class="pivwrap"></div>
+  </div>
+  <div class="card fade" style="margin-top:16px">
+    <h3>Entradas vs. salidas de HU por etapa</h3>
+    <div class="hint">Cada punto = un día. Bajo la diagonal la etapa <b>acumula</b> (entran más de las que salen); sobre la diagonal <b>drena</b>.</div>
+    <div id="cFlujo" class="chart tall"></div>
+  </div>`;
+  $("#content").innerHTML = head + kpis + charts + flujoUI;
   countUp();
   drawArea($("#cArea"), p);
   drawDonut($("#cDonut"), p);
   drawLine($("#cLine"), p);
   drawGauge($("#cGauge"), p, k);
+  setupPivot(p);
+  drawFlujo($("#cFlujo"), p);
+}
+
+/* tabla dinámica: filas = etapas, columnas = fechas, métrica seleccionable */
+function setupPivot(p) {
+  const sel = $("#tblMode"), wrap = $("#pivWrap");
+  const draw = () => { wrap.innerHTML = buildPivot(p, sel.value); wrap.scrollLeft = wrap.scrollWidth; };
+  sel.onchange = draw;
+  draw();
+}
+
+function buildPivot(p, mode) {
+  const dates = p.serie.map(s => s.fecha);
+  const fmap = Object.fromEntries((p.flujo || []).map(f => [f.fecha, f]));
+  const sum6 = (s) => PROCS.reduce((a, pr) => a + (s[pr.key] || 0), 0);
+  const hasSH = p.serie.some(s => (s.total - sum6(s)) > 0);
+
+  // valor de una etapa 'key' en la fecha índice i, según la métrica
+  const val = (key, i) => {
+    const s = p.serie[i];
+    if (mode === "count") return s[key] || 0;
+    if (mode === "delta") return i === 0 ? null : (s[key] || 0) - (p.serie[i - 1][key] || 0);
+    const f = fmap[dates[i]];
+    if (!f) return null;
+    return (mode === "ent" ? f.entradas : f.salidas)[key] || 0;
+  };
+  const shVal = (i) => {                       // fila "sin homologar" (derivada)
+    if (mode === "ent" || mode === "sal") return null;   // el flujo no la rastrea
+    const now = p.serie[i].total - sum6(p.serie[i]);
+    if (mode === "count") return now;
+    return i === 0 ? null : now - (p.serie[i - 1].total - sum6(p.serie[i - 1]));
+  };
+  const totVal = (i) => {
+    const s = p.serie[i];
+    if (mode === "count") return s.total;
+    if (mode === "delta") return i === 0 ? null : s.total - p.serie[i - 1].total;
+    const f = fmap[dates[i]]; if (!f) return null;
+    const o = (mode === "ent" ? f.entradas : f.salidas);
+    return PROCS.reduce((a, pr) => a + (o[pr.key] || 0), 0);
+  };
+  const cell = (v) => {
+    if (v == null) return `<td class="czero">·</td>`;
+    if (mode === "count") return `<td>${v}</td>`;
+    const cls = v > 0 ? "cpos" : v < 0 ? "cneg" : "czero";
+    return `<td class="${cls}">${v > 0 ? "+" + v : v}</td>`;
+  };
+
+  let h = `<table class="piv"><thead><tr><th>Etapa</th>` +
+    dates.map(d => `<th>${d.slice(5)}</th>`).join("") + `</tr></thead><tbody>`;
+  for (const pr of PROCS) {
+    h += `<tr><th><span class="sw-i" style="background:${pr.color}"></span>${pr.label}</th>` +
+      dates.map((d, i) => cell(val(pr.key, i))).join("") + `</tr>`;
+  }
+  if (hasSH) {
+    h += `<tr><th><span class="sw-i" style="background:#5d6678"></span>Sin homologar</th>` +
+      dates.map((d, i) => cell(shVal(i))).join("") + `</tr>`;
+  }
+  h += `<tr class="tot"><th>Total HU</th>` + dates.map((d, i) => cell(totVal(i))).join("") + `</tr>`;
+  return h + `</tbody></table>`;
+}
+
+/* dispersión entradas (x) vs salidas (y) por etapa; un punto por día */
+function drawFlujo(el, p) {
+  const c = mkChart(el), ax = axisBase();
+  const fl = p.flujo || [];
+  const series = PROCS.map(pr => ({
+    name: pr.label, type: "scatter", color: pr.color, symbolSize: 10,
+    itemStyle: { opacity: .8 }, emphasis: { focus: "series" },
+    data: fl.map(f => {
+      const e = f.entradas[pr.key] || 0, s = f.salidas[pr.key] || 0;
+      return (e || s) ? { value: [e, s], fecha: f.fecha } : null;
+    }).filter(Boolean),
+  })).filter(se => se.data.length);
+  const maxv = Math.max(1, ...series.flatMap(se => se.data.map(d => Math.max(d.value[0], d.value[1]))));
+  c.setOption({
+    tooltip: {
+      ...ax.tooltip, trigger: "item",
+      formatter: (x) => {
+        const [e, s] = x.data.value, n = e - s;
+        return `${x.seriesName} · ${x.data.fecha}<br/>Entradas: <b>${e}</b><br/>Salidas: <b>${s}</b><br/>Neto: <b>${n >= 0 ? "+" : ""}${n}</b>`;
+      },
+    },
+    legend: { type: "scroll", data: series.map(se => se.name), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "circle" },
+    grid: { left: 8, right: 18, top: 38, bottom: 6, containLabel: true },
+    xAxis: { type: "value", name: "Entradas", min: 0, max: maxv, nameLocation: "end", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+    yAxis: { type: "value", name: "Salidas", min: 0, max: maxv, nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+    series: [...series, {
+      type: "line", name: "y=x", silent: true, showSymbol: false, animation: false,
+      lineStyle: { type: "dashed", color: cssv("--muted2"), width: 1 },
+      data: [[0, 0], [maxv, maxv]], tooltip: { show: false },
+    }],
+  });
 }
 
 function drawArea(el, p) {

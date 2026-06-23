@@ -1,5 +1,5 @@
 {
- "generado": "2026-06-23 16:26 UTC",
+ "generado": "2026-06-23 16:55 UTC",
  "corte": "2026-06-23",
  "total_filas": 156284,
  "procesos": [
@@ -541,6 +541,228 @@
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 197
     }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-04-20",
+     "entradas": {
+      "EN PRODUCCIÓN": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-04-21",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-22",
+     "entradas": {
+      "EN PRODUCCIÓN": 91
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-23",
+     "entradas": {
+      "DESARROLLO": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "EN PRODUCCIÓN": 4
+     }
+    },
+    {
+     "fecha": "2026-04-24",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-27",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-28",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-29",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-30",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-04",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-05",
+     "entradas": {
+      "EN PRODUCCIÓN": 4
+     },
+     "salidas": {
+      "DESARROLLO": 4
+     }
+    },
+    {
+     "fecha": "2026-05-07",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-08",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-11",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-12",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-14",
+     "entradas": {
+      "REQUERIMIENTOS": 55,
+      "DESARROLLO": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {
+      "REQUERIMIENTOS": 65
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 36
+     }
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {
+      "DESARROLLO": 5,
+      "EN PRODUCCIÓN": 8
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 13
+     }
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {
+      "QA": 4
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "REQUERIMIENTOS": 14
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {
+      "REQUERIMIENTOS": 2
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {},
+     "salidas": {}
+    }
    ]
   },
   {
@@ -1061,6 +1283,464 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 243
+    }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-04-16",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 11,
+      "QA": 21
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 171,
+      "DESARROLLO": 2,
+      "QA": 6
+     }
+    },
+    {
+     "fecha": "2026-04-17",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 2,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-04-20",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-04-21",
+     "entradas": {
+      "REQUERIMIENTOS": 64,
+      "DESARROLLO": 26,
+      "QA": 62
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 5,
+      "QA": 4
+     }
+    },
+    {
+     "fecha": "2026-04-22",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3,
+      "QA": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 4,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-04-23",
+     "entradas": {
+      "REQUERIMIENTOS": 16,
+      "DESARROLLO": 1,
+      "QA": 7
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 18,
+      "DESARROLLO": 11,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-04-24",
+     "entradas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 7,
+      "QA": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 21,
+      "DESARROLLO": 6,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-04-27",
+     "entradas": {
+      "REQUERIMIENTOS": 27,
+      "DESARROLLO": 6,
+      "QA": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 5,
+      "QA": 25
+     }
+    },
+    {
+     "fecha": "2026-04-28",
+     "entradas": {
+      "REQUERIMIENTOS": 14,
+      "DESARROLLO": 10
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 10,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-04-29",
+     "entradas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 2,
+      "QA": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 3,
+      "QA": 11
+     }
+    },
+    {
+     "fecha": "2026-04-30",
+     "entradas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 1,
+      "QA": 5,
+      "EN PRODUCCIÓN": 199
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 66,
+      "DESARROLLO": 22,
+      "QA": 66,
+      "EN PRODUCCIÓN": 196
+     }
+    },
+    {
+     "fecha": "2026-05-04",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 2,
+      "QA": 9
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 7,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-05-05",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-05-07",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 1,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-05-11",
+     "entradas": {
+      "REQUERIMIENTOS": 18,
+      "DESARROLLO": 2,
+      "QA": 10
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 8,
+      "DESARROLLO": 7,
+      "QA": 2,
+      "EN PRODUCCIÓN": 1
+     }
+    },
+    {
+     "fecha": "2026-05-12",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 8,
+      "QA": 16
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 21,
+      "DESARROLLO": 2,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-05-25",
+     "entradas": {
+      "REQUERIMIENTOS": 32,
+      "DESARROLLO": 22,
+      "QA": 51,
+      "EN PRODUCCIÓN": 23
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 98,
+      "DESARROLLO": 21,
+      "QA": 30,
+      "EN PRODUCCIÓN": 6
+     }
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 13,
+      "QA": 9
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 15,
+      "DESARROLLO": 8,
+      "QA": 8
+     }
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 4,
+      "QA": 6,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 7,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 4,
+      "QA": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 7,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 7,
+      "QA": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 3,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 9,
+      "QA": 9
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 9,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {
+      "DESARROLLO": 6,
+      "QA": 8
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 22,
+      "DESARROLLO": 5,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 5,
+      "QA": 8
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 7,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 10,
+      "QA": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 6,
+      "QA": 7
+     }
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 8,
+      "QA": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 5,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 6,
+      "QA": 3
+     },
+     "salidas": {
+      "DESARROLLO": 4,
+      "QA": 6
+     }
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 9,
+      "QA": 4,
+      "EN PRODUCCIÓN": 10
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 4,
+      "QA": 19
+     }
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 6,
+      "QA": 5,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 7,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 6,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "DESARROLLO": 5,
+      "QA": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 4,
+      "QA": 4
+     }
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {
+      "REQUERIMIENTOS": 20,
+      "DESARROLLO": 6,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {
+      "DESARROLLO": 6,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "QA": 4
+     }
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {
+      "DESARROLLO": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 3
+     },
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {
+      "DESARROLLO": 4,
+      "QA": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 7,
+      "QA": 2
+     }
     }
    ]
   },
@@ -2051,6 +2731,563 @@
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
     }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-03-04",
+     "entradas": {
+      "DESARROLLO": 5,
+      "QA": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 11
+     }
+    },
+    {
+     "fecha": "2026-03-05",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-03-06",
+     "entradas": {
+      "DESARROLLO": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4
+     }
+    },
+    {
+     "fecha": "2026-03-09",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-03-10",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2,
+      "QA": 5,
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 2,
+      "QA": 4
+     }
+    },
+    {
+     "fecha": "2026-03-11",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 4,
+      "QA": 9
+     },
+     "salidas": {
+      "DESARROLLO": 9,
+      "QA": 7
+     }
+    },
+    {
+     "fecha": "2026-03-12",
+     "entradas": {
+      "DESARROLLO": 1,
+      "EN PRODUCCIÓN": 82
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-03-13",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-03-16",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1,
+      "QA": 5,
+      "EN PRODUCCIÓN": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 2,
+      "QA": 6
+     }
+    },
+    {
+     "fecha": "2026-03-17",
+     "entradas": {
+      "QA": 2,
+      "EN PRODUCCIÓN": 4
+     },
+     "salidas": {
+      "DESARROLLO": 2,
+      "QA": 4
+     }
+    },
+    {
+     "fecha": "2026-03-18",
+     "entradas": {
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1
+     }
+    },
+    {
+     "fecha": "2026-03-19",
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-03-20",
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2
+     }
+    },
+    {
+     "fecha": "2026-03-24",
+     "entradas": {
+      "DESARROLLO": 3,
+      "QA": 1,
+      "EN PRODUCCIÓN": 10
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "QA": 9,
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1
+     }
+    },
+    {
+     "fecha": "2026-03-25",
+     "entradas": {
+      "DESARROLLO": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-03-26",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-03-27",
+     "entradas": {
+      "DESARROLLO": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4
+     }
+    },
+    {
+     "fecha": "2026-03-30",
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-03-31",
+     "entradas": {
+      "QA": 3
+     },
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-04-01",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-04-06",
+     "entradas": {
+      "QA": 11
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 7
+     }
+    },
+    {
+     "fecha": "2026-04-07",
+     "entradas": {
+      "DESARROLLO": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3
+     }
+    },
+    {
+     "fecha": "2026-04-08",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-09",
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-04-10",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-13",
+     "entradas": {
+      "QA": 3
+     },
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-04-14",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-15",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-04-16",
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-17",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-20",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-21",
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-04-22",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-04-23",
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-24",
+     "entradas": {
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-04-27",
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-28",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-29",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-30",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-05-04",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-05",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-06",
+     "entradas": {
+      "QA": 3
+     },
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-05-07",
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-08",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-11",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-12",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-13",
+     "entradas": {
+      "QA": 1,
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 20
+     },
+     "salidas": {
+      "DESARROLLO": 1,
+      "QA": 20
+     }
+    },
+    {
+     "fecha": "2026-05-15",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-19",
+     "entradas": {
+      "QA": 1,
+      "EN PRODUCCIÓN": 19
+     },
+     "salidas": {
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 20
+     }
+    },
+    {
+     "fecha": "2026-05-20",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-21",
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-05-22",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-25",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {
+      "CLIENTE": 62
+     },
+     "salidas": {
+      "QA": 62,
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
+     }
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {
+      "QA": 62,
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
+     },
+     "salidas": {
+      "CLIENTE": 62
+     }
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {
+      "EN PRODUCCIÓN": 7
+     },
+     "salidas": {
+      "QA": 8
+     }
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {},
+     "salidas": {}
+    }
    ]
   },
   {
@@ -2779,6 +4016,487 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
+    }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-04-01",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-06",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-07",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-08",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-09",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-10",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-13",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-14",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-15",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-16",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-17",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-20",
+     "entradas": {
+      "REQUERIMIENTOS": 2
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-21",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5
+     }
+    },
+    {
+     "fecha": "2026-04-22",
+     "entradas": {
+      "DESARROLLO": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2
+     }
+    },
+    {
+     "fecha": "2026-04-23",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-04-24",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-04-27",
+     "entradas": {
+      "DESARROLLO": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2
+     }
+    },
+    {
+     "fecha": "2026-04-28",
+     "entradas": {
+      "DESARROLLO": 4,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-29",
+     "entradas": {
+      "DESARROLLO": 3,
+      "QA": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 4
+     }
+    },
+    {
+     "fecha": "2026-04-30",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-05-04",
+     "entradas": {},
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-05-05",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 8,
+      "QA": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 5,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-05-07",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-05-11",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 5,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 4
+     }
+    },
+    {
+     "fecha": "2026-05-12",
+     "entradas": {
+      "DESARROLLO": 5,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-05-13",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-05-14",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-05-15",
+     "entradas": {
+      "REQUERIMIENTOS": 8
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-19",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-20",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 3
+     }
+    },
+    {
+     "fecha": "2026-05-21",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-22",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-25",
+     "entradas": {
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 2
+     }
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {
+      "DESARROLLO": 8,
+      "QA": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 4
+     }
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {
+      "DESARROLLO": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {
+      "DESARROLLO": 14
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 13,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 4,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {
+      "REQUERIMIENTOS": 90,
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 14,
+      "DESARROLLO": 3,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {
+      "DESARROLLO": 7
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 12,
+      "QA": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 7,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 5
+     }
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3,
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 2,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {
+      "REQUERIMIENTOS": 6,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 6
+     }
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {
+      "DESARROLLO": 2
+     },
+     "salidas": {
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 4
+     },
+     "salidas": {
+      "DESARROLLO": 4,
+      "QA": 3
+     }
     }
    ]
   },
@@ -3678,6 +5396,586 @@
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
     }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-03-09",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 3,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 1,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-03-10",
+     "entradas": {
+      "DESARROLLO": 4,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "QA": 4,
+      "CLIENTE": 6
+     }
+    },
+    {
+     "fecha": "2026-03-11",
+     "entradas": {
+      "REQUERIMIENTOS": 10,
+      "DESARROLLO": 3,
+      "QA": 7,
+      "CLIENTE": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 9,
+      "QA": 4,
+      "CLIENTE": 2
+     }
+    },
+    {
+     "fecha": "2026-03-12",
+     "entradas": {
+      "REQUERIMIENTOS": 41,
+      "QA": 3,
+      "CLIENTE": 2,
+      "EN PRODUCCIÓN": 289
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-03-13",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 2,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-03-16",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 1,
+      "CLIENTE": 2
+     },
+     "salidas": {
+      "DESARROLLO": 1,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-03-18",
+     "entradas": {
+      "DESARROLLO": 11,
+      "QA": 1,
+      "CLIENTE": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 1,
+      "QA": 9
+     }
+    },
+    {
+     "fecha": "2026-03-19",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-03-20",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 9,
+      "CLIENTE": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 4,
+      "QA": 5,
+      "CLIENTE": 1
+     }
+    },
+    {
+     "fecha": "2026-03-24",
+     "entradas": {
+      "QA": 7,
+      "EN PRODUCCIÓN": 25
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 8,
+      "DESARROLLO": 2,
+      "QA": 5,
+      "CLIENTE": 19
+     }
+    },
+    {
+     "fecha": "2026-03-25",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "EN PRODUCCIÓN": 1
+     }
+    },
+    {
+     "fecha": "2026-03-26",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 4,
+      "QA": 4,
+      "CLIENTE": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 4,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-03-27",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 1,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-03-30",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "QA": 5,
+      "CLIENTE": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 7,
+      "QA": 6
+     }
+    },
+    {
+     "fecha": "2026-03-31",
+     "entradas": {
+      "DESARROLLO": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-04-01",
+     "entradas": {
+      "DESARROLLO": 7,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 8
+     }
+    },
+    {
+     "fecha": "2026-04-06",
+     "entradas": {
+      "REQUERIMIENTOS": 197
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 60,
+      "DESARROLLO": 26,
+      "QA": 61,
+      "CLIENTE": 29,
+      "EN PRODUCCIÓN": 313
+     }
+    },
+    {
+     "fecha": "2026-04-07",
+     "entradas": {
+      "REQUERIMIENTOS": 55,
+      "DESARROLLO": 50,
+      "QA": 59,
+      "CLIENTE": 25,
+      "EN PRODUCCIÓN": 300
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 197
+     }
+    },
+    {
+     "fecha": "2026-04-08",
+     "entradas": {
+      "REQUERIMIENTOS": 184
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 55,
+      "DESARROLLO": 50,
+      "QA": 59,
+      "CLIENTE": 25,
+      "EN PRODUCCIÓN": 300
+     }
+    },
+    {
+     "fecha": "2026-04-09",
+     "entradas": {
+      "REQUERIMIENTOS": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 32
+     }
+    },
+    {
+     "fecha": "2026-04-10",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 11
+     }
+    },
+    {
+     "fecha": "2026-04-13",
+     "entradas": {
+      "REQUERIMIENTOS": 5
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-14",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-15",
+     "entradas": {
+      "REQUERIMIENTOS": 7
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-16",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-17",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-20",
+     "entradas": {
+      "REQUERIMIENTOS": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-04-21",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-04-22",
+     "entradas": {
+      "REQUERIMIENTOS": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-04-23",
+     "entradas": {
+      "REQUERIMIENTOS": 10
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2
+     }
+    },
+    {
+     "fecha": "2026-04-24",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 26
+     }
+    },
+    {
+     "fecha": "2026-04-27",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5
+     }
+    },
+    {
+     "fecha": "2026-04-28",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-04",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-07",
+     "entradas": {
+      "REQUERIMIENTOS": 15
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 12
+     }
+    },
+    {
+     "fecha": "2026-05-08",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9
+     }
+    },
+    {
+     "fecha": "2026-05-11",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-12",
+     "entradas": {
+      "REQUERIMIENTOS": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 43
+     }
+    },
+    {
+     "fecha": "2026-05-13",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-14",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 67
+     }
+    },
+    {
+     "fecha": "2026-05-15",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-19",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-20",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-21",
+     "entradas": {
+      "REQUERIMIENTOS": 44
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 46
+     }
+    },
+    {
+     "fecha": "2026-05-22",
+     "entradas": {
+      "REQUERIMIENTOS": 54
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 44
+     }
+    },
+    {
+     "fecha": "2026-05-25",
+     "entradas": {
+      "REQUERIMIENTOS": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {
+      "REQUERIMIENTOS": 4
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {
+      "REQUERIMIENTOS": 8
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 3
+     }
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {
+      "REQUERIMIENTOS": 8
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {
+      "REQUERIMIENTOS": 7
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {
+      "REQUERIMIENTOS": 7
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 51
+     }
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 31
+     }
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {
+      "REQUERIMIENTOS": 4
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2
+     }
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {
+      "REQUERIMIENTOS": 6
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5
+     }
+    }
    ]
   },
   {
@@ -4237,6 +6535,268 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
+    }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-04-23",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-24",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-27",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-28",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-29",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-04-30",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 8
+     }
+    },
+    {
+     "fecha": "2026-05-04",
+     "entradas": {
+      "QA": 36
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 71
+     }
+    },
+    {
+     "fecha": "2026-05-05",
+     "entradas": {
+      "DESARROLLO": 11,
+      "QA": 67
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 36
+     }
+    },
+    {
+     "fecha": "2026-05-06",
+     "entradas": {
+      "REQUERIMIENTOS": 78
+     },
+     "salidas": {
+      "DESARROLLO": 11,
+      "QA": 67
+     }
+    },
+    {
+     "fecha": "2026-05-08",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-11",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-12",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-13",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-14",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 11
+     }
+    },
+    {
+     "fecha": "2026-05-15",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-19",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-20",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 9
+     }
+    },
+    {
+     "fecha": "2026-05-21",
+     "entradas": {
+      "REQUERIMIENTOS": 54
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 59
+     }
+    },
+    {
+     "fecha": "2026-05-22",
+     "entradas": {
+      "REQUERIMIENTOS": 44
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 54
+     }
+    },
+    {
+     "fecha": "2026-05-25",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {
+      "REQUERIMIENTOS": 4
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3
+     }
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 53
+     }
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "REQUERIMIENTOS": 6
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {
+      "REQUERIMIENTOS": 78
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {},
+     "salidas": {
+      "REQUERIMIENTOS": 78
+     }
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {}
     }
    ]
   },
@@ -5227,6 +7787,860 @@
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 364
     }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-03-03",
+     "entradas": {
+      "REQUERIMIENTOS": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 31
+     }
+    },
+    {
+     "fecha": "2026-03-04",
+     "entradas": {
+      "DESARROLLO": 13,
+      "QA": 66,
+      "CLIENTE": 26
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2
+     }
+    },
+    {
+     "fecha": "2026-03-05",
+     "entradas": {
+      "DESARROLLO": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4
+     }
+    },
+    {
+     "fecha": "2026-03-09",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 3,
+      "QA": 3,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 1,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-03-10",
+     "entradas": {
+      "DESARROLLO": 2,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "QA": 4,
+      "CLIENTE": 6
+     }
+    },
+    {
+     "fecha": "2026-03-11",
+     "entradas": {
+      "REQUERIMIENTOS": 10,
+      "DESARROLLO": 3,
+      "QA": 9,
+      "CLIENTE": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 7,
+      "QA": 6,
+      "CLIENTE": 2
+     }
+    },
+    {
+     "fecha": "2026-03-12",
+     "entradas": {
+      "QA": 3,
+      "CLIENTE": 2,
+      "EN PRODUCCIÓN": 289
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-03-13",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 2,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-03-16",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 1,
+      "CLIENTE": 2
+     },
+     "salidas": {
+      "DESARROLLO": 1,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-03-18",
+     "entradas": {
+      "DESARROLLO": 11,
+      "QA": 1,
+      "CLIENTE": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 1,
+      "QA": 9
+     }
+    },
+    {
+     "fecha": "2026-03-19",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-03-20",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 8,
+      "CLIENTE": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 4,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-03-24",
+     "entradas": {
+      "QA": 4,
+      "EN PRODUCCIÓN": 25
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 2,
+      "QA": 5,
+      "CLIENTE": 20
+     }
+    },
+    {
+     "fecha": "2026-03-25",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 7
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7,
+      "EN PRODUCCIÓN": 1
+     }
+    },
+    {
+     "fecha": "2026-03-26",
+     "entradas": {
+      "DESARROLLO": 2,
+      "QA": 3,
+      "CLIENTE": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 2,
+      "QA": 4
+     }
+    },
+    {
+     "fecha": "2026-03-27",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 3,
+      "CLIENTE": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-03-30",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "QA": 5,
+      "CLIENTE": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 7,
+      "QA": 6
+     }
+    },
+    {
+     "fecha": "2026-03-31",
+     "entradas": {
+      "DESARROLLO": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "QA": 5
+     }
+    },
+    {
+     "fecha": "2026-04-01",
+     "entradas": {
+      "DESARROLLO": 7,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 8
+     }
+    },
+    {
+     "fecha": "2026-04-06",
+     "entradas": {
+      "DESARROLLO": 29,
+      "QA": 28,
+      "CLIENTE": 22
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 2,
+      "QA": 33,
+      "CLIENTE": 26,
+      "EN PRODUCCIÓN": 13
+     }
+    },
+    {
+     "fecha": "2026-04-07",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2,
+      "QA": 2,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 5
+     }
+    },
+    {
+     "fecha": "2026-04-08",
+     "entradas": {
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-09",
+     "entradas": {
+      "REQUERIMIENTOS": 2
+     },
+     "salidas": {
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-04-10",
+     "entradas": {
+      "QA": 11,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "CLIENTE": 11
+     }
+    },
+    {
+     "fecha": "2026-04-13",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-14",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-04-15",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-16",
+     "entradas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 2,
+      "QA": 4,
+      "CLIENTE": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 7,
+      "QA": 1,
+      "EN PRODUCCIÓN": 1
+     }
+    },
+    {
+     "fecha": "2026-04-17",
+     "entradas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 4,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 5,
+      "QA": 3
+     }
+    },
+    {
+     "fecha": "2026-04-20",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-21",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3,
+      "QA": 1,
+      "EN PRODUCCIÓN": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "QA": 5,
+      "CLIENTE": 1
+     }
+    },
+    {
+     "fecha": "2026-04-22",
+     "entradas": {
+      "DESARROLLO": 3,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-04-23",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-04-24",
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-04-27",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 2,
+      "EN PRODUCCIÓN": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-04-28",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-04-29",
+     "entradas": {
+      "REQUERIMIENTOS": 37,
+      "DESARROLLO": 2,
+      "QA": 4,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "DESARROLLO": 5,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-04-30",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 18,
+      "QA": 1,
+      "CLIENTE": 1
+     }
+    },
+    {
+     "fecha": "2026-05-04",
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-05",
+     "entradas": {
+      "DESARROLLO": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5
+     }
+    },
+    {
+     "fecha": "2026-05-06",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 4,
+      "QA": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6,
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-05-07",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 2,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "QA": 4
+     }
+    },
+    {
+     "fecha": "2026-05-08",
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-05-11",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3,
+      "QA": 7,
+      "EN PRODUCCIÓN": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 9,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-05-12",
+     "entradas": {
+      "REQUERIMIENTOS": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-13",
+     "entradas": {
+      "REQUERIMIENTOS": 1,
+      "QA": 38
+     },
+     "salidas": {
+      "DESARROLLO": 38,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-05-14",
+     "entradas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 5,
+      "QA": 2,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 6,
+      "QA": 2
+     }
+    },
+    {
+     "fecha": "2026-05-15",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-05-19",
+     "entradas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 43,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3,
+      "QA": 42,
+      "EN PRODUCCIÓN": 1
+     }
+    },
+    {
+     "fecha": "2026-05-20",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7
+     }
+    },
+    {
+     "fecha": "2026-05-21",
+     "entradas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 1,
+      "QA": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 7
+     }
+    },
+    {
+     "fecha": "2026-05-22",
+     "entradas": {
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-05-25",
+     "entradas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 2,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 4
+     }
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {
+      "REQUERIMIENTOS": 5,
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 2,
+      "EN PRODUCCIÓN": 5
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 2,
+      "QA": 4,
+      "CLIENTE": 1
+     }
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 7,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 8
+     }
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {
+      "REQUERIMIENTOS": 6,
+      "QA": 1,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 6,
+      "QA": 19,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 15
+     }
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {
+      "DESARROLLO": 4,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {
+      "REQUERIMIENTOS": 8,
+      "DESARROLLO": 2,
+      "QA": 8
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 2,
+      "CLIENTE": 6
+     }
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {
+      "DESARROLLO": 5,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {
+      "REQUERIMIENTOS": 8,
+      "DESARROLLO": 7,
+      "QA": 7
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 1,
+      "CLIENTE": 6
+     }
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {
+      "REQUERIMIENTOS": 11,
+      "DESARROLLO": 1,
+      "QA": 33,
+      "CLIENTE": 69,
+      "EN PRODUCCIÓN": 35
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 33,
+      "QA": 104
+     }
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "REQUERIMIENTOS": 32,
+      "QA": 13,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 10
+     }
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 2,
+      "QA": 4,
+      "EN PRODUCCIÓN": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 5,
+      "CLIENTE": 1
+     }
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 6,
+      "QA": 1,
+      "EN PRODUCCIÓN": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 5,
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 1,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 7,
+      "QA": 50
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 2,
+      "CLIENTE": 47
+     }
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 5,
+      "QA": 2
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 8,
+      "DESARROLLO": 2
+     }
+    }
    ]
   },
   {
@@ -5539,6 +8953,176 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
+    }
+   ],
+   "flujo": [
+    {
+     "fecha": "2026-05-25",
+     "entradas": {
+      "REQUERIMIENTOS": 6
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-26",
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1
+     }
+    },
+    {
+     "fecha": "2026-05-27",
+     "entradas": {
+      "REQUERIMIENTOS": 5
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-28",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-05-29",
+     "entradas": {
+      "DESARROLLO": 4,
+      "QA": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 9,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-01",
+     "entradas": {
+      "DESARROLLO": 13,
+      "QA": 10
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 22,
+      "DESARROLLO": 1
+     }
+    },
+    {
+     "fecha": "2026-06-02",
+     "entradas": {
+      "REQUERIMIENTOS": 10
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-03",
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 4
+     }
+    },
+    {
+     "fecha": "2026-06-04",
+     "entradas": {
+      "REQUERIMIENTOS": 15,
+      "DESARROLLO": 1,
+      "QA": 8
+     },
+     "salidas": {
+      "DESARROLLO": 8,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-05",
+     "entradas": {
+      "DESARROLLO": 6
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 6
+     }
+    },
+    {
+     "fecha": "2026-06-09",
+     "entradas": {
+      "DESARROLLO": 12,
+      "QA": 17
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 22,
+      "DESARROLLO": 7
+     }
+    },
+    {
+     "fecha": "2026-06-10",
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-11",
+     "entradas": {
+      "REQUERIMIENTOS": 12,
+      "DESARROLLO": 9
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-12",
+     "entradas": {
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 1,
+      "QA": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 11,
+      "QA": 1
+     }
+    },
+    {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "QA": 3
+     },
+     "salidas": {
+      "DESARROLLO": 3
+     }
+    },
+    {
+     "fecha": "2026-06-17",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-18",
+     "entradas": {},
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-19",
+     "entradas": {
+      "REQUERIMIENTOS": 3
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-22",
+     "entradas": {
+      "REQUERIMIENTOS": 8
+     },
+     "salidas": {}
+    },
+    {
+     "fecha": "2026-06-23",
+     "entradas": {},
+     "salidas": {}
     }
    ]
   }

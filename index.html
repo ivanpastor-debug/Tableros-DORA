@@ -81,6 +81,17 @@ input[type=date]:hover{border-color:var(--accent)}
 footer{margin-top:30px;text-align:center;color:var(--muted2);font-size:12px}
 .fade{animation:fade .4s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* tabla consolidada (pivot) */
+.pivwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;max-height:440px}
+table.piv{border-collapse:separate;border-spacing:0;font-size:12px;white-space:nowrap;min-width:100%}
+table.piv th,table.piv td{padding:6px 11px;text-align:center;border-bottom:1px solid var(--line)}
+table.piv thead th{position:sticky;top:0;background:var(--card2);z-index:2;font-weight:700;color:var(--muted);font-size:11px}
+table.piv tbody th{position:sticky;left:0;background:var(--card2);z-index:1;text-align:left;font-weight:700;color:var(--text)}
+table.piv thead th:first-child{left:0;z-index:3}
+table.piv tr.tot th,table.piv tr.tot td{font-weight:800;border-top:2px solid var(--line);background:var(--card)}
+table.piv tr.tot th{background:var(--card2)}
+.cpos{color:#10b981;font-weight:700}.cneg{color:#ef4444;font-weight:700}.czero{color:var(--muted2)}
+.sw-i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px;vertical-align:middle}
 </style>
 </head>
 <body>
