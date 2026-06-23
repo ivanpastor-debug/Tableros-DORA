@@ -7,6 +7,10 @@ const cssv = (n) => getComputedStyle(document.body).getPropertyValue(n).trim();
 const fmt = (n) => n == null ? "—" : new Intl.NumberFormat("es-CO").format(Math.round(n));
 const pct = (n) => n == null ? "—" : (n * 100).toFixed(1).replace(".", ",") + "%";
 const pct0 = (n) => n == null ? "—" : Math.round(n * 100) + "%";
+/* etiqueta homologada de proyecto (igual que el menú desplegable) */
+const shorten = (s, n = 16) => (s && s.length > n ? s.slice(0, n - 1) + "…" : (s || ""));
+const etiqueta = (p) => `${p.codigo} · ${p.nombre}`;            // largo (ejes horizontales / tooltips)
+const etiqueta2l = (p) => `${p.codigo}\n${shorten(p.nombre, 14)}`; // 2 líneas (ejes de barras verticales)
 
 /* ---------- carga ---------- */
 fetch("data.json").then(r => r.json()).then(d => {
@@ -254,12 +258,16 @@ function renderPortfolio() {
 function drawCompare(el, ps) {
   const c = mkChart(el), ax = axisBase();
   const names = ps.map(p => p.codigo);
+  const lblMap = Object.fromEntries(ps.map(p => [p.codigo, etiqueta2l(p)]));
   c.setOption({
     tooltip: { trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" },
       valueFormatter: (v) => (v == null ? "—" : (v).toFixed(0) + "%") },
     legend: { data: ["% Producción", "% Avance"], textStyle: { color: ax.textColor, fontSize: 11 }, top: 0 },
     grid: { left: 8, right: 14, top: 34, bottom: 6, containLabel: true },
-    xAxis: { type: "category", data: names, axisLabel: { color: ax.textColor, fontSize: 11 }, axisLine: { lineStyle: { color: ax.line } } },
+    xAxis: { type: "category", data: names,
+      axisLabel: { color: ax.textColor, fontSize: 10, interval: 0, lineHeight: 13,
+        formatter: (v) => lblMap[v] || v },
+      axisLine: { lineStyle: { color: ax.line } } },
     yAxis: { type: "value", max: 100, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: "{value}%" } },
     series: [
       { name: "% Producción", type: "bar", color: "#10b981", barWidth: 14, itemStyle: { borderRadius: [4, 4, 0, 0] },
@@ -279,7 +287,7 @@ function drawVolume(el, ps) {
     legend: { data: ["En producción", "Pendientes"], textStyle: { color: ax.textColor, fontSize: 11 }, top: 0 },
     grid: { left: 8, right: 20, top: 34, bottom: 6, containLabel: true },
     xAxis: { type: "value", splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
-    yAxis: { type: "category", data: sorted.map(p => p.codigo), axisLabel: { color: ax.textColor, fontSize: 11 }, axisLine: { lineStyle: { color: ax.line } } },
+    yAxis: { type: "category", data: sorted.map(p => etiqueta(p)), axisLabel: { color: ax.textColor, fontSize: 11 }, axisLine: { lineStyle: { color: ax.line } } },
     series: [
       { name: "En producción", type: "bar", stack: "h", color: "#10b981", data: sorted.map(p => p.kpis.hu_prod) },
       { name: "Pendientes", type: "bar", stack: "h", color: "#6366f1", itemStyle: { borderRadius: [0, 4, 4, 0] }, data: sorted.map(p => p.kpis.hu_pendientes) },
