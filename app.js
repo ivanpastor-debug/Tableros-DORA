@@ -402,9 +402,9 @@ function renderProject(p) {
     </div>
     <div id="cProdPD" class="chart"></div>
   </div>` : "";
-  const carga = cargaCard(p.codigo);       // interno (data_carga.json); "" si no existe (público)
+  const carga = cargaCard(p.codigo);       // al FINAL del tablero
   const alertas = alertasCard(p.codigo);
-  $("#content").innerHTML = head + kpis + recursos + carga + alertas + charts + flujoUI + prodUI;
+  $("#content").innerHTML = head + kpis + recursos + charts + flujoUI + prodUI + carga + alertas;
   countUp();
   setupRecursos(recObj);
   drawArea($("#cArea"), p);
