@@ -1,5 +1,5 @@
 {
- "generado": "2026-06-24 12:00",
+ "generado": "2026-06-24 14:30",
  "corte": "2026-06-24",
  "total_filas": 159667,
  "procesos": [
@@ -852,8 +852,8 @@
    },
    "por_proceso": {
     "REQUERIMIENTOS": 81,
-    "DESARROLLO": 61,
-    "QA": 113,
+    "DESARROLLO": 152,
+    "QA": 22,
     "CLIENTE": 63,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
     "EN PRODUCCIÓN": 244
@@ -966,8 +966,8 @@
      "dias_hab": 7,
      "avance": 0.5672,
      "REQUERIMIENTOS": 229,
-     "DESARROLLO": 55,
-     "QA": 129,
+     "DESARROLLO": 63,
+     "QA": 121,
      "CLIENTE": 83,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 212
@@ -980,8 +980,8 @@
      "dias_hab": 8,
      "avance": 0.5566,
      "REQUERIMIENTOS": 253,
-     "DESARROLLO": 56,
-     "QA": 111,
+     "DESARROLLO": 63,
+     "QA": 104,
      "CLIENTE": 79,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 3,
      "EN PRODUCCIÓN": 212
@@ -994,8 +994,8 @@
      "dias_hab": 9,
      "avance": 0.5507,
      "REQUERIMIENTOS": 257,
-     "DESARROLLO": 66,
-     "QA": 108,
+     "DESARROLLO": 73,
+     "QA": 101,
      "CLIENTE": 78,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 212
@@ -1008,8 +1008,8 @@
      "dias_hab": 10,
      "avance": 0.549,
      "REQUERIMIENTOS": 262,
-     "DESARROLLO": 65,
-     "QA": 99,
+     "DESARROLLO": 73,
+     "QA": 91,
      "CLIENTE": 77,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 212
@@ -1022,8 +1022,8 @@
      "dias_hab": 11,
      "avance": 0.5803,
      "REQUERIMIENTOS": 201,
-     "DESARROLLO": 44,
-     "QA": 82,
+     "DESARROLLO": 56,
+     "QA": 70,
      "CLIENTE": 35,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 215
@@ -1036,8 +1036,8 @@
      "dias_hab": 12,
      "avance": 0.5831,
      "REQUERIMIENTOS": 199,
-     "DESARROLLO": 39,
-     "QA": 91,
+     "DESARROLLO": 53,
+     "QA": 77,
      "CLIENTE": 32,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 215
@@ -1050,8 +1050,8 @@
      "dias_hab": 13,
      "avance": 0.5844,
      "REQUERIMIENTOS": 200,
-     "DESARROLLO": 38,
-     "QA": 91,
+     "DESARROLLO": 54,
+     "QA": 75,
      "CLIENTE": 32,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 215
@@ -1064,8 +1064,8 @@
      "dias_hab": 15,
      "avance": 0.596,
      "REQUERIMIENTOS": 201,
-     "DESARROLLO": 39,
-     "QA": 79,
+     "DESARROLLO": 58,
+     "QA": 60,
      "CLIENTE": 44,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 215
@@ -1078,8 +1078,8 @@
      "dias_hab": 17,
      "avance": 0.5902,
      "REQUERIMIENTOS": 211,
-     "DESARROLLO": 34,
-     "QA": 90,
+     "DESARROLLO": 57,
+     "QA": 67,
      "CLIENTE": 41,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 214
@@ -1092,8 +1092,8 @@
      "dias_hab": 18,
      "avance": 0.6,
      "REQUERIMIENTOS": 193,
-     "DESARROLLO": 40,
-     "QA": 104,
+     "DESARROLLO": 63,
+     "QA": 81,
      "CLIENTE": 42,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 214
@@ -1106,8 +1106,8 @@
      "dias_hab": 26,
      "avance": 0.6904,
      "REQUERIMIENTOS": 127,
-     "DESARROLLO": 41,
-     "QA": 102,
+     "DESARROLLO": 84,
+     "QA": 59,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 231
@@ -1120,8 +1120,8 @@
      "dias_hab": 27,
      "avance": 0.7022,
      "REQUERIMIENTOS": 114,
-     "DESARROLLO": 46,
-     "QA": 103,
+     "DESARROLLO": 93,
+     "QA": 56,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 231
@@ -1134,8 +1134,8 @@
      "dias_hab": 28,
      "avance": 0.7087,
      "REQUERIMIENTOS": 112,
-     "DESARROLLO": 43,
-     "QA": 107,
+     "DESARROLLO": 94,
+     "QA": 56,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 232
@@ -1148,8 +1148,8 @@
      "dias_hab": 29,
      "avance": 0.7131,
      "REQUERIMIENTOS": 111,
-     "DESARROLLO": 40,
-     "QA": 109,
+     "DESARROLLO": 92,
+     "QA": 57,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 232
@@ -1162,8 +1162,8 @@
      "dias_hab": 30,
      "avance": 0.7175,
      "REQUERIMIENTOS": 103,
-     "DESARROLLO": 44,
-     "QA": 114,
+     "DESARROLLO": 102,
+     "QA": 56,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 232
@@ -1176,8 +1176,8 @@
      "dias_hab": 31,
      "avance": 0.724,
      "REQUERIMIENTOS": 99,
-     "DESARROLLO": 44,
-     "QA": 118,
+     "DESARROLLO": 110,
+     "QA": 52,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 232
@@ -1190,8 +1190,8 @@
      "dias_hab": 32,
      "avance": 0.7513,
      "REQUERIMIENTOS": 77,
-     "DESARROLLO": 45,
-     "QA": 124,
+     "DESARROLLO": 117,
+     "QA": 52,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 232
@@ -1204,8 +1204,8 @@
      "dias_hab": 33,
      "avance": 0.756,
      "REQUERIMIENTOS": 74,
-     "DESARROLLO": 43,
-     "QA": 130,
+     "DESARROLLO": 120,
+     "QA": 53,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 232
@@ -1218,8 +1218,8 @@
      "dias_hab": 34,
      "avance": 0.7602,
      "REQUERIMIENTOS": 71,
-     "DESARROLLO": 47,
-     "QA": 129,
+     "DESARROLLO": 127,
+     "QA": 49,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 232
@@ -1232,8 +1232,8 @@
      "dias_hab": 35,
      "avance": 0.7642,
      "REQUERIMIENTOS": 69,
-     "DESARROLLO": 50,
-     "QA": 128,
+     "DESARROLLO": 137,
+     "QA": 41,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 232
@@ -1246,8 +1246,8 @@
      "dias_hab": 36,
      "avance": 0.7628,
      "REQUERIMIENTOS": 70,
-     "DESARROLLO": 52,
-     "QA": 125,
+     "DESARROLLO": 140,
+     "QA": 37,
      "CLIENTE": 64,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 232
@@ -1260,8 +1260,8 @@
      "dias_hab": 37,
      "avance": 0.7661,
      "REQUERIMIENTOS": 70,
-     "DESARROLLO": 57,
-     "QA": 111,
+     "DESARROLLO": 137,
+     "QA": 31,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 242
@@ -1274,8 +1274,8 @@
      "dias_hab": 38,
      "avance": 0.7665,
      "REQUERIMIENTOS": 71,
-     "DESARROLLO": 56,
-     "QA": 110,
+     "DESARROLLO": 137,
+     "QA": 29,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 243
@@ -1288,8 +1288,8 @@
      "dias_hab": 39,
      "avance": 0.7701,
      "REQUERIMIENTOS": 71,
-     "DESARROLLO": 52,
-     "QA": 114,
+     "DESARROLLO": 138,
+     "QA": 28,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 243
@@ -1302,8 +1302,8 @@
      "dias_hab": 40,
      "avance": 0.7716,
      "REQUERIMIENTOS": 70,
-     "DESARROLLO": 53,
-     "QA": 114,
+     "DESARROLLO": 141,
+     "QA": 26,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 243
@@ -1316,8 +1316,8 @@
      "dias_hab": 41,
      "avance": 0.7466,
      "REQUERIMIENTOS": 89,
-     "DESARROLLO": 57,
-     "QA": 112,
+     "DESARROLLO": 147,
+     "QA": 22,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 243
@@ -1330,8 +1330,8 @@
      "dias_hab": 42,
      "avance": 0.7473,
      "REQUERIMIENTOS": 85,
-     "DESARROLLO": 63,
-     "QA": 109,
+     "DESARROLLO": 152,
+     "QA": 20,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 243
@@ -1344,8 +1344,8 @@
      "dias_hab": 43,
      "avance": 0.7469,
      "REQUERIMIENTOS": 84,
-     "DESARROLLO": 65,
-     "QA": 109,
+     "DESARROLLO": 154,
+     "QA": 20,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 243
@@ -1358,8 +1358,8 @@
      "dias_hab": 44,
      "avance": 0.7484,
      "REQUERIMIENTOS": 84,
-     "DESARROLLO": 63,
-     "QA": 112,
+     "DESARROLLO": 155,
+     "QA": 20,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 243
@@ -1372,8 +1372,8 @@
      "dias_hab": 45,
      "avance": 0.7508,
      "REQUERIMIENTOS": 82,
-     "DESARROLLO": 60,
-     "QA": 115,
+     "DESARROLLO": 152,
+     "QA": 23,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 243
@@ -1386,8 +1386,8 @@
      "dias_hab": 46,
      "avance": 0.7524,
      "REQUERIMIENTOS": 81,
-     "DESARROLLO": 61,
-     "QA": 113,
+     "DESARROLLO": 152,
+     "QA": 22,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 5,
      "EN PRODUCCIÓN": 244
@@ -1484,14 +1484,14 @@
      "fecha": "2026-04-24",
      "entradas": {
       "REQUERIMIENTOS": 9,
-      "DESARROLLO": 7,
-      "QA": 18,
+      "DESARROLLO": 15,
+      "QA": 17,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 21,
       "DESARROLLO": 6,
-      "QA": 3,
+      "QA": 10,
       "CLIENTE": 15
      }
     },
@@ -1506,8 +1506,8 @@
      },
      "salidas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 5,
-      "QA": 23,
+      "DESARROLLO": 6,
+      "QA": 22,
       "CLIENTE": 6
      }
     },
@@ -1528,7 +1528,7 @@
      "fecha": "2026-04-29",
      "entradas": {
       "REQUERIMIENTOS": 7,
-      "DESARROLLO": 2,
+      "DESARROLLO": 3,
       "QA": 2,
       "CLIENTE": 1,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
@@ -1536,7 +1536,7 @@
      "salidas": {
       "REQUERIMIENTOS": 2,
       "DESARROLLO": 3,
-      "QA": 11,
+      "QA": 12,
       "CLIENTE": 2
      }
     },
@@ -1544,14 +1544,14 @@
      "fecha": "2026-04-30",
      "entradas": {
       "REQUERIMIENTOS": 5,
-      "DESARROLLO": 1,
-      "QA": 9,
+      "DESARROLLO": 5,
+      "QA": 7,
       "EN PRODUCCIÓN": 199
      },
      "salidas": {
       "REQUERIMIENTOS": 66,
       "DESARROLLO": 22,
-      "QA": 26,
+      "QA": 28,
       "CLIENTE": 42,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
       "EN PRODUCCIÓN": 196
@@ -1561,49 +1561,51 @@
      "fecha": "2026-05-04",
      "entradas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 2,
-      "QA": 11,
+      "DESARROLLO": 4,
+      "QA": 10,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 5,
       "DESARROLLO": 7,
-      "QA": 2,
+      "QA": 3,
       "CLIENTE": 3
      }
     },
     {
      "fecha": "2026-05-05",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2
      },
      "salidas": {
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 2
      }
     },
     {
      "fecha": "2026-05-07",
      "entradas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 1,
+      "DESARROLLO": 4,
       "CLIENTE": 12
      },
      "salidas": {
       "REQUERIMIENTOS": 3,
-      "QA": 12
+      "QA": 15
      }
     },
     {
      "fecha": "2026-05-11",
      "entradas": {
       "REQUERIMIENTOS": 18,
-      "DESARROLLO": 2,
+      "DESARROLLO": 6,
       "QA": 12
      },
      "salidas": {
       "REQUERIMIENTOS": 8,
       "DESARROLLO": 7,
-      "QA": 1,
+      "QA": 5,
       "CLIENTE": 3,
       "EN PRODUCCIÓN": 1
      }
@@ -1626,16 +1628,16 @@
      "fecha": "2026-05-25",
      "entradas": {
       "REQUERIMIENTOS": 32,
-      "DESARROLLO": 22,
-      "QA": 39,
+      "DESARROLLO": 53,
+      "QA": 31,
       "CLIENTE": 32,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
       "EN PRODUCCIÓN": 23
      },
      "salidas": {
       "REQUERIMIENTOS": 98,
-      "DESARROLLO": 21,
-      "QA": 41,
+      "DESARROLLO": 32,
+      "QA": 53,
       "CLIENTE": 11,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
       "EN PRODUCCIÓN": 6
@@ -1645,28 +1647,28 @@
      "fecha": "2026-05-26",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 13,
+      "DESARROLLO": 17,
       "QA": 9
      },
      "salidas": {
       "REQUERIMIENTOS": 15,
       "DESARROLLO": 8,
-      "QA": 8
+      "QA": 12
      }
     },
     {
      "fecha": "2026-05-27",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 4,
-      "QA": 5,
+      "DESARROLLO": 7,
+      "QA": 4,
       "CLIENTE": 1,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 7,
-      "QA": 1,
+      "DESARROLLO": 6,
+      "QA": 4,
       "CLIENTE": 1
      }
     },
@@ -1674,27 +1676,27 @@
      "fecha": "2026-05-28",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 4,
+      "DESARROLLO": 5,
       "QA": 5,
       "CLIENTE": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 3,
       "DESARROLLO": 7,
-      "QA": 3
+      "QA": 4
      }
     },
     {
      "fecha": "2026-05-29",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 7,
-      "QA": 7
+      "DESARROLLO": 13,
+      "QA": 6
      },
      "salidas": {
       "REQUERIMIENTOS": 9,
       "DESARROLLO": 3,
-      "QA": 2,
+      "QA": 7,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1
      }
     },
@@ -1702,64 +1704,64 @@
      "fecha": "2026-06-01",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 9,
-      "QA": 9
+      "DESARROLLO": 14,
+      "QA": 6
      },
      "salidas": {
       "REQUERIMIENTOS": 6,
-      "DESARROLLO": 9,
-      "QA": 5
+      "DESARROLLO": 6,
+      "QA": 10
      }
     },
     {
      "fecha": "2026-06-02",
      "entradas": {
-      "DESARROLLO": 6,
-      "QA": 8
+      "DESARROLLO": 12,
+      "QA": 7
      },
      "salidas": {
       "REQUERIMIENTOS": 22,
       "DESARROLLO": 5,
-      "QA": 2
+      "QA": 7
      }
     },
     {
      "fecha": "2026-06-03",
      "entradas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 5,
-      "QA": 8
+      "DESARROLLO": 9,
+      "QA": 6
      },
      "salidas": {
       "REQUERIMIENTOS": 7,
-      "DESARROLLO": 7,
-      "QA": 2
+      "DESARROLLO": 6,
+      "QA": 5
      }
     },
     {
      "fecha": "2026-06-04",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 10,
-      "QA": 6
+      "DESARROLLO": 11,
+      "QA": 4
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 6,
-      "QA": 7
+      "DESARROLLO": 4,
+      "QA": 8
      }
     },
     {
      "fecha": "2026-06-05",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 8,
-      "QA": 4
+      "DESARROLLO": 13,
+      "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 5,
-      "QA": 5
+      "DESARROLLO": 3,
+      "QA": 9
      }
     },
     {
@@ -1767,10 +1769,10 @@
      "entradas": {
       "REQUERIMIENTOS": 1,
       "DESARROLLO": 6,
-      "QA": 3
+      "QA": 2
      },
      "salidas": {
-      "DESARROLLO": 4,
+      "DESARROLLO": 3,
       "QA": 6
      }
     },
@@ -1784,8 +1786,8 @@
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 4,
-      "QA": 18,
+      "DESARROLLO": 12,
+      "QA": 10,
       "CLIENTE": 1
      }
     },
@@ -1793,7 +1795,7 @@
      "fecha": "2026-06-11",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 6,
+      "DESARROLLO": 7,
       "QA": 5,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1,
       "EN PRODUCCIÓN": 1
@@ -1801,27 +1803,15 @@
      "salidas": {
       "REQUERIMIENTOS": 1,
       "DESARROLLO": 7,
-      "QA": 6
+      "QA": 7
      }
     },
     {
      "fecha": "2026-06-12",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 2,
-      "QA": 6
-     },
-     "salidas": {
-      "REQUERIMIENTOS": 1,
-      "DESARROLLO": 6,
-      "QA": 2
-     }
-    },
-    {
-     "fecha": "2026-06-16",
-     "entradas": {
       "DESARROLLO": 5,
-      "QA": 4
+      "QA": 3
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
@@ -1830,16 +1820,28 @@
      }
     },
     {
+     "fecha": "2026-06-16",
+     "entradas": {
+      "DESARROLLO": 6,
+      "QA": 3
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3,
+      "QA": 5
+     }
+    },
+    {
      "fecha": "2026-06-17",
      "entradas": {
       "REQUERIMIENTOS": 20,
-      "DESARROLLO": 6,
+      "DESARROLLO": 8,
       "QA": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
       "DESARROLLO": 2,
-      "QA": 4,
+      "QA": 6,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1
      }
     },
@@ -1851,7 +1853,8 @@
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "QA": 4
+      "DESARROLLO": 1,
+      "QA": 3
      }
     },
     {
@@ -1870,11 +1873,12 @@
     {
      "fecha": "2026-06-22",
      "entradas": {
-      "DESARROLLO": 1,
-      "QA": 3
+      "DESARROLLO": 2,
+      "QA": 1
      },
      "salidas": {
-      "DESARROLLO": 3
+      "DESARROLLO": 1,
+      "QA": 1
      }
     },
     {
@@ -1899,8 +1903,8 @@
      },
      "salidas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 4,
-      "QA": 4
+      "DESARROLLO": 5,
+      "QA": 3
      }
     }
    ]
@@ -1936,8 +1940,8 @@
    },
    "por_proceso": {
     "REQUERIMIENTOS": 0,
-    "DESARROLLO": 0,
-    "QA": 28,
+    "DESARROLLO": 9,
+    "QA": 19,
     "CLIENTE": 63,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
     "EN PRODUCCIÓN": 128
@@ -1952,8 +1956,8 @@
      "dias_hab": 7,
      "avance": 0.5972,
      "REQUERIMIENTOS": 30,
-     "DESARROLLO": 15,
-     "QA": 67,
+     "DESARROLLO": 44,
+     "QA": 38,
      "CLIENTE": 24,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -1966,8 +1970,8 @@
      "dias_hab": 8,
      "avance": 0.6251,
      "REQUERIMIENTOS": 19,
-     "DESARROLLO": 20,
-     "QA": 73,
+     "DESARROLLO": 49,
+     "QA": 44,
      "CLIENTE": 24,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -1980,8 +1984,8 @@
      "dias_hab": 9,
      "avance": 0.6251,
      "REQUERIMIENTOS": 19,
-     "DESARROLLO": 20,
-     "QA": 73,
+     "DESARROLLO": 49,
+     "QA": 44,
      "CLIENTE": 24,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -1994,8 +1998,8 @@
      "dias_hab": 10,
      "avance": 0.631,
      "REQUERIMIENTOS": 15,
-     "DESARROLLO": 24,
-     "QA": 73,
+     "DESARROLLO": 53,
+     "QA": 44,
      "CLIENTE": 24,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -2008,8 +2012,8 @@
      "dias_hab": 11,
      "avance": 0.6329,
      "REQUERIMIENTOS": 15,
-     "DESARROLLO": 24,
-     "QA": 73,
+     "DESARROLLO": 53,
+     "QA": 44,
      "CLIENTE": 24,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -2022,8 +2026,8 @@
      "dias_hab": 12,
      "avance": 0.6449,
      "REQUERIMIENTOS": 13,
-     "DESARROLLO": 24,
-     "QA": 75,
+     "DESARROLLO": 51,
+     "QA": 48,
      "CLIENTE": 23,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 0
@@ -2036,8 +2040,8 @@
      "dias_hab": 13,
      "avance": 0.6414,
      "REQUERIMIENTOS": 16,
-     "DESARROLLO": 19,
-     "QA": 77,
+     "DESARROLLO": 47,
+     "QA": 49,
      "CLIENTE": 23,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 0
@@ -2050,8 +2054,8 @@
      "dias_hab": 14,
      "avance": 0.7748,
      "REQUERIMIENTOS": 15,
-     "DESARROLLO": 20,
-     "QA": 77,
+     "DESARROLLO": 47,
+     "QA": 50,
      "CLIENTE": 23,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 82
@@ -2064,8 +2068,8 @@
      "dias_hab": 15,
      "avance": 0.773,
      "REQUERIMIENTOS": 16,
-     "DESARROLLO": 20,
-     "QA": 76,
+     "DESARROLLO": 47,
+     "QA": 49,
      "CLIENTE": 23,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 82
@@ -2078,8 +2082,8 @@
      "dias_hab": 16,
      "avance": 0.7801,
      "REQUERIMIENTOS": 14,
-     "DESARROLLO": 19,
-     "QA": 79,
+     "DESARROLLO": 46,
+     "QA": 52,
      "CLIENTE": 19,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 86
@@ -2092,8 +2096,8 @@
      "dias_hab": 17,
      "avance": 0.795,
      "REQUERIMIENTOS": 14,
-     "DESARROLLO": 17,
-     "QA": 65,
+     "DESARROLLO": 35,
+     "QA": 47,
      "CLIENTE": 31,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 90
@@ -2106,8 +2110,8 @@
      "dias_hab": 18,
      "avance": 0.7952,
      "REQUERIMIENTOS": 14,
-     "DESARROLLO": 17,
-     "QA": 65,
+     "DESARROLLO": 35,
+     "QA": 47,
      "CLIENTE": 31,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 3,
      "EN PRODUCCIÓN": 91
@@ -2120,8 +2124,8 @@
      "dias_hab": 19,
      "avance": 0.7986,
      "REQUERIMIENTOS": 14,
-     "DESARROLLO": 16,
-     "QA": 66,
+     "DESARROLLO": 37,
+     "QA": 45,
      "CLIENTE": 31,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 3,
      "EN PRODUCCIÓN": 91
@@ -2134,8 +2138,8 @@
      "dias_hab": 20,
      "avance": 0.8045,
      "REQUERIMIENTOS": 12,
-     "DESARROLLO": 16,
-     "QA": 68,
+     "DESARROLLO": 38,
+     "QA": 46,
      "CLIENTE": 31,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 3,
      "EN PRODUCCIÓN": 91
@@ -2148,8 +2152,8 @@
      "dias_hab": 21,
      "avance": 0.8119,
      "REQUERIMIENTOS": 9,
-     "DESARROLLO": 19,
-     "QA": 68,
+     "DESARROLLO": 41,
+     "QA": 46,
      "CLIENTE": 23,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2162,8 +2166,8 @@
      "dias_hab": 22,
      "avance": 0.8149,
      "REQUERIMIENTOS": 8,
-     "DESARROLLO": 22,
-     "QA": 59,
+     "DESARROLLO": 38,
+     "QA": 43,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2176,8 +2180,8 @@
      "dias_hab": 23,
      "avance": 0.8158,
      "REQUERIMIENTOS": 8,
-     "DESARROLLO": 22,
-     "QA": 59,
+     "DESARROLLO": 37,
+     "QA": 44,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2190,8 +2194,8 @@
      "dias_hab": 24,
      "avance": 0.8194,
      "REQUERIMIENTOS": 4,
-     "DESARROLLO": 26,
-     "QA": 59,
+     "DESARROLLO": 41,
+     "QA": 44,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2204,8 +2208,8 @@
      "dias_hab": 25,
      "avance": 0.8212,
      "REQUERIMIENTOS": 4,
-     "DESARROLLO": 24,
-     "QA": 61,
+     "DESARROLLO": 39,
+     "QA": 46,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2218,8 +2222,8 @@
      "dias_hab": 26,
      "avance": 0.8239,
      "REQUERIMIENTOS": 4,
-     "DESARROLLO": 21,
-     "QA": 64,
+     "DESARROLLO": 36,
+     "QA": 49,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2232,8 +2236,8 @@
      "dias_hab": 27,
      "avance": 0.823,
      "REQUERIMIENTOS": 7,
-     "DESARROLLO": 18,
-     "QA": 64,
+     "DESARROLLO": 37,
+     "QA": 45,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2246,8 +2250,8 @@
      "dias_hab": 28,
      "avance": 0.8377,
      "REQUERIMIENTOS": 3,
-     "DESARROLLO": 11,
-     "QA": 75,
+     "DESARROLLO": 30,
+     "QA": 56,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2260,8 +2264,8 @@
      "dias_hab": 29,
      "avance": 0.8419,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 14,
-     "QA": 75,
+     "DESARROLLO": 35,
+     "QA": 54,
      "CLIENTE": 30,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2274,8 +2278,8 @@
      "dias_hab": 30,
      "avance": 0.841,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 14,
-     "QA": 76,
+     "DESARROLLO": 35,
+     "QA": 55,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2288,8 +2292,8 @@
      "dias_hab": 31,
      "avance": 0.8495,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 12,
-     "QA": 78,
+     "DESARROLLO": 35,
+     "QA": 55,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2302,8 +2306,8 @@
      "dias_hab": 32,
      "avance": 0.8495,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 12,
-     "QA": 78,
+     "DESARROLLO": 35,
+     "QA": 55,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2316,8 +2320,8 @@
      "dias_hab": 33,
      "avance": 0.8518,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 9,
-     "QA": 81,
+     "DESARROLLO": 32,
+     "QA": 58,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2330,8 +2334,8 @@
      "dias_hab": 34,
      "avance": 0.8554,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 9,
-     "QA": 81,
+     "DESARROLLO": 36,
+     "QA": 54,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2344,8 +2348,8 @@
      "dias_hab": 35,
      "avance": 0.8536,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 8,
-     "QA": 81,
+     "DESARROLLO": 35,
+     "QA": 54,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2358,8 +2362,8 @@
      "dias_hab": 36,
      "avance": 0.8559,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 7,
-     "QA": 82,
+     "DESARROLLO": 37,
+     "QA": 52,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2372,8 +2376,8 @@
      "dias_hab": 37,
      "avance": 0.8568,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 7,
-     "QA": 82,
+     "DESARROLLO": 39,
+     "QA": 50,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2386,8 +2390,8 @@
      "dias_hab": 38,
      "avance": 0.8568,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 7,
-     "QA": 82,
+     "DESARROLLO": 39,
+     "QA": 50,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2400,8 +2404,8 @@
      "dias_hab": 39,
      "avance": 0.8586,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 5,
-     "QA": 84,
+     "DESARROLLO": 37,
+     "QA": 52,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2414,8 +2418,8 @@
      "dias_hab": 40,
      "avance": 0.855,
      "REQUERIMIENTOS": 2,
-     "DESARROLLO": 6,
-     "QA": 82,
+     "DESARROLLO": 38,
+     "QA": 50,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2428,8 +2432,8 @@
      "dias_hab": 41,
      "avance": 0.855,
      "REQUERIMIENTOS": 2,
-     "DESARROLLO": 5,
-     "QA": 83,
+     "DESARROLLO": 36,
+     "QA": 52,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2442,8 +2446,8 @@
      "dias_hab": 42,
      "avance": 0.8554,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 7,
-     "QA": 82,
+     "DESARROLLO": 38,
+     "QA": 51,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2456,8 +2460,8 @@
      "dias_hab": 43,
      "avance": 0.8586,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 6,
-     "QA": 84,
+     "DESARROLLO": 37,
+     "QA": 53,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2470,8 +2474,8 @@
      "dias_hab": 44,
      "avance": 0.8586,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 6,
-     "QA": 84,
+     "DESARROLLO": 37,
+     "QA": 53,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2484,8 +2488,8 @@
      "dias_hab": 45,
      "avance": 0.859,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 6,
-     "QA": 84,
+     "DESARROLLO": 38,
+     "QA": 52,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2498,8 +2502,8 @@
      "dias_hab": 46,
      "avance": 0.8586,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 4,
-     "QA": 85,
+     "DESARROLLO": 36,
+     "QA": 53,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2512,8 +2516,8 @@
      "dias_hab": 47,
      "avance": 0.8586,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 4,
-     "QA": 85,
+     "DESARROLLO": 36,
+     "QA": 53,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2526,8 +2530,8 @@
      "dias_hab": 48,
      "avance": 0.8586,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 4,
-     "QA": 85,
+     "DESARROLLO": 36,
+     "QA": 53,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2540,8 +2544,8 @@
      "dias_hab": 49,
      "avance": 0.8617,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 1,
-     "QA": 88,
+     "DESARROLLO": 33,
+     "QA": 56,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2554,8 +2558,8 @@
      "dias_hab": 50,
      "avance": 0.8631,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 2,
-     "QA": 88,
+     "DESARROLLO": 34,
+     "QA": 56,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2568,8 +2572,8 @@
      "dias_hab": 51,
      "avance": 0.8631,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 2,
-     "QA": 88,
+     "DESARROLLO": 34,
+     "QA": 56,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2582,8 +2586,8 @@
      "dias_hab": 52,
      "avance": 0.8631,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 2,
-     "QA": 88,
+     "DESARROLLO": 34,
+     "QA": 56,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2596,8 +2600,8 @@
      "dias_hab": 53,
      "avance": 0.8631,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 2,
-     "QA": 88,
+     "DESARROLLO": 34,
+     "QA": 56,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 101
@@ -2610,8 +2614,8 @@
      "dias_hab": 54,
      "avance": 0.8883,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 1,
-     "QA": 65,
+     "DESARROLLO": 15,
+     "QA": 51,
      "CLIENTE": 33,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 22,
      "EN PRODUCCIÓN": 101
@@ -2624,8 +2628,8 @@
      "dias_hab": 56,
      "avance": 0.8883,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 1,
-     "QA": 65,
+     "DESARROLLO": 15,
+     "QA": 51,
      "CLIENTE": 33,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 22,
      "EN PRODUCCIÓN": 101
@@ -2638,8 +2642,8 @@
      "dias_hab": 57,
      "avance": 0.8923,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 1,
-     "QA": 65,
+     "DESARROLLO": 15,
+     "QA": 51,
      "CLIENTE": 34,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 120
@@ -2652,8 +2656,8 @@
      "dias_hab": 58,
      "avance": 0.8928,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 1,
-     "QA": 65,
+     "DESARROLLO": 16,
+     "QA": 50,
      "CLIENTE": 34,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 120
@@ -2666,8 +2670,8 @@
      "dias_hab": 59,
      "avance": 0.9027,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 66,
+     "DESARROLLO": 27,
+     "QA": 39,
      "CLIENTE": 34,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 120
@@ -2680,8 +2684,8 @@
      "dias_hab": 60,
      "avance": 0.9027,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 66,
+     "DESARROLLO": 27,
+     "QA": 39,
      "CLIENTE": 34,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 120
@@ -2694,8 +2698,8 @@
      "dias_hab": 61,
      "avance": 0.9027,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 66,
+     "DESARROLLO": 27,
+     "QA": 39,
      "CLIENTE": 34,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 120
@@ -2708,8 +2712,8 @@
      "dias_hab": 62,
      "avance": 0.9095,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 52,
+     "DESARROLLO": 13,
+     "QA": 39,
      "CLIENTE": 47,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2722,8 +2726,8 @@
      "dias_hab": 63,
      "avance": 0.9095,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 52,
+     "DESARROLLO": 13,
+     "QA": 39,
      "CLIENTE": 47,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2736,8 +2740,8 @@
      "dias_hab": 64,
      "avance": 0.9095,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 52,
+     "DESARROLLO": 13,
+     "QA": 39,
      "CLIENTE": 47,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2750,8 +2754,8 @@
      "dias_hab": 65,
      "avance": 0.9095,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 52,
+     "DESARROLLO": 13,
+     "QA": 39,
      "CLIENTE": 47,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2764,10 +2768,10 @@
      "dias_hab": 66,
      "avance": 0.9045,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 37,
-     "CLIENTE": 64,
-     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
+     "DESARROLLO": 3,
+     "QA": 34,
+     "CLIENTE": 62,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
     },
     {
@@ -2778,8 +2782,8 @@
      "dias_hab": 67,
      "avance": 0.9185,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 37,
+     "DESARROLLO": 3,
+     "QA": 34,
      "CLIENTE": 62,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2792,8 +2796,8 @@
      "dias_hab": 68,
      "avance": 0.9185,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 37,
+     "DESARROLLO": 3,
+     "QA": 34,
      "CLIENTE": 62,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2806,8 +2810,8 @@
      "dias_hab": 69,
      "avance": 0.9185,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 37,
+     "DESARROLLO": 3,
+     "QA": 34,
      "CLIENTE": 62,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2820,8 +2824,8 @@
      "dias_hab": 70,
      "avance": 0.9225,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 37,
+     "DESARROLLO": 3,
+     "QA": 34,
      "CLIENTE": 62,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2834,8 +2838,8 @@
      "dias_hab": 71,
      "avance": 0.9275,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 12,
+     "QA": 24,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2848,8 +2852,8 @@
      "dias_hab": 72,
      "avance": 0.9275,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 12,
+     "QA": 24,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2862,8 +2866,8 @@
      "dias_hab": 73,
      "avance": 0.9275,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 12,
+     "QA": 24,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2876,8 +2880,8 @@
      "dias_hab": 74,
      "avance": 0.9275,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 12,
+     "QA": 24,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2890,8 +2894,8 @@
      "dias_hab": 75,
      "avance": 0.9284,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 14,
+     "QA": 22,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 121
@@ -2904,8 +2908,8 @@
      "dias_hab": 76,
      "avance": 0.9317,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 14,
+     "QA": 22,
      "CLIENTE": 55,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
@@ -2918,8 +2922,8 @@
      "dias_hab": 77,
      "avance": 0.9317,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 14,
+     "QA": 22,
      "CLIENTE": 55,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
@@ -2932,8 +2936,8 @@
      "dias_hab": 78,
      "avance": 0.9317,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 14,
+     "QA": 22,
      "CLIENTE": 55,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
@@ -2946,8 +2950,8 @@
      "dias_hab": 79,
      "avance": 0.9317,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 36,
+     "DESARROLLO": 14,
+     "QA": 22,
      "CLIENTE": 55,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
@@ -2960,8 +2964,8 @@
      "dias_hab": 80,
      "avance": 0.9367,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 28,
+     "DESARROLLO": 9,
+     "QA": 19,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
@@ -2974,8 +2978,8 @@
      "dias_hab": 81,
      "avance": 0.9367,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 28,
+     "DESARROLLO": 9,
+     "QA": 19,
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
@@ -3021,8 +3025,8 @@
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 2,
-      "QA": 3,
+      "DESARROLLO": 4,
+      "QA": 1,
       "CLIENTE": 1
      }
     },
@@ -3031,10 +3035,10 @@
      "entradas": {
       "REQUERIMIENTOS": 3,
       "DESARROLLO": 4,
-      "QA": 9
+      "QA": 8
      },
      "salidas": {
-      "DESARROLLO": 9,
+      "DESARROLLO": 8,
       "QA": 7
      }
     },
@@ -3042,10 +3046,12 @@
      "fecha": "2026-03-12",
      "entradas": {
       "DESARROLLO": 1,
+      "QA": 1,
       "EN PRODUCCIÓN": 82
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
      }
     },
     {
@@ -3075,13 +3081,14 @@
     {
      "fecha": "2026-03-17",
      "entradas": {
+      "DESARROLLO": 7,
       "QA": 2,
       "CLIENTE": 16,
       "EN PRODUCCIÓN": 4
      },
      "salidas": {
-      "DESARROLLO": 2,
-      "QA": 16,
+      "DESARROLLO": 18,
+      "QA": 7,
       "CLIENTE": 4
      }
     },
@@ -3097,19 +3104,23 @@
     {
      "fecha": "2026-03-19",
      "entradas": {
+      "DESARROLLO": 3,
       "QA": 1
      },
      "salidas": {
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 3
      }
     },
     {
      "fecha": "2026-03-20",
      "entradas": {
+      "DESARROLLO": 1,
       "QA": 2
      },
      "salidas": {
-      "REQUERIMIENTOS": 2
+      "REQUERIMIENTOS": 2,
+      "QA": 1
      }
     },
     {
@@ -3128,23 +3139,25 @@
     {
      "fecha": "2026-03-25",
      "entradas": {
-      "DESARROLLO": 3,
+      "DESARROLLO": 4,
       "CLIENTE": 7
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "QA": 9
+      "DESARROLLO": 7,
+      "QA": 3
      }
     },
     {
      "fecha": "2026-03-26",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 1
+      "DESARROLLO": 2
      }
     },
     {
@@ -3177,10 +3190,12 @@
     {
      "fecha": "2026-04-01",
      "entradas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 4
      },
      "salidas": {
-      "DESARROLLO": 3
+      "DESARROLLO": 3,
+      "QA": 4
      }
     },
     {
@@ -3196,10 +3211,11 @@
     {
      "fecha": "2026-04-07",
      "entradas": {
-      "DESARROLLO": 3
+      "DESARROLLO": 5
      },
      "salidas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "QA": 2
      }
     },
     {
@@ -3214,10 +3230,12 @@
     {
      "fecha": "2026-04-09",
      "entradas": {
+      "DESARROLLO": 2,
       "QA": 2
      },
      "salidas": {
-      "DESARROLLO": 2
+      "DESARROLLO": 2,
+      "QA": 2
      }
     },
     {
@@ -3236,8 +3254,12 @@
     },
     {
      "fecha": "2026-04-14",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 4
+     },
+     "salidas": {
+      "QA": 4
+     }
     },
     {
      "fecha": "2026-04-15",
@@ -3253,16 +3275,22 @@
     {
      "fecha": "2026-04-16",
      "entradas": {
+      "DESARROLLO": 3,
       "QA": 1
      },
      "salidas": {
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 3
      }
     },
     {
      "fecha": "2026-04-17",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 2
+     },
+     "salidas": {
+      "QA": 2
+     }
     },
     {
      "fecha": "2026-04-20",
@@ -3293,10 +3321,10 @@
     {
      "fecha": "2026-04-23",
      "entradas": {
-      "QA": 1
+      "QA": 2
      },
      "salidas": {
-      "DESARROLLO": 1
+      "DESARROLLO": 2
      }
     },
     {
@@ -3327,8 +3355,12 @@
     },
     {
      "fecha": "2026-04-29",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "QA": 1
+     }
     },
     {
      "fecha": "2026-04-30",
@@ -3386,13 +3418,14 @@
     {
      "fecha": "2026-05-13",
      "entradas": {
-      "QA": 1,
+      "DESARROLLO": 7,
+      "QA": 2,
       "CLIENTE": 21,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 20
      },
      "salidas": {
-      "DESARROLLO": 1,
-      "QA": 24,
+      "DESARROLLO": 26,
+      "QA": 7,
       "CLIENTE": 17
      }
     },
@@ -3413,16 +3446,22 @@
     },
     {
      "fecha": "2026-05-20",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "QA": 1
+     }
     },
     {
      "fecha": "2026-05-21",
      "entradas": {
+      "DESARROLLO": 12,
       "QA": 1
      },
      "salidas": {
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 12
      }
     },
     {
@@ -3442,7 +3481,7 @@
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
-      "QA": 14,
+      "DESARROLLO": 14,
       "CLIENTE": 1
      }
     },
@@ -3464,21 +3503,17 @@
     {
      "fecha": "2026-06-01",
      "entradas": {
-      "CLIENTE": 17
+      "CLIENTE": 15
      },
      "salidas": {
-      "QA": 15,
-      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
+      "DESARROLLO": 10,
+      "QA": 5
      }
     },
     {
      "fecha": "2026-06-02",
-     "entradas": {
-      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
-     },
-     "salidas": {
-      "CLIENTE": 2
-     }
+     "entradas": {},
+     "salidas": {}
     },
     {
      "fecha": "2026-06-03",
@@ -3498,10 +3533,12 @@
     {
      "fecha": "2026-06-09",
      "entradas": {
+      "DESARROLLO": 10,
       "CLIENTE": 1
      },
      "salidas": {
-      "QA": 1
+      "DESARROLLO": 1,
+      "QA": 10
      }
     },
     {
@@ -3521,8 +3558,12 @@
     },
     {
      "fecha": "2026-06-16",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 2
+     },
+     "salidas": {
+      "QA": 2
+     }
     },
     {
      "fecha": "2026-06-17",
@@ -3554,7 +3595,8 @@
       "CLIENTE": 8
      },
      "salidas": {
-      "QA": 8
+      "DESARROLLO": 5,
+      "QA": 3
      }
     },
     {
@@ -3595,8 +3637,8 @@
    },
    "por_proceso": {
     "REQUERIMIENTOS": 170,
-    "DESARROLLO": 51,
-    "QA": 21,
+    "DESARROLLO": 66,
+    "QA": 6,
     "CLIENTE": 0,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
     "EN PRODUCCIÓN": 0
@@ -3877,8 +3919,8 @@
      "dias_hab": 37,
      "avance": 0.1581,
      "REQUERIMIENTOS": 155,
-     "DESARROLLO": 13,
-     "QA": 8,
+     "DESARROLLO": 14,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3891,8 +3933,8 @@
      "dias_hab": 38,
      "avance": 0.1665,
      "REQUERIMIENTOS": 153,
-     "DESARROLLO": 15,
-     "QA": 7,
+     "DESARROLLO": 16,
+     "QA": 6,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3905,8 +3947,8 @@
      "dias_hab": 39,
      "avance": 0.1644,
      "REQUERIMIENTOS": 153,
-     "DESARROLLO": 12,
-     "QA": 7,
+     "DESARROLLO": 13,
+     "QA": 6,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3919,8 +3961,8 @@
      "dias_hab": 40,
      "avance": 0.1763,
      "REQUERIMIENTOS": 146,
-     "DESARROLLO": 15,
-     "QA": 9,
+     "DESARROLLO": 17,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3933,8 +3975,8 @@
      "dias_hab": 42,
      "avance": 0.1742,
      "REQUERIMIENTOS": 146,
-     "DESARROLLO": 17,
-     "QA": 7,
+     "DESARROLLO": 19,
+     "QA": 5,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3947,8 +3989,8 @@
      "dias_hab": 44,
      "avance": 0.1804,
      "REQUERIMIENTOS": 143,
-     "DESARROLLO": 18,
-     "QA": 9,
+     "DESARROLLO": 21,
+     "QA": 6,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3961,8 +4003,8 @@
      "dias_hab": 45,
      "avance": 0.1875,
      "REQUERIMIENTOS": 137,
-     "DESARROLLO": 22,
-     "QA": 11,
+     "DESARROLLO": 26,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3975,8 +4017,8 @@
      "dias_hab": 46,
      "avance": 0.1952,
      "REQUERIMIENTOS": 135,
-     "DESARROLLO": 23,
-     "QA": 12,
+     "DESARROLLO": 28,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -3989,8 +4031,8 @@
      "dias_hab": 47,
      "avance": 0.2202,
      "REQUERIMIENTOS": 129,
-     "DESARROLLO": 23,
-     "QA": 13,
+     "DESARROLLO": 28,
+     "QA": 8,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4003,8 +4045,8 @@
      "dias_hab": 48,
      "avance": 0.219,
      "REQUERIMIENTOS": 136,
-     "DESARROLLO": 23,
-     "QA": 13,
+     "DESARROLLO": 29,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4017,8 +4059,8 @@
      "dias_hab": 49,
      "avance": 0.2187,
      "REQUERIMIENTOS": 137,
-     "DESARROLLO": 24,
-     "QA": 13,
+     "DESARROLLO": 30,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4031,8 +4073,8 @@
      "dias_hab": 50,
      "avance": 0.2327,
      "REQUERIMIENTOS": 134,
-     "DESARROLLO": 24,
-     "QA": 13,
+     "DESARROLLO": 30,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4045,8 +4087,8 @@
      "dias_hab": 51,
      "avance": 0.2327,
      "REQUERIMIENTOS": 134,
-     "DESARROLLO": 24,
-     "QA": 13,
+     "DESARROLLO": 30,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4059,8 +4101,8 @@
      "dias_hab": 52,
      "avance": 0.2327,
      "REQUERIMIENTOS": 134,
-     "DESARROLLO": 24,
-     "QA": 13,
+     "DESARROLLO": 30,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4073,8 +4115,8 @@
      "dias_hab": 53,
      "avance": 0.2363,
      "REQUERIMIENTOS": 132,
-     "DESARROLLO": 25,
-     "QA": 14,
+     "DESARROLLO": 32,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4087,8 +4129,8 @@
      "dias_hab": 54,
      "avance": 0.2398,
      "REQUERIMIENTOS": 130,
-     "DESARROLLO": 25,
-     "QA": 14,
+     "DESARROLLO": 33,
+     "QA": 6,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4101,8 +4143,8 @@
      "dias_hab": 55,
      "avance": 0.2492,
      "REQUERIMIENTOS": 121,
-     "DESARROLLO": 29,
-     "QA": 19,
+     "DESARROLLO": 37,
+     "QA": 11,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4115,8 +4157,8 @@
      "dias_hab": 56,
      "avance": 0.2569,
      "REQUERIMIENTOS": 117,
-     "DESARROLLO": 32,
-     "QA": 18,
+     "DESARROLLO": 40,
+     "QA": 10,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4129,8 +4171,8 @@
      "dias_hab": 57,
      "avance": 0.2575,
      "REQUERIMIENTOS": 117,
-     "DESARROLLO": 32,
-     "QA": 18,
+     "DESARROLLO": 40,
+     "QA": 10,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4143,8 +4185,8 @@
      "dias_hab": 58,
      "avance": 0.2601,
      "REQUERIMIENTOS": 116,
-     "DESARROLLO": 33,
-     "QA": 18,
+     "DESARROLLO": 41,
+     "QA": 10,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4157,8 +4199,8 @@
      "dias_hab": 59,
      "avance": 0.2682,
      "REQUERIMIENTOS": 103,
-     "DESARROLLO": 47,
-     "QA": 17,
+     "DESARROLLO": 56,
+     "QA": 8,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4171,8 +4213,8 @@
      "dias_hab": 60,
      "avance": 0.2724,
      "REQUERIMIENTOS": 100,
-     "DESARROLLO": 48,
-     "QA": 19,
+     "DESARROLLO": 57,
+     "QA": 10,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4185,8 +4227,8 @@
      "dias_hab": 61,
      "avance": 0.2419,
      "REQUERIMIENTOS": 176,
-     "DESARROLLO": 47,
-     "QA": 19,
+     "DESARROLLO": 57,
+     "QA": 9,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4199,8 +4241,8 @@
      "dias_hab": 62,
      "avance": 0.2462,
      "REQUERIMIENTOS": 175,
-     "DESARROLLO": 46,
-     "QA": 21,
+     "DESARROLLO": 58,
+     "QA": 9,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4213,8 +4255,8 @@
      "dias_hab": 63,
      "avance": 0.2479,
      "REQUERIMIENTOS": 170,
-     "DESARROLLO": 53,
-     "QA": 19,
+     "DESARROLLO": 65,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4227,8 +4269,8 @@
      "dias_hab": 64,
      "avance": 0.256,
      "REQUERIMIENTOS": 162,
-     "DESARROLLO": 58,
-     "QA": 22,
+     "DESARROLLO": 72,
+     "QA": 8,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4241,8 +4283,8 @@
      "dias_hab": 65,
      "avance": 0.2619,
      "REQUERIMIENTOS": 161,
-     "DESARROLLO": 54,
-     "QA": 27,
+     "DESARROLLO": 69,
+     "QA": 12,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4255,8 +4297,8 @@
      "dias_hab": 66,
      "avance": 0.2652,
      "REQUERIMIENTOS": 162,
-     "DESARROLLO": 51,
-     "QA": 29,
+     "DESARROLLO": 67,
+     "QA": 13,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4269,8 +4311,8 @@
      "dias_hab": 67,
      "avance": 0.2648,
      "REQUERIMIENTOS": 162,
-     "DESARROLLO": 52,
-     "QA": 28,
+     "DESARROLLO": 68,
+     "QA": 12,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4283,8 +4325,8 @@
      "dias_hab": 68,
      "avance": 0.2639,
      "REQUERIMIENTOS": 163,
-     "DESARROLLO": 53,
-     "QA": 26,
+     "DESARROLLO": 69,
+     "QA": 10,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4297,8 +4339,8 @@
      "dias_hab": 69,
      "avance": 0.2621,
      "REQUERIMIENTOS": 168,
-     "DESARROLLO": 47,
-     "QA": 27,
+     "DESARROLLO": 63,
+     "QA": 11,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4311,8 +4353,8 @@
      "dias_hab": 70,
      "avance": 0.2608,
      "REQUERIMIENTOS": 169,
-     "DESARROLLO": 48,
-     "QA": 25,
+     "DESARROLLO": 64,
+     "QA": 9,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4325,8 +4367,8 @@
      "dias_hab": 71,
      "avance": 0.2604,
      "REQUERIMIENTOS": 169,
-     "DESARROLLO": 50,
-     "QA": 23,
+     "DESARROLLO": 66,
+     "QA": 7,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4339,8 +4381,8 @@
      "dias_hab": 72,
      "avance": 0.2605,
      "REQUERIMIENTOS": 170,
-     "DESARROLLO": 48,
-     "QA": 24,
+     "DESARROLLO": 63,
+     "QA": 9,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4353,8 +4395,8 @@
      "dias_hab": 73,
      "avance": 0.2586,
      "REQUERIMIENTOS": 170,
-     "DESARROLLO": 51,
-     "QA": 21,
+     "DESARROLLO": 66,
+     "QA": 6,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -4495,12 +4537,13 @@
     {
      "fecha": "2026-04-29",
      "entradas": {
-      "DESARROLLO": 3,
+      "DESARROLLO": 4,
       "QA": 4
      },
      "salidas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 4
+      "DESARROLLO": 4,
+      "QA": 1
      }
     },
     {
@@ -4525,13 +4568,13 @@
      "fecha": "2026-05-05",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 8,
+      "DESARROLLO": 9,
       "QA": 3
      },
      "salidas": {
       "REQUERIMIENTOS": 9,
       "DESARROLLO": 5,
-      "QA": 1
+      "QA": 2
      }
     },
     {
@@ -4550,35 +4593,38 @@
      "fecha": "2026-05-11",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 5,
+      "DESARROLLO": 6,
       "QA": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 5,
-      "DESARROLLO": 4
+      "DESARROLLO": 4,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-05-12",
      "entradas": {
-      "DESARROLLO": 5,
+      "DESARROLLO": 6,
       "QA": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 6,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-05-13",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 2,
+      "DESARROLLO": 3,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 1
      }
     },
     {
@@ -4596,10 +4642,12 @@
     {
      "fecha": "2026-05-15",
      "entradas": {
-      "REQUERIMIENTOS": 8
+      "REQUERIMIENTOS": 8,
+      "DESARROLLO": 1
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 1
      }
     },
     {
@@ -4632,19 +4680,23 @@
     {
      "fecha": "2026-05-25",
      "entradas": {
-      "DESARROLLO": 2,
+      "DESARROLLO": 3,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-05-26",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 1
+     },
      "salidas": {
-      "REQUERIMIENTOS": 2
+      "REQUERIMIENTOS": 2,
+      "QA": 1
      }
     },
     {
@@ -4685,11 +4737,11 @@
     {
      "fecha": "2026-06-02",
      "entradas": {
-      "DESARROLLO": 14
+      "DESARROLLO": 15
      },
      "salidas": {
       "REQUERIMIENTOS": 13,
-      "QA": 1
+      "QA": 2
      }
     },
     {
@@ -4708,12 +4760,11 @@
      "fecha": "2026-06-04",
      "entradas": {
       "REQUERIMIENTOS": 90,
-      "DESARROLLO": 2,
-      "QA": 1
+      "DESARROLLO": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 14,
-      "DESARROLLO": 3,
+      "DESARROLLO": 2,
       "QA": 1
      }
     },
@@ -4721,12 +4772,13 @@
      "fecha": "2026-06-05",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 2,
+      "DESARROLLO": 4,
       "QA": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 3
+      "DESARROLLO": 3,
+      "QA": 2
      }
     },
     {
@@ -4743,34 +4795,37 @@
      "fecha": "2026-06-10",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 12,
-      "QA": 6
+      "DESARROLLO": 13,
+      "QA": 5
      },
      "salidas": {
       "REQUERIMIENTOS": 9,
-      "DESARROLLO": 7,
-      "QA": 3
+      "DESARROLLO": 6,
+      "QA": 4
      }
     },
     {
      "fecha": "2026-06-11",
      "entradas": {
-      "DESARROLLO": 1,
+      "DESARROLLO": 2,
       "QA": 5
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 5
+      "DESARROLLO": 5,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-06-12",
      "entradas": {
       "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1,
       "QA": 2
      },
      "salidas": {
-      "DESARROLLO": 3
+      "DESARROLLO": 3,
+      "QA": 1
      }
     },
     {
@@ -4836,8 +4891,8 @@
       "QA": 4
      },
      "salidas": {
-      "DESARROLLO": 4,
-      "QA": 3
+      "DESARROLLO": 5,
+      "QA": 2
      }
     },
     {
@@ -4869,7 +4924,7 @@
     "hu_total": 592,
     "hu_prod": 0,
     "pct_prod": 0.0,
-    "pct_avance": null,
+    "pct_avance": 0.7192513368983957,
     "hu_pendientes": 592,
     "removidas": 80,
     "dias_transcurridos": 71,
@@ -4884,13 +4939,13 @@
    },
    "por_proceso": {
     "REQUERIMIENTOS": 8,
-    "DESARROLLO": 0,
-    "QA": 0,
+    "DESARROLLO": 135,
+    "QA": 418,
     "CLIENTE": 0,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
     "EN PRODUCCIÓN": 0
    },
-   "sin_proceso": 584,
+   "sin_proceso": 31,
    "serie": [
     {
      "fecha": "2026-03-05",
@@ -5136,10 +5191,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 19,
-     "avance": null,
+     "avance": 0.4242,
      "REQUERIMIENTOS": 197,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 102,
+     "QA": 97,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5152,8 +5207,8 @@
      "dias_hab": 20,
      "avance": 0.788,
      "REQUERIMIENTOS": 55,
-     "DESARROLLO": 50,
-     "QA": 55,
+     "DESARROLLO": 72,
+     "QA": 33,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 300
@@ -5164,10 +5219,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 21,
-     "avance": null,
+     "avance": 0.4668,
      "REQUERIMIENTOS": 184,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 94,
+     "QA": 138,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5178,10 +5233,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 22,
-     "avance": null,
+     "avance": 0.5022,
      "REQUERIMIENTOS": 154,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 107,
+     "QA": 157,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5192,10 +5247,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 23,
-     "avance": null,
+     "avance": 0.5173,
      "REQUERIMIENTOS": 143,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 107,
+     "QA": 167,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5206,10 +5261,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 24,
-     "avance": null,
+     "avance": 0.5107,
      "REQUERIMIENTOS": 148,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 111,
+     "QA": 163,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5220,10 +5275,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 25,
-     "avance": null,
+     "avance": 0.5098,
      "REQUERIMIENTOS": 149,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 116,
+     "QA": 163,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5234,10 +5289,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 26,
-     "avance": null,
+     "avance": 0.5034,
      "REQUERIMIENTOS": 156,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 118,
+     "QA": 161,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5248,10 +5303,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 27,
-     "avance": null,
+     "avance": 0.5021,
      "REQUERIMIENTOS": 156,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 121,
+     "QA": 159,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5262,10 +5317,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 28,
-     "avance": null,
+     "avance": 0.5048,
      "REQUERIMIENTOS": 157,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 116,
+     "QA": 164,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5276,10 +5331,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 29,
-     "avance": null,
+     "avance": 0.5041,
      "REQUERIMIENTOS": 160,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 117,
+     "QA": 166,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5290,10 +5345,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 30,
-     "avance": null,
+     "avance": 0.5047,
      "REQUERIMIENTOS": 162,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 117,
+     "QA": 169,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5304,10 +5359,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 31,
-     "avance": null,
+     "avance": 0.502,
      "REQUERIMIENTOS": 167,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 117,
+     "QA": 170,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5318,10 +5373,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 32,
-     "avance": null,
+     "avance": 0.4974,
      "REQUERIMIENTOS": 175,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 123,
+     "QA": 171,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5332,10 +5387,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 33,
-     "avance": null,
+     "avance": 0.5173,
      "REQUERIMIENTOS": 149,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 144,
+     "QA": 176,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5346,10 +5401,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 34,
-     "avance": null,
+     "avance": 0.5253,
      "REQUERIMIENTOS": 147,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 141,
+     "QA": 187,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5360,10 +5415,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 35,
-     "avance": null,
+     "avance": 0.5238,
      "REQUERIMIENTOS": 150,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 140,
+     "QA": 188,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5374,10 +5429,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 38,
-     "avance": null,
+     "avance": 0.5217,
      "REQUERIMIENTOS": 153,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 143,
+     "QA": 188,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5388,10 +5443,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 41,
-     "avance": null,
+     "avance": 0.5359,
      "REQUERIMIENTOS": 156,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 130,
+     "QA": 216,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5402,10 +5457,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 42,
-     "avance": null,
+     "avance": 0.5412,
      "REQUERIMIENTOS": 148,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 138,
+     "QA": 217,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5416,10 +5471,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 43,
-     "avance": null,
+     "avance": 0.5412,
      "REQUERIMIENTOS": 148,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 138,
+     "QA": 217,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5430,10 +5485,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 44,
-     "avance": null,
+     "avance": 0.5693,
      "REQUERIMIENTOS": 110,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 173,
+     "QA": 228,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5444,10 +5499,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 45,
-     "avance": null,
+     "avance": 0.5705,
      "REQUERIMIENTOS": 110,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 171,
+     "QA": 230,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5458,10 +5513,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 46,
-     "avance": null,
+     "avance": 0.6322,
      "REQUERIMIENTOS": 44,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 199,
+     "QA": 270,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5472,10 +5527,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 47,
-     "avance": null,
+     "avance": 0.6322,
      "REQUERIMIENTOS": 44,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 199,
+     "QA": 270,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5486,10 +5541,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 48,
-     "avance": null,
+     "avance": 0.6314,
      "REQUERIMIENTOS": 45,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 200,
+     "QA": 271,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5500,10 +5555,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 49,
-     "avance": null,
+     "avance": 0.6317,
      "REQUERIMIENTOS": 46,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 198,
+     "QA": 273,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5514,10 +5569,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 50,
-     "avance": null,
+     "avance": 0.623,
      "REQUERIMIENTOS": 44,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 56,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5528,10 +5583,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 51,
-     "avance": null,
+     "avance": 0.6257,
      "REQUERIMIENTOS": 54,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 197,
+     "QA": 274,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5542,10 +5597,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 52,
-     "avance": null,
+     "avance": 0.6249,
      "REQUERIMIENTOS": 55,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 197,
+     "QA": 274,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5556,10 +5611,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 53,
-     "avance": null,
+     "avance": 0.6249,
      "REQUERIMIENTOS": 55,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 197,
+     "QA": 274,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5570,10 +5625,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 54,
-     "avance": null,
+     "avance": 0.6217,
      "REQUERIMIENTOS": 59,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 197,
+     "QA": 274,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5584,10 +5639,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 55,
-     "avance": null,
+     "avance": 0.6154,
      "REQUERIMIENTOS": 67,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 197,
+     "QA": 274,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5598,10 +5653,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 56,
-     "avance": null,
+     "avance": 0.6171,
      "REQUERIMIENTOS": 64,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 200,
+     "QA": 274,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5612,10 +5667,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 57,
-     "avance": null,
+     "avance": 0.6181,
      "REQUERIMIENTOS": 63,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 202,
+     "QA": 276,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5626,10 +5681,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 58,
-     "avance": null,
+     "avance": 0.6177,
      "REQUERIMIENTOS": 63,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 204,
+     "QA": 276,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5640,10 +5695,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 59,
-     "avance": null,
+     "avance": 0.6135,
      "REQUERIMIENTOS": 70,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 200,
+     "QA": 277,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5654,10 +5709,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 60,
-     "avance": null,
+     "avance": 0.6086,
      "REQUERIMIENTOS": 77,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 200,
+     "QA": 278,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5668,10 +5723,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 61,
-     "avance": null,
+     "avance": 0.6329,
      "REQUERIMIENTOS": 33,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 242,
+     "QA": 278,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5682,10 +5737,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 62,
-     "avance": null,
+     "avance": 0.6329,
      "REQUERIMIENTOS": 33,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 242,
+     "QA": 278,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5696,10 +5751,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 63,
-     "avance": null,
+     "avance": 0.7277,
      "REQUERIMIENTOS": 2,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 128,
+     "QA": 418,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5710,10 +5765,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 64,
-     "avance": null,
+     "avance": 0.7277,
      "REQUERIMIENTOS": 2,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 128,
+     "QA": 418,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5724,10 +5779,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 65,
-     "avance": null,
+     "avance": 0.7174,
      "REQUERIMIENTOS": 6,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 140,
+     "QA": 406,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5738,10 +5793,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 66,
-     "avance": null,
+     "avance": 0.717,
      "REQUERIMIENTOS": 7,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 139,
+     "QA": 407,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5752,10 +5807,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 67,
-     "avance": null,
+     "avance": 0.717,
      "REQUERIMIENTOS": 7,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 139,
+     "QA": 407,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5766,10 +5821,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 68,
-     "avance": null,
+     "avance": 0.7231,
      "REQUERIMIENTOS": 6,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 130,
+     "QA": 418,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5780,10 +5835,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 69,
-     "avance": null,
+     "avance": 0.7175,
      "REQUERIMIENTOS": 12,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 130,
+     "QA": 418,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5794,10 +5849,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 70,
-     "avance": null,
+     "avance": 0.717,
      "REQUERIMIENTOS": 12,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 131,
+     "QA": 417,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5808,10 +5863,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 71,
-     "avance": null,
+     "avance": 0.7187,
      "REQUERIMIENTOS": 8,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 136,
+     "QA": 417,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -5822,10 +5877,10 @@
      "removidas": 80,
      "prod": 0,
      "dias_hab": 72,
-     "avance": null,
+     "avance": 0.7193,
      "REQUERIMIENTOS": 8,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 135,
+     "QA": 418,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6038,7 +6093,9 @@
     {
      "fecha": "2026-04-06",
      "entradas": {
-      "REQUERIMIENTOS": 197
+      "REQUERIMIENTOS": 197,
+      "DESARROLLO": 102,
+      "QA": 97
      },
      "salidas": {
       "REQUERIMIENTOS": 60,
@@ -6052,24 +6109,28 @@
      "fecha": "2026-04-07",
      "entradas": {
       "REQUERIMIENTOS": 55,
-      "DESARROLLO": 50,
-      "QA": 55,
+      "DESARROLLO": 72,
+      "QA": 33,
       "CLIENTE": 29,
       "EN PRODUCCIÓN": 300
      },
      "salidas": {
-      "REQUERIMIENTOS": 197
+      "REQUERIMIENTOS": 197,
+      "DESARROLLO": 102,
+      "QA": 97
      }
     },
     {
      "fecha": "2026-04-08",
      "entradas": {
-      "REQUERIMIENTOS": 184
+      "REQUERIMIENTOS": 184,
+      "DESARROLLO": 94,
+      "QA": 138
      },
      "salidas": {
       "REQUERIMIENTOS": 55,
-      "DESARROLLO": 50,
-      "QA": 55,
+      "DESARROLLO": 72,
+      "QA": 33,
       "CLIENTE": 29,
       "EN PRODUCCIÓN": 300
      }
@@ -6077,74 +6138,103 @@
     {
      "fecha": "2026-04-09",
      "entradas": {
-      "REQUERIMIENTOS": 2
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 24,
+      "QA": 19
      },
      "salidas": {
-      "REQUERIMIENTOS": 32
+      "REQUERIMIENTOS": 32,
+      "DESARROLLO": 11
      }
     },
     {
      "fecha": "2026-04-10",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 13,
+      "QA": 13
+     },
      "salidas": {
-      "REQUERIMIENTOS": 11
+      "REQUERIMIENTOS": 11,
+      "DESARROLLO": 13,
+      "QA": 3
      }
     },
     {
      "fecha": "2026-04-13",
      "entradas": {
-      "REQUERIMIENTOS": 5
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 4
      },
-     "salidas": {}
+     "salidas": {
+      "QA": 4
+     }
     },
     {
      "fecha": "2026-04-14",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 5
      },
      "salidas": {}
     },
     {
      "fecha": "2026-04-15",
      "entradas": {
-      "REQUERIMIENTOS": 7
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 2
      },
-     "salidas": {}
+     "salidas": {
+      "QA": 2
+     }
     },
     {
      "fecha": "2026-04-16",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 3
+     },
+     "salidas": {
+      "QA": 2
+     }
     },
     {
      "fecha": "2026-04-17",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 5
      },
-     "salidas": {}
+     "salidas": {
+      "DESARROLLO": 5
+     }
     },
     {
      "fecha": "2026-04-20",
      "entradas": {
-      "REQUERIMIENTOS": 4
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 2,
+      "QA": 2
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
      }
     },
     {
      "fecha": "2026-04-21",
      "entradas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3,
+      "QA": 3
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3
      }
     },
     {
      "fecha": "2026-04-22",
      "entradas": {
-      "REQUERIMIENTOS": 6
+      "REQUERIMIENTOS": 6,
+      "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1
@@ -6153,58 +6243,79 @@
     {
      "fecha": "2026-04-23",
      "entradas": {
-      "REQUERIMIENTOS": 10
+      "REQUERIMIENTOS": 10,
+      "DESARROLLO": 7,
+      "QA": 1
      },
      "salidas": {
-      "REQUERIMIENTOS": 2
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1
      }
     },
     {
      "fecha": "2026-04-24",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 23,
+      "QA": 6
+     },
      "salidas": {
-      "REQUERIMIENTOS": 26
+      "REQUERIMIENTOS": 26,
+      "DESARROLLO": 2,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-04-27",
      "entradas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3,
+      "QA": 11
      },
      "salidas": {
-      "REQUERIMIENTOS": 5
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 6
      }
     },
     {
      "fecha": "2026-04-28",
      "entradas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "QA": 1
      },
-     "salidas": {}
+     "salidas": {
+      "DESARROLLO": 1
+     }
     },
     {
      "fecha": "2026-05-04",
      "entradas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3
      },
      "salidas": {}
     },
     {
      "fecha": "2026-05-07",
      "entradas": {
-      "REQUERIMIENTOS": 15
+      "REQUERIMIENTOS": 15,
+      "DESARROLLO": 11,
+      "QA": 28
      },
      "salidas": {
-      "REQUERIMIENTOS": 12
+      "REQUERIMIENTOS": 12,
+      "DESARROLLO": 24
      }
     },
     {
      "fecha": "2026-05-08",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 9,
+      "QA": 1
      },
      "salidas": {
-      "REQUERIMIENTOS": 9
+      "REQUERIMIENTOS": 9,
+      "DESARROLLO": 1
      }
     },
     {
@@ -6215,24 +6326,35 @@
     {
      "fecha": "2026-05-12",
      "entradas": {
-      "REQUERIMIENTOS": 5
+      "REQUERIMIENTOS": 5,
+      "DESARROLLO": 44,
+      "QA": 12
      },
      "salidas": {
-      "REQUERIMIENTOS": 43
+      "REQUERIMIENTOS": 43,
+      "DESARROLLO": 9,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-05-13",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
     },
     {
      "fecha": "2026-05-14",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 61,
+      "QA": 40
      },
      "salidas": {
-      "REQUERIMIENTOS": 67
+      "REQUERIMIENTOS": 67,
+      "DESARROLLO": 33
      }
     },
     {
@@ -6243,33 +6365,48 @@
     {
      "fecha": "2026-05-19",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2,
+      "QA": 1
      },
-     "salidas": {}
+     "salidas": {
+      "DESARROLLO": 1
+     }
     },
     {
      "fecha": "2026-05-20",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 2
      },
-     "salidas": {}
+     "salidas": {
+      "DESARROLLO": 2
+     }
     },
     {
      "fecha": "2026-05-21",
      "entradas": {
-      "REQUERIMIENTOS": 44
+      "REQUERIMIENTOS": 44,
+      "DESARROLLO": 56,
+      "QA": 144
      },
      "salidas": {
-      "REQUERIMIENTOS": 46
+      "REQUERIMIENTOS": 46,
+      "DESARROLLO": 198,
+      "QA": 273
      }
     },
     {
      "fecha": "2026-05-22",
      "entradas": {
-      "REQUERIMIENTOS": 54
+      "REQUERIMIENTOS": 54,
+      "DESARROLLO": 197,
+      "QA": 274
      },
      "salidas": {
-      "REQUERIMIENTOS": 44
+      "REQUERIMIENTOS": 44,
+      "DESARROLLO": 56,
+      "QA": 144
      }
     },
     {
@@ -6302,46 +6439,59 @@
     },
     {
      "fecha": "2026-05-29",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 3
+     },
      "salidas": {
       "REQUERIMIENTOS": 3
      }
     },
     {
      "fecha": "2026-06-01",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 2,
+      "QA": 2
+     },
      "salidas": {
       "REQUERIMIENTOS": 1
      }
     },
     {
      "fecha": "2026-06-02",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 2
+     },
      "salidas": {}
     },
     {
      "fecha": "2026-06-03",
      "entradas": {
-      "REQUERIMIENTOS": 8
+      "REQUERIMIENTOS": 8,
+      "QA": 3
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 4,
+      "QA": 2
      }
     },
     {
      "fecha": "2026-06-04",
      "entradas": {
-      "REQUERIMIENTOS": 7
+      "REQUERIMIENTOS": 7,
+      "QA": 1
      },
      "salidas": {}
     },
     {
      "fecha": "2026-06-05",
      "entradas": {
-      "REQUERIMIENTOS": 7
+      "REQUERIMIENTOS": 7,
+      "DESARROLLO": 52
      },
      "salidas": {
-      "REQUERIMIENTOS": 51
+      "REQUERIMIENTOS": 51,
+      "DESARROLLO": 10
      }
     },
     {
@@ -6351,9 +6501,14 @@
     },
     {
      "fecha": "2026-06-10",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 29,
+      "QA": 143
+     },
      "salidas": {
-      "REQUERIMIENTOS": 31
+      "REQUERIMIENTOS": 31,
+      "DESARROLLO": 143,
+      "QA": 3
      }
     },
     {
@@ -6364,16 +6519,24 @@
     {
      "fecha": "2026-06-12",
      "entradas": {
-      "REQUERIMIENTOS": 4
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 14,
+      "QA": 1
      },
-     "salidas": {}
+     "salidas": {
+      "DESARROLLO": 2,
+      "QA": 13
+     }
     },
     {
      "fecha": "2026-06-16",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 1
      },
-     "salidas": {}
+     "salidas": {
+      "DESARROLLO": 1
+     }
     },
     {
      "fecha": "2026-06-17",
@@ -6383,10 +6546,14 @@
     {
      "fecha": "2026-06-18",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1,
+      "QA": 12
      },
      "salidas": {
-      "REQUERIMIENTOS": 2
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 10,
+      "QA": 1
      }
     },
     {
@@ -6398,13 +6565,18 @@
     },
     {
      "fecha": "2026-06-22",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "QA": 1
+     }
     },
     {
      "fecha": "2026-06-23",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 5
      },
      "salidas": {
       "REQUERIMIENTOS": 5
@@ -6412,8 +6584,12 @@
     },
     {
      "fecha": "2026-06-24",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
     }
    ]
   },
@@ -6433,7 +6609,7 @@
     "hu_total": 280,
     "hu_prod": 0,
     "pct_prod": 0.0,
-    "pct_avance": null,
+    "pct_avance": 0.7233576642335767,
     "hu_pendientes": 280,
     "removidas": 3,
     "dias_transcurridos": 40,
@@ -6448,13 +6624,13 @@
    },
    "por_proceso": {
     "REQUERIMIENTOS": 9,
-    "DESARROLLO": 0,
-    "QA": 0,
+    "DESARROLLO": 52,
+    "QA": 213,
     "CLIENTE": 0,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
     "EN PRODUCCIÓN": 0
    },
-   "sin_proceso": 271,
+   "sin_proceso": 6,
    "serie": [
     {
      "fecha": "2026-04-22",
@@ -6462,10 +6638,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 0,
-     "avance": null,
+     "avance": 0.5345,
      "REQUERIMIENTOS": 78,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 44,
+     "QA": 104,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6476,10 +6652,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 1,
-     "avance": null,
+     "avance": 0.5328,
      "REQUERIMIENTOS": 79,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 46,
+     "QA": 104,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6490,10 +6666,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 2,
-     "avance": null,
+     "avance": 0.5341,
      "REQUERIMIENTOS": 79,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 45,
+     "QA": 105,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6504,10 +6680,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 3,
-     "avance": null,
+     "avance": 0.5365,
      "REQUERIMIENTOS": 79,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 44,
+     "QA": 107,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6518,10 +6694,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 4,
-     "avance": null,
+     "avance": 0.5365,
      "REQUERIMIENTOS": 79,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 44,
+     "QA": 107,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6532,10 +6708,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 5,
-     "avance": null,
+     "avance": 0.5349,
      "REQUERIMIENTOS": 80,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 45,
+     "QA": 107,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6546,10 +6722,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 6,
-     "avance": null,
+     "avance": 0.5628,
      "REQUERIMIENTOS": 72,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 41,
+     "QA": 121,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6588,10 +6764,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 9,
-     "avance": null,
+     "avance": 0.555,
      "REQUERIMIENTOS": 78,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 40,
+     "QA": 122,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6602,10 +6778,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 11,
-     "avance": null,
+     "avance": 0.5545,
      "REQUERIMIENTOS": 78,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 42,
+     "QA": 122,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6616,10 +6792,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 12,
-     "avance": null,
+     "avance": 0.5545,
      "REQUERIMIENTOS": 78,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 42,
+     "QA": 122,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6630,10 +6806,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 13,
-     "avance": null,
+     "avance": 0.5642,
      "REQUERIMIENTOS": 79,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 33,
+     "QA": 131,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6644,10 +6820,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 14,
-     "avance": null,
+     "avance": 0.5652,
      "REQUERIMIENTOS": 79,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 33,
+     "QA": 132,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6658,10 +6834,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 15,
-     "avance": null,
+     "avance": 0.5947,
      "REQUERIMIENTOS": 68,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 31,
+     "QA": 145,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6672,10 +6848,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 16,
-     "avance": null,
+     "avance": 0.5947,
      "REQUERIMIENTOS": 68,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 31,
+     "QA": 145,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6686,10 +6862,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 17,
-     "avance": null,
+     "avance": 0.5934,
      "REQUERIMIENTOS": 68,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 32,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6700,10 +6876,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 18,
-     "avance": null,
+     "avance": 0.6045,
      "REQUERIMIENTOS": 59,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 41,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6714,10 +6890,10 @@
      "removidas": 75,
      "prod": 0,
      "dias_hab": 19,
-     "avance": null,
+     "avance": 0.6257,
      "REQUERIMIENTOS": 54,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 197,
+     "QA": 274,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6728,10 +6904,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 20,
-     "avance": null,
+     "avance": 0.623,
      "REQUERIMIENTOS": 44,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 56,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6742,10 +6918,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 21,
-     "avance": null,
+     "avance": 0.619,
      "REQUERIMIENTOS": 46,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 57,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6756,10 +6932,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 22,
-     "avance": null,
+     "avance": 0.619,
      "REQUERIMIENTOS": 46,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 57,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6770,10 +6946,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 23,
-     "avance": null,
+     "avance": 0.619,
      "REQUERIMIENTOS": 46,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 57,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6784,10 +6960,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 24,
-     "avance": null,
+     "avance": 0.6173,
      "REQUERIMIENTOS": 47,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 57,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6798,10 +6974,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 25,
-     "avance": null,
+     "avance": 0.6157,
      "REQUERIMIENTOS": 48,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 57,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6812,10 +6988,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 26,
-     "avance": null,
+     "avance": 0.6091,
      "REQUERIMIENTOS": 52,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 57,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6826,10 +7002,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 27,
-     "avance": null,
+     "avance": 0.6087,
      "REQUERIMIENTOS": 52,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 58,
+     "QA": 144,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6840,10 +7016,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 28,
-     "avance": null,
+     "avance": 0.6081,
      "REQUERIMIENTOS": 52,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 61,
+     "QA": 145,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6854,10 +7030,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 29,
-     "avance": null,
+     "avance": 0.6069,
      "REQUERIMIENTOS": 53,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 62,
+     "QA": 146,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6868,10 +7044,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 30,
-     "avance": null,
+     "avance": 0.6678,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 115,
+     "QA": 146,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6882,10 +7058,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 31,
-     "avance": null,
+     "avance": 0.7198,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 70,
+     "QA": 192,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6896,10 +7072,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 32,
-     "avance": null,
+     "avance": 0.7473,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 46,
+     "QA": 216,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6910,10 +7086,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 33,
-     "avance": null,
+     "avance": 0.7473,
      "REQUERIMIENTOS": 0,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 46,
+     "QA": 216,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6924,10 +7100,10 @@
      "removidas": 2,
      "prod": 0,
      "dias_hab": 34,
-     "avance": null,
+     "avance": 0.7338,
      "REQUERIMIENTOS": 1,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 56,
+     "QA": 206,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6938,10 +7114,10 @@
      "removidas": 3,
      "prod": 0,
      "dias_hab": 35,
-     "avance": null,
+     "avance": 0.7219,
      "REQUERIMIENTOS": 7,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 56,
+     "QA": 206,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6952,10 +7128,10 @@
      "removidas": 3,
      "prod": 0,
      "dias_hab": 36,
-     "avance": null,
+     "avance": 0.7219,
      "REQUERIMIENTOS": 7,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 56,
+     "QA": 206,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6966,10 +7142,10 @@
      "removidas": 3,
      "prod": 0,
      "dias_hab": 37,
-     "avance": null,
+     "avance": 0.55,
      "REQUERIMIENTOS": 85,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 55,
+     "QA": 130,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6980,10 +7156,10 @@
      "removidas": 3,
      "prod": 0,
      "dias_hab": 38,
-     "avance": null,
+     "avance": 0.7278,
      "REQUERIMIENTOS": 7,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 51,
+     "QA": 212,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -6994,10 +7170,10 @@
      "removidas": 3,
      "prod": 0,
      "dias_hab": 39,
-     "avance": null,
+     "avance": 0.7258,
      "REQUERIMIENTOS": 8,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 51,
+     "QA": 212,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -7008,10 +7184,10 @@
      "removidas": 3,
      "prod": 0,
      "dias_hab": 40,
-     "avance": null,
+     "avance": 0.7223,
      "REQUERIMIENTOS": 9,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 53,
+     "QA": 212,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -7022,10 +7198,10 @@
      "removidas": 3,
      "prod": 0,
      "dias_hab": 41,
-     "avance": null,
+     "avance": 0.7234,
      "REQUERIMIENTOS": 9,
-     "DESARROLLO": 0,
-     "QA": 0,
+     "DESARROLLO": 52,
+     "QA": 213,
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
@@ -7035,19 +7211,28 @@
     {
      "fecha": "2026-04-23",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2
      },
      "salidas": {}
     },
     {
      "fecha": "2026-04-24",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
     },
     {
      "fecha": "2026-04-27",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
     },
     {
      "fecha": "2026-04-28",
@@ -7057,22 +7242,28 @@
     {
      "fecha": "2026-04-29",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
      },
      "salidas": {}
     },
     {
      "fecha": "2026-04-30",
-     "entradas": {},
+     "entradas": {
+      "QA": 14
+     },
      "salidas": {
-      "REQUERIMIENTOS": 8
+      "REQUERIMIENTOS": 8,
+      "DESARROLLO": 4
      }
     },
     {
      "fecha": "2026-05-04",
      "entradas": {},
      "salidas": {
-      "REQUERIMIENTOS": 72
+      "REQUERIMIENTOS": 72,
+      "DESARROLLO": 41,
+      "QA": 121
      }
     },
     {
@@ -7083,13 +7274,17 @@
     {
      "fecha": "2026-05-06",
      "entradas": {
-      "REQUERIMIENTOS": 78
+      "REQUERIMIENTOS": 78,
+      "DESARROLLO": 40,
+      "QA": 122
      },
      "salidas": {}
     },
     {
      "fecha": "2026-05-08",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 2
+     },
      "salidas": {}
     },
     {
@@ -7100,20 +7295,28 @@
     {
      "fecha": "2026-05-12",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 9
+     },
+     "salidas": {
+      "DESARROLLO": 9
+     }
+    },
+    {
+     "fecha": "2026-05-13",
+     "entradas": {
+      "QA": 1
      },
      "salidas": {}
     },
     {
-     "fecha": "2026-05-13",
-     "entradas": {},
-     "salidas": {}
-    },
-    {
      "fecha": "2026-05-14",
-     "entradas": {},
+     "entradas": {
+      "QA": 13
+     },
      "salidas": {
-      "REQUERIMIENTOS": 11
+      "REQUERIMIENTOS": 11,
+      "DESARROLLO": 2
      }
     },
     {
@@ -7123,12 +7326,18 @@
     },
     {
      "fecha": "2026-05-19",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 1
+     },
+     "salidas": {
+      "QA": 1
+     }
     },
     {
      "fecha": "2026-05-20",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 9
+     },
      "salidas": {
       "REQUERIMIENTOS": 9
      }
@@ -7136,25 +7345,34 @@
     {
      "fecha": "2026-05-21",
      "entradas": {
-      "REQUERIMIENTOS": 54
+      "REQUERIMIENTOS": 54,
+      "DESARROLLO": 197,
+      "QA": 274
      },
      "salidas": {
-      "REQUERIMIENTOS": 59
+      "REQUERIMIENTOS": 59,
+      "DESARROLLO": 41,
+      "QA": 144
      }
     },
     {
      "fecha": "2026-05-22",
      "entradas": {
-      "REQUERIMIENTOS": 44
+      "REQUERIMIENTOS": 44,
+      "DESARROLLO": 56,
+      "QA": 144
      },
      "salidas": {
-      "REQUERIMIENTOS": 54
+      "REQUERIMIENTOS": 54,
+      "DESARROLLO": 197,
+      "QA": 274
      }
     },
     {
      "fecha": "2026-05-25",
      "entradas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1
@@ -7193,13 +7411,17 @@
     },
     {
      "fecha": "2026-06-02",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 1
+     },
      "salidas": {}
     },
     {
      "fecha": "2026-06-03",
      "entradas": {
-      "REQUERIMIENTOS": 3
+      "REQUERIMIENTOS": 3,
+      "DESARROLLO": 3,
+      "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 3
@@ -7208,26 +7430,41 @@
     {
      "fecha": "2026-06-04",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1,
+      "QA": 1
      },
      "salidas": {}
     },
     {
      "fecha": "2026-06-05",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 53
+     },
      "salidas": {
       "REQUERIMIENTOS": 53
      }
     },
     {
      "fecha": "2026-06-09",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 46
+     },
+     "salidas": {
+      "DESARROLLO": 46
+     }
     },
     {
      "fecha": "2026-06-10",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "DESARROLLO": 1,
+      "QA": 25
+     },
+     "salidas": {
+      "DESARROLLO": 25,
+      "QA": 1
+     }
     },
     {
      "fecha": "2026-06-11",
@@ -7237,9 +7474,12 @@
     {
      "fecha": "2026-06-12",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 10
      },
-     "salidas": {}
+     "salidas": {
+      "QA": 10
+     }
     },
     {
      "fecha": "2026-06-16",
@@ -7256,15 +7496,24 @@
     {
      "fecha": "2026-06-18",
      "entradas": {
-      "REQUERIMIENTOS": 78
+      "REQUERIMIENTOS": 78,
+      "DESARROLLO": 34,
+      "QA": 6
      },
-     "salidas": {}
+     "salidas": {
+      "DESARROLLO": 35,
+      "QA": 82
+     }
     },
     {
      "fecha": "2026-06-19",
-     "entradas": {},
+     "entradas": {
+      "DESARROLLO": 29,
+      "QA": 82
+     },
      "salidas": {
-      "REQUERIMIENTOS": 78
+      "REQUERIMIENTOS": 78,
+      "DESARROLLO": 33
      }
     },
     {
@@ -7277,14 +7526,19 @@
     {
      "fecha": "2026-06-23",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 2
      },
      "salidas": {}
     },
     {
      "fecha": "2026-06-24",
-     "entradas": {},
-     "salidas": {}
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
     }
    ]
   },
@@ -7319,8 +7573,8 @@
    },
    "por_proceso": {
     "REQUERIMIENTOS": 122,
-    "DESARROLLO": 22,
-    "QA": 79,
+    "DESARROLLO": 36,
+    "QA": 65,
     "CLIENTE": 10,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 62,
     "EN PRODUCCIÓN": 364
@@ -7615,8 +7869,8 @@
      "dias_hab": 24,
      "avance": 0.785,
      "REQUERIMIENTOS": 55,
-     "DESARROLLO": 53,
-     "QA": 53,
+     "DESARROLLO": 74,
+     "QA": 32,
      "CLIENTE": 28,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 300
@@ -7629,8 +7883,8 @@
      "dias_hab": 25,
      "avance": 0.788,
      "REQUERIMIENTOS": 55,
-     "DESARROLLO": 50,
-     "QA": 55,
+     "DESARROLLO": 72,
+     "QA": 33,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 300
@@ -7643,8 +7897,8 @@
      "dias_hab": 26,
      "avance": 0.7933,
      "REQUERIMIENTOS": 50,
-     "DESARROLLO": 51,
-     "QA": 56,
+     "DESARROLLO": 73,
+     "QA": 34,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 300
@@ -7657,8 +7911,8 @@
      "dias_hab": 27,
      "avance": 0.7928,
      "REQUERIMIENTOS": 52,
-     "DESARROLLO": 51,
-     "QA": 54,
+     "DESARROLLO": 74,
+     "QA": 31,
      "CLIENTE": 29,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 300
@@ -7671,8 +7925,8 @@
      "dias_hab": 28,
      "avance": 0.7963,
      "REQUERIMIENTOS": 51,
-     "DESARROLLO": 51,
-     "QA": 58,
+     "DESARROLLO": 79,
+     "QA": 30,
      "CLIENTE": 18,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 301
@@ -7685,8 +7939,8 @@
      "dias_hab": 29,
      "avance": 0.7972,
      "REQUERIMIENTOS": 51,
-     "DESARROLLO": 51,
-     "QA": 59,
+     "DESARROLLO": 84,
+     "QA": 26,
      "CLIENTE": 18,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 301
@@ -7699,8 +7953,8 @@
      "dias_hab": 30,
      "avance": 0.798,
      "REQUERIMIENTOS": 53,
-     "DESARROLLO": 49,
-     "QA": 60,
+     "DESARROLLO": 85,
+     "QA": 24,
      "CLIENTE": 18,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 301
@@ -7713,8 +7967,8 @@
      "dias_hab": 31,
      "avance": 0.7968,
      "REQUERIMIENTOS": 53,
-     "DESARROLLO": 50,
-     "QA": 61,
+     "DESARROLLO": 89,
+     "QA": 22,
      "CLIENTE": 18,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 301
@@ -7727,8 +7981,8 @@
      "dias_hab": 32,
      "avance": 0.7979,
      "REQUERIMIENTOS": 55,
-     "DESARROLLO": 45,
-     "QA": 64,
+     "DESARROLLO": 85,
+     "QA": 24,
      "CLIENTE": 19,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
      "EN PRODUCCIÓN": 300
@@ -7741,8 +7995,8 @@
      "dias_hab": 33,
      "avance": 0.7975,
      "REQUERIMIENTOS": 58,
-     "DESARROLLO": 44,
-     "QA": 62,
+     "DESARROLLO": 84,
+     "QA": 22,
      "CLIENTE": 19,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 301
@@ -7755,8 +8009,8 @@
      "dias_hab": 34,
      "avance": 0.7962,
      "REQUERIMIENTOS": 59,
-     "DESARROLLO": 44,
-     "QA": 63,
+     "DESARROLLO": 85,
+     "QA": 22,
      "CLIENTE": 19,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 301
@@ -7769,8 +8023,8 @@
      "dias_hab": 35,
      "avance": 0.7994,
      "REQUERIMIENTOS": 56,
-     "DESARROLLO": 47,
-     "QA": 62,
+     "DESARROLLO": 88,
+     "QA": 21,
      "CLIENTE": 17,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 307
@@ -7783,8 +8037,8 @@
      "dias_hab": 36,
      "avance": 0.8015,
      "REQUERIMIENTOS": 54,
-     "DESARROLLO": 48,
-     "QA": 64,
+     "DESARROLLO": 90,
+     "QA": 22,
      "CLIENTE": 17,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 307
@@ -7797,8 +8051,8 @@
      "dias_hab": 37,
      "avance": 0.8016,
      "REQUERIMIENTOS": 54,
-     "DESARROLLO": 49,
-     "QA": 63,
+     "DESARROLLO": 92,
+     "QA": 20,
      "CLIENTE": 17,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 307
@@ -7811,8 +8065,8 @@
      "dias_hab": 38,
      "avance": 0.8023,
      "REQUERIMIENTOS": 54,
-     "DESARROLLO": 48,
-     "QA": 64,
+     "DESARROLLO": 90,
+     "QA": 22,
      "CLIENTE": 17,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 307
@@ -7825,8 +8079,8 @@
      "dias_hab": 39,
      "avance": 0.7996,
      "REQUERIMIENTOS": 56,
-     "DESARROLLO": 50,
-     "QA": 64,
+     "DESARROLLO": 93,
+     "QA": 21,
      "CLIENTE": 17,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 310
@@ -7839,8 +8093,8 @@
      "dias_hab": 40,
      "avance": 0.7981,
      "REQUERIMIENTOS": 57,
-     "DESARROLLO": 51,
-     "QA": 64,
+     "DESARROLLO": 95,
+     "QA": 20,
      "CLIENTE": 17,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 310
@@ -7853,8 +8107,8 @@
      "dias_hab": 41,
      "avance": 0.7559,
      "REQUERIMIENTOS": 94,
-     "DESARROLLO": 48,
-     "QA": 66,
+     "DESARROLLO": 95,
+     "QA": 19,
      "CLIENTE": 17,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 311
@@ -7867,8 +8121,8 @@
      "dias_hab": 42,
      "avance": 0.7696,
      "REQUERIMIENTOS": 80,
-     "DESARROLLO": 53,
-     "QA": 65,
+     "DESARROLLO": 102,
+     "QA": 16,
      "CLIENTE": 16,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 311
@@ -7881,8 +8135,8 @@
      "dias_hab": 43,
      "avance": 0.7702,
      "REQUERIMIENTOS": 79,
-     "DESARROLLO": 54,
-     "QA": 65,
+     "DESARROLLO": 104,
+     "QA": 15,
      "CLIENTE": 16,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 311
@@ -7895,8 +8149,8 @@
      "dias_hab": 44,
      "avance": 0.7717,
      "REQUERIMIENTOS": 74,
-     "DESARROLLO": 59,
-     "QA": 65,
+     "DESARROLLO": 109,
+     "QA": 15,
      "CLIENTE": 16,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 311
@@ -7909,8 +8163,8 @@
      "dias_hab": 45,
      "avance": 0.774,
      "REQUERIMIENTOS": 70,
-     "DESARROLLO": 61,
-     "QA": 67,
+     "DESARROLLO": 111,
+     "QA": 17,
      "CLIENTE": 16,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 311
@@ -7923,8 +8177,8 @@
      "dias_hab": 46,
      "avance": 0.7697,
      "REQUERIMIENTOS": 74,
-     "DESARROLLO": 63,
-     "QA": 64,
+     "DESARROLLO": 113,
+     "QA": 14,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 312
@@ -7937,8 +8191,8 @@
      "dias_hab": 47,
      "avance": 0.771,
      "REQUERIMIENTOS": 74,
-     "DESARROLLO": 61,
-     "QA": 66,
+     "DESARROLLO": 112,
+     "QA": 15,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6,
      "EN PRODUCCIÓN": 312
@@ -7951,8 +8205,8 @@
      "dias_hab": 48,
      "avance": 0.7716,
      "REQUERIMIENTOS": 74,
-     "DESARROLLO": 55,
-     "QA": 73,
+     "DESARROLLO": 107,
+     "QA": 21,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 316
@@ -7965,8 +8219,8 @@
      "dias_hab": 49,
      "avance": 0.773,
      "REQUERIMIENTOS": 74,
-     "DESARROLLO": 55,
-     "QA": 73,
+     "DESARROLLO": 108,
+     "QA": 20,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 316
@@ -7979,8 +8233,8 @@
      "dias_hab": 50,
      "avance": 0.7826,
      "REQUERIMIENTOS": 75,
-     "DESARROLLO": 17,
-     "QA": 110,
+     "DESARROLLO": 75,
+     "QA": 52,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 316
@@ -7993,8 +8247,8 @@
      "dias_hab": 51,
      "avance": 0.7871,
      "REQUERIMIENTOS": 75,
-     "DESARROLLO": 16,
-     "QA": 110,
+     "DESARROLLO": 78,
+     "QA": 48,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 317
@@ -8007,8 +8261,8 @@
      "dias_hab": 52,
      "avance": 0.7847,
      "REQUERIMIENTOS": 75,
-     "DESARROLLO": 19,
-     "QA": 109,
+     "DESARROLLO": 81,
+     "QA": 47,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 317
@@ -8021,8 +8275,8 @@
      "dias_hab": 53,
      "avance": 0.7739,
      "REQUERIMIENTOS": 83,
-     "DESARROLLO": 59,
-     "QA": 68,
+     "DESARROLLO": 122,
+     "QA": 5,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 316
@@ -8035,8 +8289,8 @@
      "dias_hab": 54,
      "avance": 0.7745,
      "REQUERIMIENTOS": 78,
-     "DESARROLLO": 65,
-     "QA": 68,
+     "DESARROLLO": 128,
+     "QA": 5,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 316
@@ -8049,8 +8303,8 @@
      "dias_hab": 55,
      "avance": 0.7758,
      "REQUERIMIENTOS": 80,
-     "DESARROLLO": 59,
-     "QA": 73,
+     "DESARROLLO": 126,
+     "QA": 6,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 316
@@ -8063,8 +8317,8 @@
      "dias_hab": 56,
      "avance": 0.777,
      "REQUERIMIENTOS": 80,
-     "DESARROLLO": 58,
-     "QA": 73,
+     "DESARROLLO": 125,
+     "QA": 6,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 317
@@ -8077,8 +8331,8 @@
      "dias_hab": 57,
      "avance": 0.7754,
      "REQUERIMIENTOS": 83,
-     "DESARROLLO": 56,
-     "QA": 74,
+     "DESARROLLO": 123,
+     "QA": 7,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 317
@@ -8091,8 +8345,8 @@
      "dias_hab": 58,
      "avance": 0.7715,
      "REQUERIMIENTOS": 88,
-     "DESARROLLO": 54,
-     "QA": 76,
+     "DESARROLLO": 123,
+     "QA": 7,
      "CLIENTE": 15,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 317
@@ -8105,8 +8359,8 @@
      "dias_hab": 59,
      "avance": 0.7634,
      "REQUERIMIENTOS": 95,
-     "DESARROLLO": 56,
-     "QA": 76,
+     "DESARROLLO": 125,
+     "QA": 7,
      "CLIENTE": 14,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 322
@@ -8119,8 +8373,8 @@
      "dias_hab": 60,
      "avance": 0.7683,
      "REQUERIMIENTOS": 94,
-     "DESARROLLO": 49,
-     "QA": 83,
+     "DESARROLLO": 118,
+     "QA": 14,
      "CLIENTE": 14,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 323
@@ -8133,8 +8387,8 @@
      "dias_hab": 61,
      "avance": 0.7649,
      "REQUERIMIENTOS": 100,
-     "DESARROLLO": 47,
-     "QA": 84,
+     "DESARROLLO": 117,
+     "QA": 14,
      "CLIENTE": 14,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 324
@@ -8147,8 +8401,8 @@
      "dias_hab": 62,
      "avance": 0.7682,
      "REQUERIMIENTOS": 97,
-     "DESARROLLO": 38,
-     "QA": 103,
+     "DESARROLLO": 116,
+     "QA": 25,
      "CLIENTE": 14,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 325
@@ -8161,8 +8415,8 @@
      "dias_hab": 63,
      "avance": 0.7684,
      "REQUERIMIENTOS": 96,
-     "DESARROLLO": 39,
-     "QA": 103,
+     "DESARROLLO": 117,
+     "QA": 25,
      "CLIENTE": 14,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 325
@@ -8175,8 +8429,8 @@
      "dias_hab": 64,
      "avance": 0.7704,
      "REQUERIMIENTOS": 92,
-     "DESARROLLO": 42,
-     "QA": 103,
+     "DESARROLLO": 119,
+     "QA": 26,
      "CLIENTE": 14,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1,
      "EN PRODUCCIÓN": 325
@@ -8189,8 +8443,8 @@
      "dias_hab": 65,
      "avance": 0.7719,
      "REQUERIMIENTOS": 97,
-     "DESARROLLO": 42,
-     "QA": 84,
+     "DESARROLLO": 100,
+     "QA": 26,
      "CLIENTE": 8,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 28,
      "EN PRODUCCIÓN": 325
@@ -8203,8 +8457,8 @@
      "dias_hab": 66,
      "avance": 0.7747,
      "REQUERIMIENTOS": 92,
-     "DESARROLLO": 46,
-     "QA": 85,
+     "DESARROLLO": 106,
+     "QA": 25,
      "CLIENTE": 8,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 28,
      "EN PRODUCCIÓN": 325
@@ -8217,8 +8471,8 @@
      "dias_hab": 67,
      "avance": 0.7766,
      "REQUERIMIENTOS": 91,
-     "DESARROLLO": 46,
-     "QA": 85,
+     "DESARROLLO": 107,
+     "QA": 24,
      "CLIENTE": 8,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 29,
      "EN PRODUCCIÓN": 325
@@ -8231,8 +8485,8 @@
      "dias_hab": 68,
      "avance": 0.7729,
      "REQUERIMIENTOS": 92,
-     "DESARROLLO": 52,
-     "QA": 86,
+     "DESARROLLO": 116,
+     "QA": 22,
      "CLIENTE": 2,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 35,
      "EN PRODUCCIÓN": 325
@@ -8245,8 +8499,8 @@
      "dias_hab": 69,
      "avance": 0.7692,
      "REQUERIMIENTOS": 95,
-     "DESARROLLO": 53,
-     "QA": 86,
+     "DESARROLLO": 117,
+     "QA": 22,
      "CLIENTE": 2,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 35,
      "EN PRODUCCIÓN": 325
@@ -8273,8 +8527,8 @@
      "dias_hab": 71,
      "avance": 0.7513,
      "REQUERIMIENTOS": 133,
-     "DESARROLLO": 11,
-     "QA": 63,
+     "DESARROLLO": 17,
+     "QA": 57,
      "CLIENTE": 71,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 361
@@ -8287,8 +8541,8 @@
      "dias_hab": 72,
      "avance": 0.7472,
      "REQUERIMIENTOS": 139,
-     "DESARROLLO": 8,
-     "QA": 67,
+     "DESARROLLO": 16,
+     "QA": 59,
      "CLIENTE": 70,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 362
@@ -8301,8 +8555,8 @@
      "dias_hab": 73,
      "avance": 0.7494,
      "REQUERIMIENTOS": 136,
-     "DESARROLLO": 11,
-     "QA": 68,
+     "DESARROLLO": 20,
+     "QA": 59,
      "CLIENTE": 70,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 364
@@ -8315,8 +8569,8 @@
      "dias_hab": 74,
      "avance": 0.7492,
      "REQUERIMIENTOS": 135,
-     "DESARROLLO": 15,
-     "QA": 67,
+     "DESARROLLO": 24,
+     "QA": 58,
      "CLIENTE": 70,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1,
      "EN PRODUCCIÓN": 364
@@ -8329,8 +8583,8 @@
      "dias_hab": 75,
      "avance": 0.7568,
      "REQUERIMIENTOS": 130,
-     "DESARROLLO": 20,
-     "QA": 70,
+     "DESARROLLO": 30,
+     "QA": 60,
      "CLIENTE": 23,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 48,
      "EN PRODUCCIÓN": 364
@@ -8343,8 +8597,8 @@
      "dias_hab": 76,
      "avance": 0.7572,
      "REQUERIMIENTOS": 127,
-     "DESARROLLO": 23,
-     "QA": 72,
+     "DESARROLLO": 35,
+     "QA": 60,
      "CLIENTE": 23,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 48,
      "EN PRODUCCIÓN": 364
@@ -8357,8 +8611,8 @@
      "dias_hab": 77,
      "avance": 0.7639,
      "REQUERIMIENTOS": 122,
-     "DESARROLLO": 22,
-     "QA": 79,
+     "DESARROLLO": 36,
+     "QA": 65,
      "CLIENTE": 10,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 62,
      "EN PRODUCCIÓN": 364
@@ -8598,8 +8852,8 @@
     {
      "fecha": "2026-04-06",
      "entradas": {
-      "DESARROLLO": 29,
-      "QA": 24,
+      "DESARROLLO": 50,
+      "QA": 3,
       "CLIENTE": 22
      },
      "salidas": {
@@ -8614,13 +8868,14 @@
      "fecha": "2026-04-07",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 2,
+      "DESARROLLO": 3,
       "QA": 2,
       "CLIENTE": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 5
+      "DESARROLLO": 5,
+      "QA": 1
      }
     },
     {
@@ -8637,21 +8892,24 @@
     {
      "fecha": "2026-04-09",
      "entradas": {
-      "REQUERIMIENTOS": 2
+      "REQUERIMIENTOS": 2,
+      "DESARROLLO": 1
      },
      "salidas": {
-      "QA": 2
+      "QA": 3
      }
     },
     {
      "fecha": "2026-04-10",
      "entradas": {
-      "QA": 4,
+      "DESARROLLO": 5,
+      "QA": 2,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 7,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
+      "QA": 3,
       "CLIENTE": 11
      }
     },
@@ -8659,50 +8917,53 @@
      "fecha": "2026-04-13",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 1,
+      "DESARROLLO": 6,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 5
      }
     },
     {
      "fecha": "2026-04-14",
      "entradas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 1,
+      "DESARROLLO": 4,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 3
+      "DESARROLLO": 3,
+      "QA": 3
      }
     },
     {
      "fecha": "2026-04-15",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 2,
+      "DESARROLLO": 5,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 3
      }
     },
     {
      "fecha": "2026-04-16",
      "entradas": {
       "REQUERIMIENTOS": 6,
-      "DESARROLLO": 2,
+      "DESARROLLO": 4,
       "QA": 4,
       "CLIENTE": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 7,
-      "QA": 1,
+      "DESARROLLO": 8,
+      "QA": 2,
       "EN PRODUCCIÓN": 1
      }
     },
@@ -8724,25 +8985,27 @@
      "fecha": "2026-04-20",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 1,
+      "DESARROLLO": 2,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-04-21",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 3,
-      "QA": 1,
+      "DESARROLLO": 4,
+      "QA": 2,
       "EN PRODUCCIÓN": 6
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "QA": 2,
+      "DESARROLLO": 1,
+      "QA": 3,
       "CLIENTE": 2,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
      }
@@ -8750,88 +9013,92 @@
     {
      "fecha": "2026-04-22",
      "entradas": {
-      "DESARROLLO": 3,
+      "DESARROLLO": 4,
       "QA": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 2
+      "DESARROLLO": 2,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-04-23",
      "entradas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 2
+      "DESARROLLO": 3
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
       "DESARROLLO": 1,
-      "QA": 1
+      "QA": 2
      }
     },
     {
      "fecha": "2026-04-24",
      "entradas": {
-      "QA": 1
+      "QA": 2
      },
      "salidas": {
-      "DESARROLLO": 1
+      "DESARROLLO": 2
      }
     },
     {
      "fecha": "2026-04-27",
      "entradas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 2,
+      "DESARROLLO": 3,
       "EN PRODUCCIÓN": 3
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-04-28",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 1
+      "DESARROLLO": 2
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-04-29",
      "entradas": {
       "REQUERIMIENTOS": 37,
-      "DESARROLLO": 2,
+      "DESARROLLO": 5,
       "QA": 4,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
       "DESARROLLO": 5,
-      "QA": 2
+      "QA": 5
      }
     },
     {
      "fecha": "2026-04-30",
      "entradas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 5
+      "DESARROLLO": 7
      },
      "salidas": {
       "REQUERIMIENTOS": 18,
-      "QA": 1,
+      "QA": 3,
       "CLIENTE": 1
      }
     },
     {
      "fecha": "2026-05-04",
      "entradas": {
-      "DESARROLLO": 1
+      "DESARROLLO": 2
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 1
      }
     },
     {
@@ -8871,58 +9138,64 @@
     {
      "fecha": "2026-05-08",
      "entradas": {
+      "DESARROLLO": 1,
       "QA": 2
      },
      "salidas": {
-      "DESARROLLO": 2
+      "DESARROLLO": 2,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-05-11",
      "entradas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 3,
+      "DESARROLLO": 4,
       "QA": 7,
       "EN PRODUCCIÓN": 4
      },
      "salidas": {
       "REQUERIMIENTOS": 3,
       "DESARROLLO": 9,
+      "QA": 1,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2
      }
     },
     {
      "fecha": "2026-05-12",
      "entradas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 1
      },
      "salidas": {
-      "REQUERIMIENTOS": 1
+      "REQUERIMIENTOS": 1,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-05-13",
      "entradas": {
       "REQUERIMIENTOS": 1,
+      "DESARROLLO": 5,
       "QA": 38
      },
      "salidas": {
       "DESARROLLO": 38,
-      "QA": 1
+      "QA": 6
      }
     },
     {
      "fecha": "2026-05-14",
      "entradas": {
       "REQUERIMIENTOS": 5,
-      "DESARROLLO": 5,
+      "DESARROLLO": 9,
       "QA": 2,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 5,
       "DESARROLLO": 6,
-      "QA": 2
+      "QA": 6
      }
     },
     {
@@ -8940,13 +9213,13 @@
      "fecha": "2026-05-19",
      "entradas": {
       "REQUERIMIENTOS": 9,
-      "DESARROLLO": 43,
+      "DESARROLLO": 44,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
       "DESARROLLO": 3,
-      "QA": 42,
+      "QA": 43,
       "EN PRODUCCIÓN": 1
      }
     },
@@ -8964,12 +9237,13 @@
      "fecha": "2026-05-21",
      "entradas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 1,
-      "QA": 5
+      "DESARROLLO": 4,
+      "QA": 4
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 7
+      "DESARROLLO": 6,
+      "QA": 3
      }
     },
     {
@@ -8997,10 +9271,12 @@
      "fecha": "2026-05-26",
      "entradas": {
       "REQUERIMIENTOS": 5,
-      "QA": 2
+      "DESARROLLO": 1,
+      "QA": 1
      },
      "salidas": {
-      "DESARROLLO": 2
+      "DESARROLLO": 1,
+      "QA": 1
      }
     },
     {
@@ -9032,24 +9308,27 @@
      "fecha": "2026-05-29",
      "entradas": {
       "REQUERIMIENTOS": 6,
+      "DESARROLLO": 1,
       "QA": 1,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
-      "DESARROLLO": 2
+      "DESARROLLO": 2,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-06-01",
      "entradas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 6,
+      "DESARROLLO": 14,
       "QA": 19,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 7,
-      "DESARROLLO": 15
+      "DESARROLLO": 15,
+      "QA": 8
      }
     },
     {
@@ -9070,58 +9349,60 @@
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 1,
-      "QA": 1
+      "DESARROLLO": 2
      }
     },
     {
      "fecha": "2026-06-04",
      "entradas": {
       "REQUERIMIENTOS": 8,
-      "DESARROLLO": 2,
+      "DESARROLLO": 4,
       "QA": 2,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 27
      },
      "salidas": {
       "REQUERIMIENTOS": 3,
-      "DESARROLLO": 2,
-      "QA": 21,
+      "DESARROLLO": 23,
+      "QA": 2,
       "CLIENTE": 6
      }
     },
     {
      "fecha": "2026-06-05",
      "entradas": {
-      "DESARROLLO": 5,
+      "DESARROLLO": 7,
       "QA": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 5,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 2
      }
     },
     {
      "fecha": "2026-06-09",
      "entradas": {
-      "DESARROLLO": 1,
+      "DESARROLLO": 2,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 1
+      "DESARROLLO": 1,
+      "QA": 1
      }
     },
     {
      "fecha": "2026-06-10",
      "entradas": {
       "REQUERIMIENTOS": 8,
-      "DESARROLLO": 7,
+      "DESARROLLO": 10,
       "QA": 1,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 6
      },
      "salidas": {
       "REQUERIMIENTOS": 7,
       "DESARROLLO": 1,
+      "QA": 3,
       "CLIENTE": 6
      }
     },
@@ -9146,8 +9427,8 @@
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
-      "DESARROLLO": 33,
-      "QA": 69,
+      "DESARROLLO": 97,
+      "QA": 5,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 35
      }
     },
@@ -9155,25 +9436,28 @@
      "fecha": "2026-06-16",
      "entradas": {
       "REQUERIMIENTOS": 32,
+      "DESARROLLO": 6,
       "QA": 13,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 4,
-      "DESARROLLO": 10
+      "DESARROLLO": 10,
+      "QA": 6
      }
     },
     {
      "fecha": "2026-06-17",
      "entradas": {
       "REQUERIMIENTOS": 7,
-      "DESARROLLO": 2,
+      "DESARROLLO": 4,
       "QA": 4,
       "EN PRODUCCIÓN": 1
      },
      "salidas": {
       "REQUERIMIENTOS": 1,
       "DESARROLLO": 5,
+      "QA": 2,
       "CLIENTE": 1
      }
     },
@@ -9181,13 +9465,14 @@
      "fecha": "2026-06-18",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 6,
+      "DESARROLLO": 7,
       "QA": 1,
       "EN PRODUCCIÓN": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 5,
-      "DESARROLLO": 3
+      "DESARROLLO": 3,
+      "QA": 1
      }
     },
     {
@@ -9208,12 +9493,12 @@
      "entradas": {
       "REQUERIMIENTOS": 2,
       "DESARROLLO": 7,
-      "QA": 3,
+      "QA": 2,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 47
      },
      "salidas": {
       "REQUERIMIENTOS": 7,
-      "DESARROLLO": 2,
+      "DESARROLLO": 1,
       "CLIENTE": 47
      }
     },
@@ -9221,25 +9506,27 @@
      "fecha": "2026-06-23",
      "entradas": {
       "REQUERIMIENTOS": 5,
-      "DESARROLLO": 5,
+      "DESARROLLO": 7,
       "QA": 2
      },
      "salidas": {
       "REQUERIMIENTOS": 8,
-      "DESARROLLO": 2
+      "DESARROLLO": 2,
+      "QA": 2
      }
     },
     {
      "fecha": "2026-06-24",
      "entradas": {
       "REQUERIMIENTOS": 2,
-      "DESARROLLO": 6,
-      "QA": 7,
+      "DESARROLLO": 7,
+      "QA": 6,
       "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 14
      },
      "salidas": {
       "REQUERIMIENTOS": 7,
-      "DESARROLLO": 7,
+      "DESARROLLO": 6,
+      "QA": 1,
       "CLIENTE": 13
      }
     }
