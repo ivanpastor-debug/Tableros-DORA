@@ -116,6 +116,25 @@ table.piv tr.tot th{background:var(--card2)}
 .cbv{font-size:30px;font-weight:800;letter-spacing:-1px;margin-top:8px;color:var(--text)}
 .cbs{font-size:11px;color:var(--muted2);margin-top:4px}
 @media(max-width:700px){.costrow{grid-template-columns:1fr}}
+/* carga por responsable + panel de alertas (interno) */
+.dwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;max-height:470px}
+.dtbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;white-space:nowrap;min-width:100%}
+.dtbl th,.dtbl td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}
+.dtbl thead th{position:sticky;top:0;background:var(--card2);color:var(--muted);font-weight:700;
+  font-size:11px;text-transform:uppercase;letter-spacing:.4px;z-index:2}
+.dtbl th.num,.dtbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+.dtbl tbody tr.rclk{cursor:pointer}
+.dtbl tbody tr.rclk:hover{background:var(--card2)}
+.dtbl tr.rdetail td{background:var(--bg2);font-size:12px;color:var(--muted)}
+.caret{display:inline-block;width:12px;color:var(--accent);font-weight:800}
+.chip2{display:inline-block;padding:2px 9px;border-radius:6px;background:var(--card2);
+  border:1px solid var(--line);font-size:11px;color:var(--text);font-weight:700}
+.tbar{height:7px;width:74px;border-radius:4px;background:var(--line);overflow:hidden;
+  display:inline-block;vertical-align:middle;margin-right:8px}
+.tbar > i{display:block;height:100%;border-radius:4px;background:var(--grad)}
+.abadge{display:inline-block;min-width:40px;text-align:center;padding:3px 8px;border-radius:7px;
+  font-weight:800;font-size:11.5px;color:#fff}
+.muted{color:var(--muted)}
 </style>
 </head>
 <body>

@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -34,6 +34,9 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // recursos/costos = archivo INTERNO (gitignored); ausente en la versión pública -> sección oculta
   try { const rr = await fetch("data_recursos.json"); RECURSOS = rr.ok ? await rr.json() : null; }
   catch (_) { RECURSOS = null; }
+  // carga por responsable + alertas = archivo INTERNO (gitignored, con nombres); ausente en público -> oculto
+  try { const cc = await fetch("data_carga.json"); CARGA = cc.ok ? await cc.json() : null; }
+  catch (_) { CARGA = null; }
   const sel = $("#proySel");
   sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` +
     d.proyectos.map(p => `<option value="${p.codigo}">${p.codigo} · ${p.nombre}</option>`).join("");
@@ -96,6 +99,70 @@ function setupRecursos(resObj) {
   REC_STATE = { resObj, date: ref, area: null };
   fi.min = F[0]; fi.max = F[F.length - 1]; fi.value = ref;
   fi.onchange = () => { REC_STATE.date = fi.value || ref; $("#recBody").innerHTML = recursosBody(snapRec(resObj, F, REC_STATE.date), REC_STATE.area); };
+}
+
+/* ---------- carga por responsable + panel de alertas (INTERNO, data_carga.json) ---------- */
+const esc = (s) => s == null ? "" : String(s).replace(/[<>&]/g, m => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[m]));
+function cargaObj(cod) { return CARGA && CARGA.proyectos ? CARGA.proyectos[cod] : null; }
+function diasBadge(d) {
+  if (d == null) return '<span class="muted">—</span>';
+  const c = d > 20 ? "#ef4444" : d > 8 ? "#f59e0b" : "#38bdf8";   // severidad por antigüedad
+  return `<span class="abadge" style="background:${c}">${d}d</span>`;
+}
+function toggleResp(cod, i) {
+  document.querySelectorAll(`.det-${cod}-${i}`).forEach(tr => { tr.style.display = tr.style.display === "none" ? "" : "none"; });
+  const car = document.getElementById(`car-${cod}-${i}`); if (car) car.textContent = car.textContent === "▸" ? "▾" : "▸";
+}
+function cargaCard(cod) {
+  const c = cargaObj(cod);
+  if (!c || !(c.responsables || []).length) return "";
+  let body = "";
+  c.responsables.forEach((r, i) => {
+    const av = r.avance;
+    body += `<tr class="rclk" onclick="toggleResp('${cod}',${i})">
+        <td><span class="caret" id="car-${cod}-${i}">▸</span> ${esc(r.nombre)}</td>
+        <td><span class="chip2">${esc(r.cargo)}</span></td>
+        <td class="muted">${esc(AREA_LBL[r.area] || r.area || "")}</td>
+        <td class="num">${r.hu_total}</td>
+        <td class="num">${r.pendientes}</td>
+        <td class="num">${av == null ? "—" : `<span class="tbar"><i style="width:${Math.round(av * 100)}%"></i></span>${pct0(av)}`}</td>
+      </tr>`;
+    (r.hus || []).forEach(h => {
+      body += `<tr class="rdetail det-${cod}-${i}" style="display:none">
+        <td>↳ HU ${h.id}</td><td colspan="2">${esc(h.state)}</td>
+        <td class="num">${h.pct == null ? "—" : h.pct + "%"}</td>
+        <td class="num">${diasBadge(h.dias_sin_mov)}</td>
+        <td title="${esc(h.titulo)}">${esc((h.titulo || "").slice(0, 46))}</td></tr>`;
+    });
+  });
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>👤 Carga por responsable</h3>
+    <div class="hint">HU asignadas al responsable actual · avance ponderado por homologación · <b>clic en una fila</b> para ver sus HU · interno (no se publica)</div>
+    <div class="dwrap"><table class="dtbl"><thead><tr>
+      <th>Responsable</th><th>Cargo</th><th>Área</th><th class="num">HU</th><th class="num">Pend.</th><th class="num">Avance</th>
+    </tr></thead><tbody>${body}</tbody></table></div>
+  </div>`;
+}
+function alertasCard(cod) {
+  const c = cargaObj(cod);
+  if (!c || !(c.alertas || []).length) return "";
+  const A = c.alertas, cap = 150;
+  const crit = A.filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 20).length;
+  const rows = A.slice(0, cap).map(a => `<tr>
+      <td class="num">${diasBadge(a.dias_sin_mov)}</td>
+      <td>HU ${a.id}</td>
+      <td>${esc(a.state)}</td>
+      <td class="muted">${esc(a.responsable)}</td>
+      <td><span class="chip2">${esc(a.cargo)}</span></td>
+      <td class="muted">desde ${a.desde || "—"}</td>
+    </tr>`).join("");
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>🚨 Alertas · HU sin movimiento</h3>
+    <div class="hint">Días en el estado actual sin cambios · de la más antigua a la más reciente · <b>${crit}</b> con +20 días${A.length > cap ? ` · mostrando ${cap} de ${A.length}` : ""} · interno</div>
+    <div class="dwrap"><table class="dtbl"><thead><tr>
+      <th class="num">Días</th><th>HU</th><th>Estado</th><th>Responsable</th><th>Cargo</th><th>Desde</th>
+    </tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
 }
 
 /* productividad persona-día por proceso: HU gestionadas (salidas) / día hábil / personas del área */
@@ -334,7 +401,9 @@ function renderProject(p) {
     </div>
     <div id="cProdPD" class="chart"></div>
   </div>` : "";
-  $("#content").innerHTML = head + kpis + recursos + charts + flujoUI + prodUI;
+  const carga = cargaCard(p.codigo);       // interno (data_carga.json); "" si no existe (público)
+  const alertas = alertasCard(p.codigo);
+  $("#content").innerHTML = head + kpis + recursos + carga + alertas + charts + flujoUI + prodUI;
   countUp();
   setupRecursos(recObj);
   drawArea($("#cArea"), p);
