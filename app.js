@@ -129,10 +129,10 @@ function cargaCard(cod) {
       </tr>`;
     (r.hus || []).forEach(h => {
       body += `<tr class="rdetail det-${cod}-${i}" style="display:none">
-        <td>↳ HU ${h.id}</td><td colspan="2">${esc(h.state)}</td>
+        <td>↳ HU ${h.id}</td><td colspan="2" title="${esc(h.titulo)}">${esc((h.titulo || h.state || "").slice(0, 60))}</td>
         <td class="num">${h.pct == null ? "—" : h.pct + "%"}</td>
         <td class="num">${diasBadge(h.dias_sin_mov)}</td>
-        <td class="muted">${esc(h.proceso || "")}</td></tr>`;
+        <td class="muted">${esc(h.state)}</td></tr>`;
     });
   });
   return `<div class="card fade" style="margin-top:16px">
@@ -151,6 +151,7 @@ function alertasCard(cod) {
   const rows = A.slice(0, cap).map(a => `<tr>
       <td class="num">${diasBadge(a.dias_sin_mov)}</td>
       <td>HU ${a.id}</td>
+      <td title="${esc(a.titulo)}">${esc((a.titulo || "").slice(0, 60)) || "<span class='muted'>—</span>"}</td>
       <td>${esc(a.state)}</td>
       <td class="muted">${esc(a.responsable)}</td>
       <td><span class="chip2">${esc(a.cargo)}</span></td>
@@ -158,9 +159,9 @@ function alertasCard(cod) {
     </tr>`).join("");
   return `<div class="card fade" style="margin-top:16px">
     <h3>🚨 Alertas · HU sin movimiento</h3>
-    <div class="hint">Días en el estado actual sin cambios · de la más antigua a la más reciente · <b>${crit}</b> con +20 días${A.length > cap ? ` · mostrando ${cap} de ${A.length}` : ""} · interno</div>
+    <div class="hint">Días en el estado actual sin cambios · de la más antigua a la más reciente · <b>${crit}</b> con +20 días${A.length > cap ? ` · mostrando ${cap} de ${A.length}` : ""}</div>
     <div class="dwrap"><table class="dtbl"><thead><tr>
-      <th class="num">Días</th><th>HU</th><th>Estado</th><th>Responsable</th><th>Cargo</th><th>Desde</th>
+      <th class="num">Días</th><th>HU</th><th>Título</th><th>Estado</th><th>Responsable</th><th>Cargo</th><th>Desde</th>
     </tr></thead><tbody>${rows}</tbody></table></div>
   </div>`;
 }
