@@ -404,7 +404,7 @@ function paintProject() {
   switch (PROFILE_TAB) {
     case "directivo":   // estratégico: salud y cumplimiento
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
-        gridKpis + two(cLine, cGauge) + cRecursos + cAlertas; break;
+        gridKpis + two(cLine, cGauge) + cRecursos + cProdPD + cAlertas; break;
     case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
         gridKpis + cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
