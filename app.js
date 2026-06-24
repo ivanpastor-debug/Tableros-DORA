@@ -132,7 +132,7 @@ function cargaCard(cod) {
         <td>↳ HU ${h.id}</td><td colspan="2">${esc(h.state)}</td>
         <td class="num">${h.pct == null ? "—" : h.pct + "%"}</td>
         <td class="num">${diasBadge(h.dias_sin_mov)}</td>
-        <td title="${esc(h.titulo)}">${esc((h.titulo || "").slice(0, 46))}</td></tr>`;
+        <td class="muted">${esc(h.proceso || "")}</td></tr>`;
     });
   });
   return `<div class="card fade" style="margin-top:16px">
