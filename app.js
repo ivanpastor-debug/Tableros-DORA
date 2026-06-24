@@ -316,10 +316,9 @@ function render(key) {
    Portafolio NO se toca. "General" conserva la vista completa para no perder nada. */
 const PROFILES = [
   { id: "general", label: "General", icon: "▦" },
-  { id: "director", label: "Director de Operaciones", icon: "🎯" },
-  { id: "gerente", label: "Gerente de Proyecto", icon: "📋" },
-  { id: "head", label: "Head / Líder de área", icon: "🛠" },
-  { id: "scrum", label: "Scrum Master", icon: "🏃" },
+  { id: "directivo", label: "Directivo", icon: "🎯" },          // antes Director de Operaciones
+  { id: "gerencial", label: "Gerencial", icon: "📋" },          // antes Gerente de Proyecto
+  { id: "operativo", label: "Operativo", icon: "🛠" },          // unifica Head/Líder + Scrum
 ];
 let PROJ = null, PROFILE_TAB = "general";
 
@@ -403,19 +402,16 @@ function paintProject() {
 
   let body;
   switch (PROFILE_TAB) {
-    case "director":   // estratégico: salud y cumplimiento
+    case "directivo":   // estratégico: salud y cumplimiento
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
         gridKpis + two(cLine, cGauge) + cRecursos + cAlertas; break;
-    case "gerente":    // integral del proyecto
+    case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
         gridKpis + cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
-    case "head":       // técnico por área / equipo
-      body = note("Vista técnica · ejecución por área y equipo") +
-        gridKpis + split(cArea, cDonut) + cProdPD + cCarga + cFlujo; break;
-    case "scrum":      // operativo día a día
-      body = note("Vista operativa · día a día del equipo") +
-        cCarga + cAlertas + cFlujo + cPivot; break;
-    default:           // General: vista completa (nada se pierde)
+    case "operativo":   // técnico + día a día (unifica Head/Líder + Scrum)
+      body = note("Vista operativa · ejecución por área y día a día del equipo") +
+        gridKpis + split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
+    default:            // General: vista completa (nada se pierde)
       body = gridKpis + cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
   }
 
