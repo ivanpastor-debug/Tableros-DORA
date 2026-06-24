@@ -60,21 +60,13 @@ function recursosBody(s, areaSel) {
   if (!s) return "";
   const pa = s.por_area || {};
   const totalN = AREA_ORDER.reduce((a, k) => a + ((pa[k] && pa[k].n) || 0), 0);
-  const sumC = (i) => AREA_ORDER.reduce((a, k) => a + ((pa[k] && pa[k].c && pa[k].c[i]) || 0), 0);
   const sel = (areaSel && pa[areaSel]) ? pa[areaSel] : null;
   const n = sel ? sel.n : totalN;
-  const c = sel ? sel.c : [sumC(0), sumC(1), sumC(2)];
   const chip = (k) => (pa[k] && pa[k].n) ? `<span class="rchip${areaSel === k ? " on" : ""}" onclick="recSelArea('${k}')"><span class="rdot" style="background:${AREA_COL[k]}"></span>${AREA_LBL[k]} <b>${pa[k].n}</b></span>` : "";
-  const box = (lbl, val, col) => `<div class="costbox" style="--c:${col}"><div class="cbl">${lbl}</div><div class="cbv" title="$${new Intl.NumberFormat("es-CO").format(Math.round(val))}">${fmtMoney(val)}</div><div class="cbs">mensual</div></div>`;
+  // Visual financiera RETIRADA (se proyectará en otra iteración) -> solo cantidad de recursos + por área.
   return `<div class="rrow">
       <div class="rbig"><div class="rbign">${n}</div><div class="rbigl">${sel ? AREA_LBL[areaSel] : "personas"}</div></div>
       <div class="rchips">${AREA_ORDER.map(chip).join("")}${areaSel ? `<span class="rchip rclear" onclick="recSelArea('${areaSel}')">✕ ver todas</span>` : ""}</div>
-    </div>
-    <div class="rsub">💲 Costo mensual ${sel ? "· " + AREA_LBL[areaSel] : "del equipo"} (banda salarial)</div>
-    <div class="costrow">
-      ${box("Mínimo", c[0], "#38bdf8")}
-      ${box("Medio", c[1], "#10b981")}
-      ${box("Máximo", c[2], "#ef4444")}
     </div>`;
 }
 function recSelArea(k) {
@@ -87,7 +79,7 @@ function recursosCard(resObj, titulo, nota) {
   const def = RECURSOS.fecha_ref || "";
   return `<div class="card fade rcard" style="margin-top:16px">
     <h3>👥 Recursos del equipo${titulo ? " · " + titulo : ""}</h3>
-    <div class="hint">${nota ? nota + " · " : ""}equipo activo a la fecha · <b>clic en un área</b> para redimensionar el costo</div>
+    <div class="hint">${nota ? nota + " · " : ""}equipo activo a la fecha · <b>clic en un área</b> para ver su nº de personas</div>
     <div class="filterbar"><label>Fecha de consulta <input type="date" id="recFecha"></label></div>
     <div id="recBody">${recursosBody(snapRec(resObj, RECURSOS.fechas, def), null)}</div>
   </div>`;
@@ -348,15 +340,19 @@ function paintProject() {
     `<button class="tab${pr.id === PROFILE_TAB ? " on" : ""}" onclick="selectProfile('${pr.id}')">${pr.icon} ${pr.label}</button>`).join("")}</div>`;
 
   // ---- fragmentos reutilizables (mismas fuentes, distinta curaduría por perfil) ----
-  const gridKpis = `<div class="grid kpis">
-    ${kpi("HU Totales", "▦", "#6366f1", `<span data-count="${k.hu_total}">0</span>`, `${fmt(k.hu_pendientes)} pendientes de producción`)}
-    ${kpi("HU Removidas", "✕", "#94a3b8", `<span data-count="${k.removidas || 0}">0</span>`, "Removido/Cancelado · fuera del conteo")}
-    ${kpi("En Producción", "✓", "#10b981", `<span data-count="${k.hu_prod}">0</span>`, `de ${fmt(k.hu_total)} HU`, k.pct_prod)}
-    ${kpi("% Puesta en Producción", "◎", "#38bdf8", `<span data-count="${(k.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`, "HU en producción / totales", k.pct_prod)}
-    ${kpi("% Avance ponderado", "◔", "#a855f7", k.pct_avance == null ? "—" : `<span data-count="${k.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, k.pct_avance == null ? "sin homologación de avance" : "promedio por etapa", k.pct_avance)}
-    ${kpi("Velocidad", "⚡", "#f59e0b", `<span data-count="${k.velocidad || 0}" data-dec="2">0</span> <small>HU/día</small>`, `${fmt(k.dias_transcurridos)} días hábiles transcurridos`)}
-    ${kpi("Días hábiles a cierre QA", "⏳", restQA != null && restQA <= 10 ? "#ef4444" : "#38bdf8", restQA == null ? "—" : `<span data-count="${restQA}">0</span>`, p.cierre?.QA ? `cierre QA ${p.cierre.QA}` : "sin fecha de cierre")}
-  </div>`;
+  // ---- tarjetas KPI individuales (se eligen por perfil) ----
+  const kHU = kpi("HU Totales", "▦", "#6366f1", `<span data-count="${k.hu_total}">0</span>`, `${fmt(k.hu_pendientes)} pendientes de producción`);
+  const kRem = kpi("HU Removidas", "✕", "#94a3b8", `<span data-count="${k.removidas || 0}">0</span>`, "Removido/Cancelado · fuera del conteo");
+  const kProd = kpi("En Producción", "✓", "#10b981", `<span data-count="${k.hu_prod}">0</span>`, `de ${fmt(k.hu_total)} HU`, k.pct_prod);
+  const kPctProd = kpi("% Puesta en Producción", "◎", "#38bdf8", `<span data-count="${(k.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`, "HU en producción / totales", k.pct_prod);
+  const kAvance = kpi("% Avance ponderado", "◔", "#a855f7", k.pct_avance == null ? "—" : `<span data-count="${k.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, k.pct_avance == null ? "sin homologación de avance" : "promedio por etapa", k.pct_avance);
+  const kVel = kpi("Velocidad", "⚡", "#f59e0b", `<span data-count="${k.velocidad || 0}" data-dec="2">0</span> <small>HU/día</small>`, `${fmt(k.dias_transcurridos)} días hábiles transcurridos`);
+  const kCierre = kpi("Días hábiles a cierre QA", "⏳", restQA != null && restQA <= 10 ? "#ef4444" : "#38bdf8", restQA == null ? "—" : `<span data-count="${restQA}">0</span>`, p.cierre?.QA ? `cierre QA ${p.cierre.QA}` : "sin fecha de cierre");
+  // HU con +10 días en el mismo estado (del panel de alertas; requiere data_carga)
+  const _cObj = cargaObj(p.codigo);
+  const _estanc10 = _cObj && _cObj.alertas ? _cObj.alertas.filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length : null;
+  const kEstanc = kpi("HU +10 días sin avanzar", "⚠", "#ef4444", _estanc10 == null ? "—" : `<span data-count="${_estanc10}">0</span>`, "mismo estado · más de 10 días");
+  const wrapKpis = (cards) => `<div class="grid kpis">${cards.join("")}</div>`;
   const cArea = `<div class="card fade"><h3>Avance por proceso en el tiempo</h3>
       <div class="hint">HU en cada etapa por fecha de corte (apilado)</div><div id="cArea" class="chart tall"></div></div>`;
   const cDonut = `<div class="card fade"><h3>Distribución actual</h3>
@@ -402,17 +398,21 @@ function paintProject() {
 
   let body;
   switch (PROFILE_TAB) {
-    case "directivo":   // estratégico: salud y cumplimiento
+    case "directivo":   // estratégico: resultado, cumplimiento y riesgo
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
-        gridKpis + two(cLine, cGauge) + cRecursos + cProdPD + cAlertas; break;
+        wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
+        two(cLine, cGauge) + cRecursos + cProdPD + cAlertas; break;
     case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
-        gridKpis + cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
-    case "operativo":   // técnico + día a día (unifica Head/Líder + Scrum)
+        wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
+        cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
+    case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
-        gridKpis + split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
+        wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
+        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
     default:            // General: vista completa (nada se pierde)
-      body = gridKpis + cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
+      body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
+        cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
   }
 
   $("#content").innerHTML = head + tabbar + body;
