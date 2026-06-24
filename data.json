@@ -1,5 +1,5 @@
 {
- "generado": "2026-06-24 09:33",
+ "generado": "2026-06-24 10:00",
  "corte": "2026-06-24",
  "total_filas": 160366,
  "procesos": [
@@ -54,14 +54,14 @@
     "pct_avance": 0.6846932515337423,
     "hu_pendientes": 129,
     "removidas": 41,
-    "dias_transcurridos": 44,
+    "dias_transcurridos": 43,
     "dias_restantes": {
      "REQ": 128,
      "DEV": 128,
      "QA": 128
     },
-    "velocidad": 4.4772727272727275,
-    "prod_actual": 4.4772727272727275,
+    "velocidad": 4.5813953488372094,
+    "prod_actual": 4.5813953488372094,
     "prod_esperada": 1.0078125
    },
    "por_proceso": {
@@ -840,14 +840,14 @@
     "pct_avance": 0.7523809523809524,
     "hu_pendientes": 323,
     "removidas": 60,
-    "dias_transcurridos": 46,
+    "dias_transcurridos": 45,
     "dias_restantes": {
      "REQ": 26,
      "DEV": 26,
      "QA": 26
     },
-    "velocidad": 5.304347826086956,
-    "prod_actual": 5.304347826086956,
+    "velocidad": 5.4222222222222225,
+    "prod_actual": 5.4222222222222225,
     "prod_esperada": 12.423076923076923
    },
    "por_proceso": {
@@ -1924,14 +1924,14 @@
     "pct_avance": 0.9366515837104071,
     "hu_pendientes": 93,
     "removidas": 0,
-    "dias_transcurridos": 81,
+    "dias_transcurridos": 80,
     "dias_restantes": {
      "REQ": 0,
      "DEV": 0,
      "QA": 4
     },
-    "velocidad": 1.5802469135802468,
-    "prod_actual": 1.5802469135802468,
+    "velocidad": 1.6,
+    "prod_actual": 1.6,
     "prod_esperada": 23.25
    },
    "por_proceso": {
@@ -3583,7 +3583,7 @@
     "pct_avance": 0.25859504132231403,
     "hu_pendientes": 242,
     "removidas": 0,
-    "dias_transcurridos": 73,
+    "dias_transcurridos": 72,
     "dias_restantes": {
      "REQ": 26,
      "DEV": 26,
@@ -4872,14 +4872,14 @@
     "pct_avance": 0.7639150227617603,
     "hu_pendientes": 295,
     "removidas": 168,
-    "dias_transcurridos": 72,
+    "dias_transcurridos": 71,
     "dias_restantes": {
      "REQ": 571,
      "DEV": 571,
      "QA": 571
     },
-    "velocidad": 5.055555555555555,
-    "prod_actual": 5.055555555555555,
+    "velocidad": 5.126760563380282,
+    "prod_actual": 5.126760563380282,
     "prod_esperada": 0.5166374781085814
    },
    "por_proceso": {
@@ -6445,14 +6445,14 @@
     "pct_avance": 0.7639150227617603,
     "hu_pendientes": 295,
     "removidas": 168,
-    "dias_transcurridos": 41,
+    "dias_transcurridos": 40,
     "dias_restantes": {
      "REQ": null,
      "DEV": null,
      "QA": null
     },
-    "velocidad": 8.878048780487806,
-    "prod_actual": 8.878048780487806,
+    "velocidad": 9.1,
+    "prod_actual": 9.1,
     "prod_esperada": null
    },
    "por_proceso": {
@@ -7325,14 +7325,14 @@
     "pct_avance": 0.7639150227617603,
     "hu_pendientes": 295,
     "removidas": 168,
-    "dias_transcurridos": 77,
+    "dias_transcurridos": 76,
     "dias_restantes": {
      "REQ": 67,
      "DEV": 67,
      "QA": 67
     },
-    "velocidad": 4.7272727272727275,
-    "prod_actual": 4.7272727272727275,
+    "velocidad": 4.7894736842105265,
+    "prod_actual": 4.7894736842105265,
     "prod_esperada": 4.402985074626866
    },
    "por_proceso": {
@@ -9282,7 +9282,7 @@
     "pct_avance": 0.41805555555555557,
     "hu_pendientes": 144,
     "removidas": 0,
-    "dias_transcurridos": 22,
+    "dias_transcurridos": 21,
     "dias_restantes": {
      "REQ": 26,
      "DEV": 26,
