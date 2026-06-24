@@ -311,76 +311,75 @@ function render(key) {
   animateBars();
 }
 
-/* ---------- vista proyecto ---------- */
+/* ---------- vista proyecto (con pestañas por perfil de control) ---------- */
+/* Cada pestaña reordena los MISMOS widgets según lo que necesita ese rol. La hoja
+   Portafolio NO se toca. "General" conserva la vista completa para no perder nada. */
+const PROFILES = [
+  { id: "general", label: "General", icon: "▦" },
+  { id: "director", label: "Director de Operaciones", icon: "🎯" },
+  { id: "gerente", label: "Gerente de Proyecto", icon: "📋" },
+  { id: "head", label: "Head / Líder de área", icon: "🛠" },
+  { id: "scrum", label: "Scrum Master", icon: "🏃" },
+];
+let PROJ = null, PROFILE_TAB = "general";
+
 function renderProject(p) {
-  const k = p.kpis;
+  PROJ = p;
+  PROFILE_TAB = "general";        // al abrir un proyecto, arranca en General
+  paintProject();
+}
+function selectProfile(id) {
+  if (id === PROFILE_TAB) return;
+  PROFILE_TAB = id;
+  disposeCharts();                // limpia ECharts de la pestaña anterior
+  paintProject();
+}
+function paintProject() {
+  const p = PROJ, k = p.kpis;
   const restQA = k.dias_restantes?.QA;
+  const recObj = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null;
+
   const head = `<div class="project-title fade">
     <h2>${p.nombre}</h2>
     <span class="tag">${p.codigo}</span>
     ${p.producto ? `<span class="tag">${p.producto}</span>` : ""}
     ${p.estado ? `<span class="tag">${p.estado}</span>` : ""}
   </div>`;
+  const tabbar = `<div class="tabbar">${PROFILES.map(pr =>
+    `<button class="tab${pr.id === PROFILE_TAB ? " on" : ""}" onclick="selectProfile('${pr.id}')">${pr.icon} ${pr.label}</button>`).join("")}</div>`;
 
-  const kpis = `<div class="grid kpis">
-    ${kpi("HU Totales", "▦", "#6366f1",
-      `<span data-count="${k.hu_total}">0</span>`,
-      `${fmt(k.hu_pendientes)} pendientes de producción`)}
-    ${kpi("HU Removidas", "✕", "#94a3b8",
-      `<span data-count="${k.removidas || 0}">0</span>`,
-      "Removido/Cancelado · fuera del conteo")}
-    ${kpi("En Producción", "✓", "#10b981",
-      `<span data-count="${k.hu_prod}">0</span>`,
-      `de ${fmt(k.hu_total)} HU`, k.pct_prod)}
-    ${kpi("% Puesta en Producción", "◎", "#38bdf8",
-      `<span data-count="${(k.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`,
-      "HU en producción / totales", k.pct_prod)}
-    ${kpi("% Avance ponderado", "◔", "#a855f7",
-      k.pct_avance == null ? "—" : `<span data-count="${k.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`,
-      k.pct_avance == null ? "sin homologación de avance" : "promedio por etapa", k.pct_avance)}
-    ${kpi("Velocidad", "⚡", "#f59e0b",
-      `<span data-count="${k.velocidad || 0}" data-dec="2">0</span> <small>HU/día</small>`,
-      `${fmt(k.dias_transcurridos)} días hábiles transcurridos`)}
-    ${kpi("Días hábiles a cierre QA", "⏳", restQA != null && restQA <= 10 ? "#ef4444" : "#38bdf8",
-      restQA == null ? "—" : `<span data-count="${restQA}">0</span>`,
-      p.cierre?.QA ? `cierre QA ${p.cierre.QA}` : "sin fecha de cierre")}
+  // ---- fragmentos reutilizables (mismas fuentes, distinta curaduría por perfil) ----
+  const gridKpis = `<div class="grid kpis">
+    ${kpi("HU Totales", "▦", "#6366f1", `<span data-count="${k.hu_total}">0</span>`, `${fmt(k.hu_pendientes)} pendientes de producción`)}
+    ${kpi("HU Removidas", "✕", "#94a3b8", `<span data-count="${k.removidas || 0}">0</span>`, "Removido/Cancelado · fuera del conteo")}
+    ${kpi("En Producción", "✓", "#10b981", `<span data-count="${k.hu_prod}">0</span>`, `de ${fmt(k.hu_total)} HU`, k.pct_prod)}
+    ${kpi("% Puesta en Producción", "◎", "#38bdf8", `<span data-count="${(k.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`, "HU en producción / totales", k.pct_prod)}
+    ${kpi("% Avance ponderado", "◔", "#a855f7", k.pct_avance == null ? "—" : `<span data-count="${k.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, k.pct_avance == null ? "sin homologación de avance" : "promedio por etapa", k.pct_avance)}
+    ${kpi("Velocidad", "⚡", "#f59e0b", `<span data-count="${k.velocidad || 0}" data-dec="2">0</span> <small>HU/día</small>`, `${fmt(k.dias_transcurridos)} días hábiles transcurridos`)}
+    ${kpi("Días hábiles a cierre QA", "⏳", restQA != null && restQA <= 10 ? "#ef4444" : "#38bdf8", restQA == null ? "—" : `<span data-count="${restQA}">0</span>`, p.cierre?.QA ? `cierre QA ${p.cierre.QA}` : "sin fecha de cierre")}
   </div>`;
-
-  const charts = `<div class="grid charts">
-    <div class="card fade"><h3>Avance por proceso en el tiempo</h3>
-      <div class="hint">HU en cada etapa por fecha de corte (apilado)</div>
-      <div id="cArea" class="chart tall"></div></div>
-    <div class="card fade"><h3>Distribución actual</h3>
-      <div class="hint">HU por proceso al ${DATA.corte}</div>
-      <div id="cDonut" class="chart tall"></div></div>
-  </div>
-  <div class="grid charts-2" style="margin-top:16px">
-    <div class="card fade"><h3>Tendencia de producción</h3>
-      <div class="hint">Total de HU vs. puestas en producción</div>
-      <div id="cLine" class="chart"></div></div>
-    <div class="card fade"><h3>Productividad · real vs. requerida</h3>
-      <div class="hint">Arco externo = real (verde si cumple / rojo si va por debajo) · arco interno = requerida (cierre QA)</div>
-      <div id="cGauge" class="chart"></div></div>
-  </div>`;
-
-  const flujoUI = `
-  <div class="card fade" style="margin-top:16px">
+  const cArea = `<div class="card fade"><h3>Avance por proceso en el tiempo</h3>
+      <div class="hint">HU en cada etapa por fecha de corte (apilado)</div><div id="cArea" class="chart tall"></div></div>`;
+  const cDonut = `<div class="card fade"><h3>Distribución actual</h3>
+      <div class="hint">HU por proceso al ${DATA.corte}</div><div id="cDonut" class="chart tall"></div></div>`;
+  const cLine = `<div class="card fade"><h3>Tendencia de producción</h3>
+      <div class="hint">Total de HU vs. puestas en producción</div><div id="cLine" class="chart"></div></div>`;
+  const cGauge = `<div class="card fade"><h3>Productividad · real vs. requerida</h3>
+      <div class="hint">Arco externo = real (verde si cumple / rojo si va por debajo) · arco interno = requerida (cierre QA)</div><div id="cGauge" class="chart"></div></div>`;
+  const cPivot = `<div class="card fade" style="margin-top:16px">
     <h3>Tabla consolidada · HU por etapa y fecha</h3>
     <div class="hint">Conteo de HU en cada etapa por día (tipo tabla dinámica). Cambia la métrica para ver variaciones o gestiones.</div>
-    <div class="filterbar">
-      <label>Métrica
+    <div class="filterbar"><label>Métrica
         <select id="tblMode">
           <option value="count">Conteo (HU en la etapa)</option>
           <option value="delta">Δ Variación día a día</option>
           <option value="ent">Entradas (gestión)</option>
           <option value="sal">Salidas (gestión)</option>
-        </select>
-      </label>
+        </select></label>
       <span class="hint" style="margin:0">▸ filas = etapas · columnas = fechas (desliza →)</span>
     </div>
-    <div id="pivWrap" class="pivwrap"></div>
-  </div>
-  <div class="card fade" style="margin-top:16px">
+    <div id="pivWrap" class="pivwrap"></div></div>`;
+  const cFlujo = `<div class="card fade" style="margin-top:16px">
     <h3>Variación de HU por etapa en el tiempo</h3>
     <div class="hint">Por día y etapa: <b>entradas hacia arriba (+)</b> y <b>salidas hacia abajo (−)</b>. Filtra por rango de fechas y por etapa.</div>
     <div class="filterbar">
@@ -388,32 +387,50 @@ function renderProject(p) {
       <label>Hasta <input type="date" id="flFin"></label>
       <label>Etapa <select id="flProc">${"<option value='__all__'>Todas las etapas</option>" + PROCS.map(pr => `<option value="${pr.key}">${pr.label}</option>`).join("")}</select></label>
     </div>
-    <div id="cFlujo" class="chart tall"></div>
-  </div>`;
-  const recObj = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null;
-  const recursos = recursosCard(recObj, null, RECURSOS ? "Planta " + RECURSOS.planta_archivo : null);
-  const prodUI = recObj ? `
-  <div class="card fade" style="margin-top:16px">
+    <div id="cFlujo" class="chart tall"></div></div>`;
+  const cRecursos = recursosCard(recObj, null, RECURSOS ? "Planta " + RECURSOS.planta_archivo : null);
+  const cProdPD = recObj ? `<div class="card fade" style="margin-top:16px">
     <h3>⚙️ Productividad persona-día por proceso · en el tiempo</h3>
     <div class="hint">HU gestionadas (salidas del proceso) ÷ personas del área, por día · filtra el rango de fechas</div>
-    <div class="filterbar">
-      <label>Desde <input type="date" id="pdIni"></label>
-      <label>Hasta <input type="date" id="pdFin"></label>
-    </div>
-    <div id="cProdPD" class="chart"></div>
-  </div>` : "";
-  const carga = cargaCard(p.codigo);       // al FINAL del tablero
-  const alertas = alertasCard(p.codigo);
-  $("#content").innerHTML = head + kpis + recursos + charts + flujoUI + prodUI + carga + alertas;
+    <div class="filterbar"><label>Desde <input type="date" id="pdIni"></label><label>Hasta <input type="date" id="pdFin"></label></div>
+    <div id="cProdPD" class="chart"></div></div>` : "";
+  const cCarga = cargaCard(p.codigo);
+  const cAlertas = alertasCard(p.codigo);
+
+  const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
+  const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
+  const note = (t) => `<div class="tabnote">${t}</div>`;
+
+  let body;
+  switch (PROFILE_TAB) {
+    case "director":   // estratégico: salud y cumplimiento
+      body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
+        gridKpis + two(cLine, cGauge) + cRecursos + cAlertas; break;
+    case "gerente":    // integral del proyecto
+      body = note("Vista integral del proyecto") +
+        gridKpis + cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
+    case "head":       // técnico por área / equipo
+      body = note("Vista técnica · ejecución por área y equipo") +
+        gridKpis + split(cArea, cDonut) + cProdPD + cCarga + cFlujo; break;
+    case "scrum":      // operativo día a día
+      body = note("Vista operativa · día a día del equipo") +
+        cCarga + cAlertas + cFlujo + cPivot; break;
+    default:           // General: vista completa (nada se pierde)
+      body = gridKpis + cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
+  }
+
+  $("#content").innerHTML = head + tabbar + body;
   countUp();
-  setupRecursos(recObj);
-  drawArea($("#cArea"), p);
-  drawDonut($("#cDonut"), p);
-  drawLine($("#cLine"), p);
-  drawGauge($("#cGauge"), p, k);
-  setupPivot(p);
-  drawFlujo($("#cFlujo"), p);
-  if (recObj) setupProdPersona(p.codigo);
+  // dibuja/cablea SOLO lo que está presente en la pestaña activa
+  if ($("#recFecha")) setupRecursos(recObj);
+  if ($("#cArea")) drawArea($("#cArea"), p);
+  if ($("#cDonut")) drawDonut($("#cDonut"), p);
+  if ($("#cLine")) drawLine($("#cLine"), p);
+  if ($("#cGauge")) drawGauge($("#cGauge"), p, k);
+  if ($("#tblMode")) setupPivot(p);
+  if ($("#cFlujo")) drawFlujo($("#cFlujo"), p);
+  if ($("#cProdPD")) setupProdPersona(p.codigo);
+  animateBars();
 }
 
 /* tabla dinámica: filas = etapas, columnas = fechas, métrica seleccionable */
