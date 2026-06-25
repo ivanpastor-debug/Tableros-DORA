@@ -247,6 +247,48 @@ function setupProdComp() {
   apply();
 }
 
+/* evolución de la planta POR DÍA (dispersión lineal): nº de personas activas por día desde el
+   primer archivo de planta (23-jun-2026). Total + una línea por área. Usa el histórico híbrido
+   de data_recursos.json (snapRec resuelve la foto vigente a cada día). */
+function dayRange(d0, d1) {            // días calendario inclusive, ISO YYYY-MM-DD
+  const out = [], end = Date.parse(d1 + "T00:00:00Z");
+  for (let t = Date.parse(d0 + "T00:00:00Z"); t <= end; t += 86400000) out.push(new Date(t).toISOString().slice(0, 10));
+  return out;
+}
+function setupPlantaEvol(resObj) {
+  const el = $("#cPlanta"); if (!el || !RECURSOS || !resObj) return;
+  const P = RECURSOS.plantas || [];
+  if (!P.length) return;                 // sin archivos de planta no hay serie diaria
+  const d0 = P[0].fecha, d1 = P[P.length - 1].fecha;   // desde el 1er archivo hasta el más reciente
+  const c = mkChart(el), ax = axisBase();
+  const fi = $("#plIni"), ff = $("#plFin");
+  fi.min = ff.min = d0; fi.max = ff.max = d1; fi.value = d0; ff.value = d1;
+  function apply() {
+    let a = fi.value || d0, b = ff.value || d1; if (a > b) { const t = a; a = b; b = t; }
+    const days = dayRange(a, b);
+    const snaps = days.map(d => snapRec(resObj, RECURSOS.fechas, d) || { por_area: {} });
+    const tot = (s) => AREA_ORDER.reduce((acc, k) => acc + ((s.por_area[k] && s.por_area[k].n) || 0), 0);
+    const presentes = AREA_ORDER.filter(k => snaps.some(s => s.por_area[k] && s.por_area[k].n > 0));
+    const series = [{
+      name: "Total", type: "line", smooth: false, showSymbol: true, symbol: "circle", symbolSize: 7,
+      lineStyle: { width: 3 }, color: "#22d3ee", data: snaps.map(tot),
+    }].concat(presentes.map(k => ({
+      name: AREA_LBL[k], type: "line", smooth: false, showSymbol: true, symbol: "circle", symbolSize: 5,
+      color: AREA_COL[k], data: snaps.map(s => (s.por_area[k] && s.por_area[k].n) || 0),
+    })));
+    c.setOption({
+      tooltip: { trigger: "axis", ...ax.tooltip, valueFormatter: (v) => v == null ? "—" : v + " pers." },
+      legend: { type: "scroll", data: series.map(s => s.name), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "circle" },
+      grid: { left: 8, right: 14, top: 34, bottom: 6, containLabel: true },
+      xAxis: { type: "category", data: days, axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: (v) => v.slice(5) } },
+      yAxis: { type: "value", name: "personas", nameTextStyle: { color: ax.textColor, fontSize: 10 }, minInterval: 1, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+      series,
+    }, true);
+  }
+  fi.onchange = ff.onchange = apply;
+  apply();
+}
+
 $("#themeBtn").onclick = () => {
   const el = document.documentElement;
   el.dataset.theme = el.dataset.theme === "dark" ? "light" : "dark";
@@ -389,6 +431,12 @@ function paintProject() {
     <div class="hint">HU gestionadas (salidas del proceso) ÷ personas del área, por día · filtra el rango de fechas</div>
     <div class="filterbar"><label>Desde <input type="date" id="pdIni"></label><label>Hasta <input type="date" id="pdFin"></label></div>
     <div id="cProdPD" class="chart"></div></div>` : "";
+  const _pl0 = RECURSOS && RECURSOS.plantas && RECURSOS.plantas.length ? RECURSOS.plantas[0].fecha : null;
+  const cPlanta = (recObj && _pl0) ? `<div class="card fade" style="margin-top:16px">
+    <h3>👥 Evolución de la planta · por día</h3>
+    <div class="hint">Nº de personas activas por día desde el primer archivo de planta (${_pl0}) · línea Total y por área · filtra el rango de fechas</div>
+    <div class="filterbar"><label>Desde <input type="date" id="plIni"></label><label>Hasta <input type="date" id="plFin"></label></div>
+    <div id="cPlanta" class="chart"></div></div>` : "";
   const cCarga = cargaCard(p.codigo);
   const cAlertas = alertasCard(p.codigo);
 
@@ -401,18 +449,18 @@ function paintProject() {
     case "directivo":   // estratégico: resultado, cumplimiento y riesgo
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
         wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
-        two(cLine, cGauge) + cRecursos + cProdPD + cAlertas; break;
+        two(cLine, cGauge) + cRecursos + cPlanta + cProdPD + cAlertas; break;
     case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
         wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
-        cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
+        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
     case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
         split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
     default:            // General: vista completa (nada se pierde)
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + split(cArea, cDonut) + two(cLine, cGauge) + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
+        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
   }
 
   $("#content").innerHTML = head + tabbar + body;
@@ -426,6 +474,7 @@ function paintProject() {
   if ($("#tblMode")) setupPivot(p);
   if ($("#cFlujo")) drawFlujo($("#cFlujo"), p);
   if ($("#cProdPD")) setupProdPersona(p.codigo);
+  if ($("#cPlanta")) setupPlantaEvol(recObj);
   animateBars();
 }
 
