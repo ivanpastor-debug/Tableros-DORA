@@ -782,7 +782,7 @@ function cronoPlantaSinHu() {
     </tr>`).join("");
   return `<div class="card fade" style="margin-top:16px">
     <h3>🪑 Planta del proceso sin HU asignada</h3>
-    <div class="hint">Personas de la planta de Positiva Core (cód. ${pp.cod_planta} · ${esc(pp.archivo)}) que <b>no tienen ninguna HU en Azure</b> al corte ${CRONO.corte} · <b>${pp.sin_hu.length}</b> sin HU de ${pp.total} (con HU: ${pp.con_hu})</div>
+    <div class="hint">Personal de <b>Requerimientos, Desarrollo y QA</b> de Positiva Core (cód. ${pp.cod_planta} · ${esc(pp.archivo)}) que <b>no tiene ninguna HU en Azure</b> al corte ${CRONO.corte} · <b>${pp.sin_hu.length}</b> sin HU de ${pp.total} (con HU: ${pp.con_hu})</div>
     <div class="dwrap"><table class="dtbl"><thead><tr>
       <th>Área</th><th>Cargo</th><th>Persona</th>
     </tr></thead><tbody>${rows}</tbody></table></div>
