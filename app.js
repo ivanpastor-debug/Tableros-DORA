@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -40,6 +40,9 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // tablero consolidado de cronograma (Positiva Core 416+355); ausente -> no aparece la opción
   try { const cr = await fetch("data_cronograma.json"); CRONO = cr.ok ? await cr.json() : null; }
   catch (_) { CRONO = null; }
+  // cumplimiento RQC del 421 (sección en perfiles Directivo/Gerencial); ausente -> no se muestra
+  try { const rq = await fetch("data_rqc.json"); RQC = rq.ok ? await rq.json() : null; }
+  catch (_) { RQC = null; }
   const sel = $("#proySel");
   const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
   sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt +
@@ -445,6 +448,16 @@ function paintProject() {
     <div id="cPlanta" class="chart"></div></div>` : "";
   const cCarga = cargaCard(p.codigo);
   const cAlertas = alertasCard(p.codigo);
+  // sección compacta de cumplimiento RQC (solo 421, solo perfiles directivo/gerencial)
+  const cRqc = (p.codigo === RQC?.codigo && RQC) ? `<div class="card fade" style="margin-top:16px">
+    <h3>📋 Cumplimiento RQC · contrato</h3>
+    <div class="hint">RQC del contrato · corte ${RQC.corte} · cumplimiento = cumplidos ÷ (totales − removidos)</div>
+    <div class="grid kpis">
+      ${kpi("RQC totales", "▦", "#6366f1", `<span data-count="${RQC.total}">0</span>`, `${RQC.removidos} removidos · ${RQC.activos} activos`)}
+      ${kpi("Cumplidas", "✓", "#10b981", `<span data-count="${RQC.cumplidos}">0</span>`, `de ${fmt(RQC.activos)} activos`, RQC.activos ? RQC.cumplidos / RQC.activos : null)}
+      ${kpi("% Cumplimiento", "◎", "#a855f7", RQC.cumplimiento == null ? "—" : `<span data-count="${RQC.cumplimiento * 100}" data-dec="1" data-suf="%">0</span>`, "cumplidos / activos", RQC.cumplimiento)}
+    </div>
+    <div id="cRqcDonut" class="chart"></div></div>` : "";
 
   const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
   const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
@@ -455,11 +468,11 @@ function paintProject() {
     case "directivo":   // estratégico: resultado, cumplimiento y riesgo
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
         wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
-        two(cLine, cGauge) + cRecursos + cPlanta + cProdPD + cAlertas; break;
+        two(cLine, cGauge) + cRqc + cRecursos + cPlanta + cProdPD + cAlertas; break;
     case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
         wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
-        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cCarga + cAlertas; break;
+        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
     case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
@@ -481,6 +494,7 @@ function paintProject() {
   if ($("#cFlujo")) drawFlujo($("#cFlujo"), p);
   if ($("#cProdPD")) setupProdPersona(p.codigo);
   if ($("#cPlanta")) setupPlantaEvol(recObj);
+  if ($("#cRqcDonut")) drawRqcDonut($("#cRqcDonut"));
   animateBars();
 }
 
@@ -689,6 +703,26 @@ function drawGauge(el, p, k) {
         : null,
     ].filter(Boolean),
   });
+}
+
+/* torta de RQC (421): distribución de lo activo -> cumplido / en gestión / pendiente (sin removidos) */
+function drawRqcDonut(el) {
+  const C = RQC, c = mkChart(el), ax = axisBase();
+  const data = [
+    { name: "Cumplido", value: C.resumen["CUMPLIDO"] || 0, itemStyle: { color: "#10b981" } },
+    { name: "En gestión", value: C.resumen["EN PROCESO"] || 0, itemStyle: { color: "#f59e0b" } },
+    { name: "Pendiente", value: C.resumen["PENDIENTE INICIO"] || 0, itemStyle: { color: "#94a3b8" } },
+  ];
+  c.setOption({
+    tooltip: { trigger: "item", ...ax.tooltip, formatter: p => `${p.name}: <b>${p.value}</b> (${p.percent}%)` },
+    legend: { bottom: 0, textStyle: { color: ax.textColor, fontSize: 11 }, icon: "circle" },
+    series: [{
+      type: "pie", radius: ["45%", "70%"], center: ["50%", "44%"], avoidLabelOverlap: true,
+      itemStyle: { borderColor: cssv("--card"), borderWidth: 2 },
+      label: { show: true, formatter: "{b}\n{c}", color: ax.textColor, fontSize: 11 },
+      data,
+    }],
+  }, true);
 }
 
 /* ---------- vista TABLERO CONSOLIDADO DE CRONOGRAMA (Positiva Core 416+355) ---------- */
