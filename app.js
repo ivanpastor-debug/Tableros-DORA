@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -37,8 +37,12 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // carga por responsable + alertas = archivo INTERNO (gitignored, con nombres); ausente en público -> oculto
   try { const cc = await fetch("data_carga.json"); CARGA = cc.ok ? await cc.json() : null; }
   catch (_) { CARGA = null; }
+  // tablero consolidado de cronograma (Positiva Core 416+355); ausente -> no aparece la opción
+  try { const cr = await fetch("data_cronograma.json"); CRONO = cr.ok ? await cr.json() : null; }
+  catch (_) { CRONO = null; }
   const sel = $("#proySel");
-  sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` +
+  const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
+  sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt +
     d.proyectos.map(p => `<option value="${p.codigo}">${p.codigo} · ${p.nombre}</option>`).join("");
   sel.onchange = () => render(sel.value);
   render("__all__");
@@ -342,6 +346,7 @@ function render(key) {
   CURRENT = key || "__all__";
   disposeCharts();
   if (CURRENT === "__all__") renderPortfolio();
+  else if (CURRENT === "__crono__") renderCronograma();
   else renderProject(DATA.proyectos.find(p => p.codigo === CURRENT));
   animateBars();
 }
@@ -684,6 +689,110 @@ function drawGauge(el, p, k) {
         : null,
     ].filter(Boolean),
   });
+}
+
+/* ---------- vista TABLERO CONSOLIDADO DE CRONOGRAMA (Positiva Core 416+355) ---------- */
+/* No toca 416 ni 355: es una vista propia que lee data_cronograma.json. */
+function renderCronograma() {
+  const C = CRONO;
+  if (!C) { $("#content").innerHTML = `<div class="card">No hay datos de cronograma (data_cronograma.json).</div>`; return; }
+  const r = C.semaforo_resumen, last = C.serie[C.serie.length - 1] || { avance: null };
+  const head = `<div class="project-title fade">
+    <h2>${C.nombre}</h2>
+    <span class="tag">${C.total_hu} HU</span>
+    <span class="tag">416 + 355</span>
+    <span class="tag">inicio medición ${C.inicio_medicion}</span>
+    <span class="tag">corte ${C.corte}</span>
+  </div>`;
+  const kpis = `<div class="grid kpis">
+    ${kpi("HU del cronograma", "▦", "#6366f1", `<span data-count="${C.total_hu}">0</span>`, `416: ${C.por_proyecto["416"] || 0} · 355: ${C.por_proyecto["355"] || 0}`)}
+    ${kpi("% Avance ponderado", "◔", "#a855f7", last.avance == null ? "—" : `<span data-count="${last.avance * 100}" data-dec="1" data-suf="%">0</span>`, "promedio por etapa", last.avance)}
+    ${kpi("Entregadas", "✓", "#10b981", `<span data-count="${r.verde}">0</span>`, `de ${C.total_hu} · objetivo ${C.objetivo}`, C.total_hu ? r.verde / C.total_hu : null)}
+    ${kpi("En plazo", "◷", "#f59e0b", `<span data-count="${r.amarillo}">0</span>`, "pendientes dentro de fecha")}
+    ${kpi("Vencidas", "⚠", "#ef4444", `<span data-count="${r.rojo}">0</span>`, "sin entregar y vencidas")}
+    ${kpi("Sin fecha", "∅", "#94a3b8", `<span data-count="${r.sin_fecha}">0</span>`, "sin fecha comprometida")}
+  </div>`;
+  const c1 = `<div class="card fade" style="margin-top:16px"><h3>📈 Avance del cronograma · a diario</h3>
+    <div class="hint">% avance ponderado por etapa (promedio de las ${C.total_hu} HU) por fecha de corte · desde ${C.inicio_medicion}</div>
+    <div id="cCronoAv" class="chart"></div></div>`;
+  const c2 = `<div class="card fade" style="margin-top:16px"><h3>📊 Avance por ramo · a diario</h3>
+    <div class="hint">% avance ponderado por ramo · una línea por ramo · filtra el rango de fechas</div>
+    <div class="filterbar"><label>Desde <input type="date" id="crIni"></label><label>Hasta <input type="date" id="crFin"></label></div>
+    <div id="cCronoRamo" class="chart tall"></div></div>`;
+  const c3 = `<div class="card fade" style="margin-top:16px"><h3>🚦 Fechas comprometidas de entrega y semáforo</h3>
+    <div class="hint">Cada punto = HU por ramo y fecha comprometida · 🟢 entregada · 🟡 pendiente en plazo · 🔴 vencida sin entregar · tamaño = nº de HU</div>
+    <div id="cCronoSem" class="chart tall"></div></div>`;
+  $("#content").innerHTML = head + kpis + c1 + c2 + c3;
+  countUp();
+  drawCronoAvance($("#cCronoAv"));
+  setupCronoRamos();
+  drawCronoSemaforo($("#cCronoSem"));
+  animateBars();
+}
+
+/* gráfico 1: avance global del cronograma por día (dispersión lineal) */
+function drawCronoAvance(el) {
+  const C = CRONO, c = mkChart(el), ax = axisBase();
+  const dates = C.serie.map(s => s.fecha);
+  const data = C.serie.map(s => s.avance == null ? null : +(s.avance * 100).toFixed(1));
+  c.setOption({
+    tooltip: { trigger: "axis", ...ax.tooltip, valueFormatter: v => v == null ? "—" : v.toFixed(1).replace(".", ",") + "%" },
+    grid: { left: 8, right: 16, top: 20, bottom: 6, containLabel: true },
+    xAxis: { type: "category", data: dates, axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: v => v.slice(5) } },
+    yAxis: { type: "value", name: "% avance", min: 0, max: 100, nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: "{value}%" } },
+    series: [{ name: "Avance", type: "line", smooth: true, showSymbol: true, symbol: "circle", symbolSize: 8, lineStyle: { width: 3 }, color: "#a855f7", areaStyle: { opacity: 0.08 }, data }],
+  }, true);
+}
+
+/* gráfico 2: avance por ramo por día (una línea por ramo) con filtro Desde/Hasta */
+function setupCronoRamos() {
+  const el = $("#cCronoRamo"); if (!el) return;
+  const C = CRONO, c = mkChart(el), ax = axisBase();
+  const dates = C.serie.map(s => s.fecha);
+  const dmin = dates[0], dmax = dates[dates.length - 1];
+  const fi = $("#crIni"), ff = $("#crFin");
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
+  function apply() {
+    let a = fi.value || dmin, b = ff.value || dmax; if (a > b) { const t = a; a = b; b = t; }
+    const rows = C.serie.filter(s => s.fecha >= a && s.fecha <= b);
+    const dts = rows.map(s => s.fecha);
+    const series = C.ramos.map((rm, i) => ({
+      name: rm, type: "line", smooth: true, showSymbol: true, symbol: "circle", symbolSize: 5, connectNulls: true,
+      color: PALETTE[i % PALETTE.length],
+      data: rows.map(s => { const v = s.por_ramo[rm]; return v == null ? null : +(v * 100).toFixed(1); }),
+    }));
+    c.setOption({
+      tooltip: { trigger: "axis", ...ax.tooltip, valueFormatter: v => v == null ? "—" : v.toFixed(1).replace(".", ",") + "%" },
+      legend: { type: "scroll", data: C.ramos, textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "circle" },
+      grid: { left: 8, right: 16, top: 54, bottom: 6, containLabel: true },
+      xAxis: { type: "category", data: dts, axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: v => v.slice(5) } },
+      yAxis: { type: "value", name: "% avance", min: 0, max: 100, nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: "{value}%" } },
+      series,
+    }, true);
+  }
+  fi.onchange = ff.onchange = apply; apply();
+}
+
+/* gráfico 3: dispersión X=fecha comprometida, Y=ramo, color=semáforo, tamaño=nº de HU */
+function drawCronoSemaforo(el) {
+  const C = CRONO, c = mkChart(el), ax = axisBase();
+  const SEM = { verde: ["Entregada", "#10b981"], amarillo: ["En plazo", "#f59e0b"], rojo: ["Vencida", "#ef4444"] };
+  const agg = {};
+  C.hus.forEach(h => { if (!h.fecha_entrega) return; const k = h.ramo + "|" + h.fecha_entrega + "|" + h.semaforo; agg[k] = (agg[k] || 0) + 1; });
+  const series = Object.keys(SEM).map(sem => ({
+    name: SEM[sem][0], type: "scatter", color: SEM[sem][1],
+    symbolSize: (val) => Math.min(38, 8 + Math.sqrt(val[2]) * 5),
+    data: Object.entries(agg).filter(([k]) => k.split("|")[2] === sem)
+      .map(([k, n]) => { const p = k.split("|"); return [p[1], p[0], n]; }),  // [fecha, ramo, conteo]
+  }));
+  c.setOption({
+    tooltip: { ...ax.tooltip, formatter: p => `<b>${p.seriesName}</b><br/>${p.value[1]}<br/>${p.value[0]} · <b>${p.value[2]}</b> HU` },
+    legend: { data: Object.values(SEM).map(s => s[0]), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0 },
+    grid: { left: 8, right: 22, top: 34, bottom: 6, containLabel: true },
+    xAxis: { type: "time", axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: v => echarts.format.formatTime("dd/MM", v) } },
+    yAxis: { type: "category", data: C.ramos, axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 11 } },
+    series,
+  }, true);
 }
 
 /* ---------- vista portafolio ---------- */
