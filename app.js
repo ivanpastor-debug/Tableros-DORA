@@ -453,8 +453,8 @@ function paintProject() {
     <h3>📋 Cumplimiento RQC · contrato</h3>
     <div class="hint">RQC del contrato · corte ${RQC.corte} · cumplimiento = cumplidos ÷ (totales − removidos)</div>
     <div class="grid kpis">
-      ${kpi("RQC totales", "▦", "#6366f1", `<span data-count="${RQC.total}">0</span>`, `${RQC.removidos} removidos · ${RQC.activos} activos`)}
-      ${kpi("Cumplidas", "✓", "#10b981", `<span data-count="${RQC.cumplidos}">0</span>`, `de ${fmt(RQC.activos)} activos`, RQC.activos ? RQC.cumplidos / RQC.activos : null)}
+      ${kpi("RQC totales", "▦", "#6366f1", `<span data-count="${RQC.activos}">0</span>`, `descontando ${RQC.removidos} removidos (${RQC.total} brutos)`)}
+      ${kpi("Cumplidas", "✓", "#10b981", `<span data-count="${RQC.cumplidos}">0</span>`, `de ${fmt(RQC.activos)} RQC`, RQC.activos ? RQC.cumplidos / RQC.activos : null)}
       ${kpi("% Cumplimiento", "◎", "#a855f7", RQC.cumplimiento == null ? "—" : `<span data-count="${RQC.cumplimiento * 100}" data-dec="1" data-suf="%">0</span>`, "cumplidos / activos", RQC.cumplimiento)}
     </div>
     <div id="cRqcDonut" class="chart"></div></div>` : "";
