@@ -108,6 +108,21 @@ function diasBadge(d) {
   const c = d > 20 ? "#ef4444" : d > 8 ? "#f59e0b" : "#38bdf8";   // severidad por antigüedad
   return `<span class="abadge" style="background:${c}">${d}d</span>`;
 }
+/* contador de HU por estado (proceso homologado) para las tablas de HU con más tiempo.
+   Una casilla por proceso presente, en el orden canónico de PROCS, con color y conteo. */
+function contadorEstado(items) {
+  if (!items || !items.length) return "";
+  const colOf = {}, lblOf = {}, order = PROCS.map(p => p.key);
+  PROCS.forEach(p => { colOf[p.key] = p.color; lblOf[p.key] = p.label; });
+  const cnt = {};
+  items.forEach(it => { const k = it.proceso || "—"; cnt[k] = (cnt[k] || 0) + 1; });
+  const rank = k => { const i = order.indexOf(k); return i < 0 ? 99 : i; };
+  const chips = Object.keys(cnt).sort((a, b) => rank(a) - rank(b)).map(k =>
+    `<span class="rchip" style="cursor:default">
+       <span class="rdot" style="background:${colOf[k] || "#5d6678"}"></span>${esc(lblOf[k] || (k === "—" ? "Sin proceso" : k))} <b>${cnt[k]}</b>
+     </span>`).join("");
+  return `<div class="rchips" style="margin:4px 0 10px">${chips}</div>`;
+}
 function toggleResp(cod, i) {
   document.querySelectorAll(`.det-${cod}-${i}`).forEach(tr => { tr.style.display = tr.style.display === "none" ? "" : "none"; });
   const car = document.getElementById(`car-${cod}-${i}`); if (car) car.textContent = car.textContent === "▸" ? "▾" : "▸";
@@ -134,9 +149,11 @@ function cargaCard(cod) {
         <td class="muted">${esc(h.state)}</td></tr>`;
     });
   });
+  const todasHus = c.responsables.flatMap(r => r.hus || []);
   return `<div class="card fade" style="margin-top:16px">
     <h3>👤 Carga por responsable</h3>
     <div class="hint">HU asignadas al responsable actual · avance ponderado por homologación · <b>clic en una fila</b> para ver sus HU · interno (no se publica)</div>
+    ${contadorEstado(todasHus)}
     <div class="dwrap"><table class="dtbl"><thead><tr>
       <th>Responsable</th><th>Cargo</th><th>Área</th><th class="num">HU</th><th class="num">Pend.</th><th class="num">Avance</th>
     </tr></thead><tbody>${body}</tbody></table></div>
@@ -159,6 +176,7 @@ function alertasCard(cod) {
   return `<div class="card fade" style="margin-top:16px">
     <h3>🚨 Alertas · HU sin movimiento</h3>
     <div class="hint">Días en el estado actual sin cambios · de la más antigua a la más reciente · <b>${crit}</b> con +20 días${A.length > cap ? ` · mostrando ${cap} de ${A.length}` : ""}</div>
+    ${contadorEstado(A)}
     <div class="dwrap"><table class="dtbl"><thead><tr>
       <th class="num">Días</th><th>HU</th><th>Título</th><th>Estado</th><th>Responsable</th><th>Cargo</th><th>Desde</th>
     </tr></thead><tbody>${rows}</tbody></table></div>
@@ -814,6 +832,7 @@ function cronoEstancadas() {
   return `<div class="card fade" style="margin-top:16px">
     <h3>⏳ HU más estancadas por etapa</h3>
     <div class="hint">HU del cronograma con más tiempo en su etapa actual (excluye entregadas y removidas) · responsable, área y fecha desde que están en esa etapa · <b>${crit}</b> con +20 días · top ${E.length}</div>
+    ${contadorEstado(E)}
     <div class="dwrap"><table class="dtbl"><thead><tr>
       <th class="num">Días</th><th>HU</th><th>Ramo</th><th>Etapa</th><th>Responsable</th><th>Área</th><th>Desde</th>
     </tr></thead><tbody>${rows}</tbody></table></div>
