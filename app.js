@@ -109,7 +109,8 @@ function diasBadge(d) {
   return `<span class="abadge" style="background:${c}">${d}d</span>`;
 }
 /* contador de HU por estado (proceso homologado) para las tablas de HU con más tiempo.
-   Una casilla por proceso presente, en el orden canónico de PROCS, con color y conteo. */
+   Una casilla por proceso presente, en el orden canónico de PROCS, con color y conteo.
+   Cada casilla es un FILTRO (clic): filtra la tabla del mismo card por ese proceso. */
 function contadorEstado(items) {
   if (!items || !items.length) return "";
   const colOf = {}, lblOf = {}, order = PROCS.map(p => p.key);
@@ -118,10 +119,34 @@ function contadorEstado(items) {
   items.forEach(it => { const k = it.proceso || "—"; cnt[k] = (cnt[k] || 0) + 1; });
   const rank = k => { const i = order.indexOf(k); return i < 0 ? 99 : i; };
   const chips = Object.keys(cnt).sort((a, b) => rank(a) - rank(b)).map(k =>
-    `<span class="rchip" style="cursor:default">
+    `<span class="rchip" style="cursor:pointer" data-fkey="proc" data-fval="${esc(k)}" onclick="chipFilter(this)">
        <span class="rdot" style="background:${colOf[k] || "#5d6678"}"></span>${esc(lblOf[k] || (k === "—" ? "Sin proceso" : k))} <b>${cnt[k]}</b>
      </span>`).join("");
-  return `<div class="rchips" style="margin:4px 0 10px">${chips}</div>`;
+  return `<div class="rchips" style="margin:4px 0 10px">${chips}<span class="hint" style="margin:0 0 0 2px;align-self:center">filtra la tabla ↓</span></div>`;
+}
+
+/* filtro genérico de tabla por casilla-contador. Muestra/oculta filas según data-<key> de cada
+   fila (o data-<key>s con lista separada por '|'). Clic en la casilla activa alterna el filtro. */
+function chipFilter(el) {
+  let card = el.parentElement;
+  while (card && !card.querySelector("table.dtbl")) card = card.parentElement;
+  if (!card) return;
+  const key = el.dataset.fkey, val = el.dataset.fval, wasOn = el.classList.contains("fon");
+  card.querySelectorAll("[data-fkey='" + key + "']").forEach(g => { g.classList.remove("fon"); chipSel(g, false); });
+  const active = wasOn ? null : val;
+  if (active != null) { el.classList.add("fon"); chipSel(el, true); }
+  const tb = card.querySelector("table.dtbl tbody"); if (!tb) return;
+  [...tb.rows].forEach(r => {
+    if (r.classList.contains("rdetail")) { r.style.display = "none"; return; }  // detalle siempre colapsado al filtrar
+    if (active == null) { r.style.display = ""; return; }
+    const single = r.dataset[key], multi = r.dataset[key + "s"];
+    const ok = single === active || (multi && multi.split("|").includes(active));
+    r.style.display = ok ? "" : "none";
+  });
+}
+function chipSel(el, on) {
+  if (el.classList.contains("rchip")) el.classList.toggle("on", on);
+  else el.style.boxShadow = on ? "0 0 0 2px var(--accent)" : "";   // casilla KPI (planta por área)
 }
 function toggleResp(cod, i) {
   document.querySelectorAll(`.det-${cod}-${i}`).forEach(tr => { tr.style.display = tr.style.display === "none" ? "" : "none"; });
@@ -133,7 +158,8 @@ function cargaCard(cod) {
   let body = "";
   c.responsables.forEach((r, i) => {
     const av = r.avance;
-    body += `<tr class="rclk" onclick="toggleResp('${cod}',${i})">
+    const procs = [...new Set((r.hus || []).map(h => h.proceso || "—"))].join("|");
+    body += `<tr class="rclk" data-procs="${esc(procs)}" onclick="toggleResp('${cod}',${i})">
         <td><span class="caret" id="car-${cod}-${i}">▸</span> ${esc(r.nombre)}</td>
         <td><span class="chip2">${esc(r.cargo)}</span></td>
         <td class="muted">${esc(AREA_LBL[r.area] || r.area || "")}</td>
@@ -164,7 +190,7 @@ function alertasCard(cod) {
   if (!c || !(c.alertas || []).length) return "";
   const A = c.alertas, cap = 150;
   const crit = A.filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 20).length;
-  const rows = A.slice(0, cap).map(a => `<tr>
+  const rows = A.slice(0, cap).map(a => `<tr data-proc="${esc(a.proceso || "—")}">
       <td class="num">${diasBadge(a.dias_sin_mov)}</td>
       <td>HU ${a.id}</td>
       <td title="${esc(a.titulo)}">${esc((a.titulo || "").slice(0, 60)) || "<span class='muted'>—</span>"}</td>
@@ -793,18 +819,22 @@ function areaTag(a) {
 function cronoPlantaSinHu() {
   const pp = CRONO && CRONO.planta_proceso;
   if (!pp || !(pp.sin_hu || []).length) return "";
-  const rows = pp.sin_hu.map(p => `<tr>
+  const rows = pp.sin_hu.map(p => `<tr data-area="${esc(p.area)}">
       <td>${areaTag(p.area)}</td>
       <td><span class="chip2">${esc(p.cargo) || "—"}</span></td>
       <td>${esc(p.nombre)}</td>
     </tr>`).join("");
-  // contador de sin asignación por área (REQ / DEV / QA)
+  // contador de sin asignación por área (REQ / DEV / QA) — cada casilla es un FILTRO (clic)
   const AREAS3 = ["REQUERIMIENTOS", "DESARROLLO", "PRUEBAS QA Y TESTER"];
   const cnt = {}; AREAS3.forEach(a => cnt[a] = 0);
   pp.sin_hu.forEach(p => { if (p.area in cnt) cnt[p.area]++; });
-  const counter = `<div class="grid kpis" style="margin:4px 0 2px">${AREAS3.map(a =>
-    kpi(AREA_LBL[a], "○", AREA_COL[a], `<span data-count="${cnt[a]}">0</span>`, "sin HU asignada",
-        pp.total ? cnt[a] / pp.sin_hu.length : null)).join("")}</div>`;
+  const casilla = (a) => `<div class="card kpi fade" style="cursor:pointer" data-fkey="area" data-fval="${esc(a)}" onclick="chipFilter(this)">
+      <div class="label"><span class="ic" style="background:${AREA_COL[a]}20;color:${AREA_COL[a]}">○</span>${AREA_LBL[a]}</div>
+      <div class="val"><span data-count="${cnt[a]}">0</span></div>
+      <div class="foot">sin HU asignada</div>
+      <div class="bar-mini"><i style="width:0" data-w="${pp.sin_hu.length ? Math.min(100, cnt[a] / pp.sin_hu.length * 100) : 0}"></i></div>
+    </div>`;
+  const counter = `<div class="grid kpis" style="margin:4px 0 2px">${AREAS3.map(casilla).join("")}</div>`;
   return `<div class="card fade" style="margin-top:16px">
     <h3>🪑 Planta del proceso sin HU asignada</h3>
     <div class="hint">Personal de <b>Requerimientos, Desarrollo y QA</b> de Positiva Core (cód. ${pp.cod_planta} · ${esc(pp.archivo)}) que <b>no tiene ninguna HU en Azure</b> al corte ${CRONO.corte} · <b>${pp.sin_hu.length}</b> sin HU de ${pp.total} (con HU: ${pp.con_hu})</div>
@@ -820,7 +850,7 @@ function cronoEstancadas() {
   const E = CRONO && CRONO.estancadas;
   if (!E || !E.length) return "";
   const crit = E.filter(e => e.dias != null && e.dias > 20).length;
-  const rows = E.map(e => `<tr>
+  const rows = E.map(e => `<tr data-proc="${esc(e.proceso || "—")}">
       <td class="num">${diasBadge(e.dias)}</td>
       <td>HU ${e.id}</td>
       <td class="muted">${esc(e.ramo) || "—"}</td>
