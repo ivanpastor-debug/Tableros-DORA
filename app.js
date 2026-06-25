@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -43,6 +43,9 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // cumplimiento RQC del 421 (sección en perfiles Directivo/Gerencial); ausente -> no se muestra
   try { const rq = await fetch("data_rqc.json"); RQC = rq.ok ? await rq.json() : null; }
   catch (_) { RQC = null; }
+  // productividad diaria por proceso (meta vs real, variación); ausente -> no se muestra
+  try { const pr = await fetch("data_productividad.json"); PRODUCTIV = pr.ok ? await pr.json() : null; }
+  catch (_) { PRODUCTIV = null; }
   const sel = $("#proySel");
   const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
   sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt +
@@ -502,6 +505,17 @@ function paintProject() {
       ${kpi("% Cumplimiento", "◎", "#a855f7", RQC.cumplimiento == null ? "—" : `<span data-count="${RQC.cumplimiento * 100}" data-dec="1" data-suf="%">0</span>`, "cumplidos / activos", RQC.cumplimiento)}
     </div>
     <div id="cRqcDonut" class="chart"></div></div>` : "";
+  // productividad por proceso: variación diaria gestionado − esperado (solo proyectos con config, p.ej. 397)
+  const prodObj = PRODUCTIV && PRODUCTIV.proyectos ? PRODUCTIV.proyectos[p.codigo] : null;
+  const cProd = prodObj ? `<div class="card fade" style="margin-top:16px">
+    <h3>📈 Productividad diaria por proceso · variación</h3>
+    <div class="hint">Variación = <b>gestionado − esperado</b> (salidas acumuladas − meta acumulada) por día · <b>negativa</b> los días sin salidas (la meta sube y lo real queda plano) · referencia ${prodObj.ref} · ${prodObj.procesos.map(x => `${x.label} ${x.tasa.toFixed(2)}/día`).join(" · ")}</div>
+    <div class="filterbar">
+      <label>Desde <input type="date" id="pvIni"></label>
+      <label>Hasta <input type="date" id="pvFin"></label>
+      <label>Proceso <select id="pvProc"><option value="__all__">Todos</option>${prodObj.procesos.map(x => `<option value="${x.key}">${x.label}</option>`).join("")}</select></label>
+    </div>
+    <div id="cProdVar" class="chart tall"></div></div>` : "";
 
   const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
   const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
@@ -512,18 +526,18 @@ function paintProject() {
     case "directivo":   // estratégico: resultado, cumplimiento y riesgo
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
         wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
-        two(cLine, cGauge) + cRqc + cRecursos + cPlanta + cProdPD + cAlertas; break;
+        two(cLine, cGauge) + cProd + cRqc + cRecursos + cPlanta + cProdPD + cAlertas; break;
     case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
         wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
-        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
+        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cProd + cRqc + cCarga + cAlertas; break;
     case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
-        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
+        split(cArea, cDonut) + cProd + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
     default:            // General: vista completa (nada se pierde)
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
+        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cProd + cRqc + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
   }
 
   $("#content").innerHTML = head + tabbar + body;
@@ -539,7 +553,54 @@ function paintProject() {
   if ($("#cProdPD")) setupProdPersona(p.codigo);
   if ($("#cPlanta")) setupPlantaEvol(recObj);
   if ($("#cRqcDonut")) drawRqcDonut($("#cRqcDonut"));
+  if ($("#cProdVar")) setupProdVar(p.codigo);
   animateBars();
+}
+
+/* productividad diaria por proceso: variación = gestionado − esperado (real − meta), por día.
+   X = fechas (diario), Y = variación; negativa los días sin salidas. Filtros Desde/Hasta + proceso. */
+function setupProdVar(cod) {
+  const el = $("#cProdVar"); if (!el) return;
+  const P = PRODUCTIV && PRODUCTIV.proyectos ? PRODUCTIV.proyectos[cod] : null; if (!P) return;
+  const c = mkChart(el), ax = axisBase();
+  const allF = P.procesos[0].serie.map(s => s.f);
+  const dmin = allF[0], dmax = allF[allF.length - 1];
+  const fi = $("#pvIni"), ff = $("#pvFin"), fp = $("#pvProc");
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
+  const nf = (v) => (v > 0 ? "+" : "") + v.toFixed(1).replace(".", ",");
+  function apply() {
+    let a = fi.value || dmin, b = ff.value || dmax; if (a > b) { const t = a; a = b; b = t; }
+    const procs = fp.value === "__all__" ? P.procesos : P.procesos.filter(x => x.key === fp.value);
+    const idx = allF.map((f, i) => [f, i]).filter(([f]) => f >= a && f <= b);
+    const dts = idx.map(([f]) => f);
+    const series = procs.map(p => ({
+      name: p.label, type: "line", smooth: false, showSymbol: true, symbol: "circle", symbolSize: 4,
+      color: p.color, lineStyle: { width: 2 }, emphasis: { focus: "series" },
+      data: idx.map(([, i]) => p.serie[i].var),
+    }));
+    if (series.length) series[0].markLine = { silent: true, symbol: "none", label: { show: false },
+      lineStyle: { color: ax.textColor, type: "dashed", opacity: 0.5 }, data: [{ yAxis: 0 }] };
+    c.setOption({
+      tooltip: {
+        trigger: "axis", ...ax.tooltip, formatter: (ps) => {
+          if (!ps.length) return "";
+          const f = ps[0].axisValue, i = allF.indexOf(f); let s = `<b>${f}</b>`;
+          ps.forEach(pt => {
+            const pr = procs.find(x => x.label === pt.seriesName), d = pr ? pr.serie[i] : null;
+            s += `<br>${pt.marker}${pt.seriesName}: <b>${nf(pt.value)}</b>`;
+            if (d) s += ` <span style="opacity:.65">(gestionado ${d.real} · esperado ${d.meta.toFixed(1).replace(".", ",")})</span>`;
+          });
+          return s;
+        }
+      },
+      legend: { data: procs.map(p => p.label), textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "circle" },
+      grid: { left: 8, right: 16, top: 40, bottom: 6, containLabel: true },
+      xAxis: { type: "category", data: dts, axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: v => v.slice(5) } },
+      yAxis: { type: "value", name: "variación (HU)", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+      series,
+    }, true);
+  }
+  fi.onchange = ff.onchange = fp.onchange = apply; apply();
 }
 
 /* tabla dinámica: filas = etapas, columnas = fechas, métrica seleccionable */
