@@ -255,13 +255,14 @@ function dayRange(d0, d1) {            // días calendario inclusive, ISO YYYY-M
   for (let t = Date.parse(d0 + "T00:00:00Z"); t <= end; t += 86400000) out.push(new Date(t).toISOString().slice(0, 10));
   return out;
 }
-function setupPlantaEvol(resObj) {
-  const el = $("#cPlanta"); if (!el || !RECURSOS || !resObj) return;
+function setupPlantaEvol(resObj, ids) {
+  const id = ids || { el: "#cPlanta", ini: "#plIni", fin: "#plFin" };
+  const el = $(id.el); if (!el || !RECURSOS || !resObj) return;
   const P = RECURSOS.plantas || [];
   if (!P.length) return;                 // sin archivos de planta no hay serie diaria
   const d0 = P[0].fecha, d1 = P[P.length - 1].fecha;   // desde el 1er archivo hasta el más reciente
   const c = mkChart(el), ax = axisBase();
-  const fi = $("#plIni"), ff = $("#plFin");
+  const fi = $(id.ini), ff = $(id.fin);
   fi.min = ff.min = d0; fi.max = ff.max = d1; fi.value = d0; ff.value = d1;
   function apply() {
     let a = fi.value || d0, b = ff.value || d1; if (a > b) { const t = a; a = b; b = t; }
@@ -751,6 +752,15 @@ function renderPortfolio() {
     <div id="cProd" class="chart tall"></div>
   </div>` + (RECURSOS ? `
   <div class="card fade" style="margin-top:16px">
+    <h3>👥 Evolución de la planta consolidada · por día</h3>
+    <div class="hint">Total de personas de todo el portafolio por día (sin doble-conteo de plantas compartidas) · línea Total y por área · desde el primer archivo de planta${RECURSOS.plantas && RECURSOS.plantas.length ? " (" + RECURSOS.plantas[0].fecha + ")" : ""}</div>
+    <div class="filterbar">
+      <label>Desde <input type="date" id="ppIni"></label>
+      <label>Hasta <input type="date" id="ppFin"></label>
+    </div>
+    <div id="cPlantaPort" class="chart tall"></div>
+  </div>
+  <div class="card fade" style="margin-top:16px">
     <h3>⚙️ Productividad persona-día por proyecto · en el tiempo</h3>
     <div class="hint">Una línea por proyecto · eje X fechas, eje Y productividad (HU gestionadas ÷ personas REQ+DEV+QA) · filtra el rango de fechas</div>
     <div class="filterbar">
@@ -776,6 +786,7 @@ function renderPortfolio() {
   drawVolume($("#cVol"), rows);
   drawProductividad($("#cProd"), allp, a, b);
   if (RECURSOS) setupProdComp();
+  if ($("#cPlantaPort")) setupPlantaEvol(RECURSOS.portafolio, { el: "#cPlantaPort", ini: "#ppIni", fin: "#ppFin" });
 }
 
 /* estado (punto de serie) vigente a la fecha d: último corte con fecha <= d, o null */
