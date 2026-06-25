@@ -780,9 +780,17 @@ function cronoPlantaSinHu() {
       <td><span class="chip2">${esc(p.cargo) || "—"}</span></td>
       <td>${esc(p.nombre)}</td>
     </tr>`).join("");
+  // contador de sin asignación por área (REQ / DEV / QA)
+  const AREAS3 = ["REQUERIMIENTOS", "DESARROLLO", "PRUEBAS QA Y TESTER"];
+  const cnt = {}; AREAS3.forEach(a => cnt[a] = 0);
+  pp.sin_hu.forEach(p => { if (p.area in cnt) cnt[p.area]++; });
+  const counter = `<div class="grid kpis" style="margin:4px 0 2px">${AREAS3.map(a =>
+    kpi(AREA_LBL[a], "○", AREA_COL[a], `<span data-count="${cnt[a]}">0</span>`, "sin HU asignada",
+        pp.total ? cnt[a] / pp.sin_hu.length : null)).join("")}</div>`;
   return `<div class="card fade" style="margin-top:16px">
     <h3>🪑 Planta del proceso sin HU asignada</h3>
     <div class="hint">Personal de <b>Requerimientos, Desarrollo y QA</b> de Positiva Core (cód. ${pp.cod_planta} · ${esc(pp.archivo)}) que <b>no tiene ninguna HU en Azure</b> al corte ${CRONO.corte} · <b>${pp.sin_hu.length}</b> sin HU de ${pp.total} (con HU: ${pp.con_hu})</div>
+    ${counter}
     <div class="dwrap"><table class="dtbl"><thead><tr>
       <th>Área</th><th>Cargo</th><th>Persona</th>
     </tr></thead><tbody>${rows}</tbody></table></div>
