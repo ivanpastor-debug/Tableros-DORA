@@ -752,15 +752,6 @@ function renderPortfolio() {
     <div id="cProd" class="chart tall"></div>
   </div>` + (RECURSOS ? `
   <div class="card fade" style="margin-top:16px">
-    <h3>👥 Evolución de la planta consolidada · por día</h3>
-    <div class="hint">Total de personas de todo el portafolio por día (sin doble-conteo de plantas compartidas) · línea Total y por área · desde el primer archivo de planta${RECURSOS.plantas && RECURSOS.plantas.length ? " (" + RECURSOS.plantas[0].fecha + ")" : ""}</div>
-    <div class="filterbar">
-      <label>Desde <input type="date" id="ppIni"></label>
-      <label>Hasta <input type="date" id="ppFin"></label>
-    </div>
-    <div id="cPlantaPort" class="chart tall"></div>
-  </div>
-  <div class="card fade" style="margin-top:16px">
     <h3>⚙️ Productividad persona-día por proyecto · en el tiempo</h3>
     <div class="hint">Una línea por proyecto · eje X fechas, eje Y productividad (HU gestionadas ÷ personas REQ+DEV+QA) · filtra el rango de fechas</div>
     <div class="filterbar">
@@ -771,7 +762,18 @@ function renderPortfolio() {
   </div>` : "");
   const recursos = recursosCard(RECURSOS ? RECURSOS.portafolio : null, "Portafolio",
     RECURSOS ? "consolidado (sin doble-conteo de plantas compartidas)" : null);
-  $("#content").innerHTML = head + kpis + recursos + charts;
+  // evolución de la planta consolidada por día — va JUSTO debajo de "Recursos del equipo"
+  const plantaPort = RECURSOS ? `
+  <div class="card fade" style="margin-top:16px">
+    <h3>👥 Evolución de la planta consolidada · por día</h3>
+    <div class="hint">Total de personas de todo el portafolio por día (sin doble-conteo de plantas compartidas) · línea Total y por área · desde el primer archivo de planta${RECURSOS.plantas && RECURSOS.plantas.length ? " (" + RECURSOS.plantas[0].fecha + ")" : ""}</div>
+    <div class="filterbar">
+      <label>Desde <input type="date" id="ppIni"></label>
+      <label>Hasta <input type="date" id="ppFin"></label>
+    </div>
+    <div id="cPlantaPort" class="chart tall"></div>
+  </div>` : "";
+  $("#content").innerHTML = head + kpis + recursos + plantaPort + charts;
   if (RECURSOS) setupRecursos(RECURSOS.portafolio);
 
   // filtros (gobiernan todo el portafolio) — el estado vive en PORT_INI/PORT_FIN
