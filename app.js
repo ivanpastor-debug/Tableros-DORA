@@ -713,7 +713,8 @@ function renderCronograma() {
     ${kpi("Sin fecha", "∅", "#94a3b8", `<span data-count="${r.sin_fecha}">0</span>`, "sin fecha comprometida")}
   </div>`;
   const c1 = `<div class="card fade" style="margin-top:16px"><h3>📈 Avance del cronograma · a diario</h3>
-    <div class="hint">% avance ponderado por etapa (promedio de las ${C.total_hu} HU) por fecha de corte · desde ${C.inicio_medicion}</div>
+    <div class="hint">% avance ponderado por etapa (promedio de las ${C.total_hu} HU) por fecha de corte · medición desde ${C.inicio_medicion} · filtra el rango</div>
+    <div class="filterbar"><label>Desde <input type="date" id="cavIni"></label><label>Hasta <input type="date" id="cavFin"></label></div>
     <div id="cCronoAv" class="chart"></div></div>`;
   const c2 = `<div class="card fade" style="margin-top:16px"><h3>📊 Avance por ramo · a diario</h3>
     <div class="hint">% avance ponderado por ramo · una línea por ramo · filtra el rango de fechas</div>
@@ -724,24 +725,44 @@ function renderCronograma() {
     <div id="cCronoSem" class="chart tall"></div></div>`;
   $("#content").innerHTML = head + kpis + c1 + c2 + c3;
   countUp();
-  drawCronoAvance($("#cCronoAv"));
+  setupCronoAvance();
   setupCronoRamos();
   drawCronoSemaforo($("#cCronoSem"));
   animateBars();
 }
 
-/* gráfico 1: avance global del cronograma por día (dispersión lineal) */
-function drawCronoAvance(el) {
+/* gráfico 1: avance global del cronograma por día (dispersión lineal) con filtro Desde/Hasta.
+   Eje Y dinámico (acotado a la ventana visible) para que se aprecie la variación diaria. */
+function setupCronoAvance() {
+  const el = $("#cCronoAv"); if (!el) return;
   const C = CRONO, c = mkChart(el), ax = axisBase();
   const dates = C.serie.map(s => s.fecha);
-  const data = C.serie.map(s => s.avance == null ? null : +(s.avance * 100).toFixed(1));
-  c.setOption({
-    tooltip: { trigger: "axis", ...ax.tooltip, valueFormatter: v => v == null ? "—" : v.toFixed(1).replace(".", ",") + "%" },
-    grid: { left: 8, right: 16, top: 20, bottom: 6, containLabel: true },
-    xAxis: { type: "category", data: dates, axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: v => v.slice(5) } },
-    yAxis: { type: "value", name: "% avance", min: 0, max: 100, nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: "{value}%" } },
-    series: [{ name: "Avance", type: "line", smooth: true, showSymbol: true, symbol: "circle", symbolSize: 8, lineStyle: { width: 3 }, color: "#a855f7", areaStyle: { opacity: 0.08 }, data }],
-  }, true);
+  const dmin = dates[0], dmax = dates[dates.length - 1];
+  const fi = $("#cavIni"), ff = $("#cavFin");
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
+  function apply() {
+    let a = fi.value || dmin, b = ff.value || dmax; if (a > b) { const t = a; a = b; b = t; }
+    const rows = C.serie.filter(s => s.fecha >= a && s.fecha <= b);
+    const dts = rows.map(s => s.fecha);
+    const data = rows.map(s => s.avance == null ? null : +(s.avance * 100).toFixed(1));
+    const vals = data.filter(v => v != null);
+    // eje Y ajustado a la ventana (margen del 25% del rango, redondeado a 5, acotado 0-100)
+    let ymin = 0, ymax = 100;
+    if (vals.length) {
+      const lo = Math.min(...vals), hi = Math.max(...vals), pad = Math.max(2, (hi - lo) * 0.25);
+      ymin = Math.max(0, Math.floor((lo - pad) / 5) * 5);
+      ymax = Math.min(100, Math.ceil((hi + pad) / 5) * 5);
+      if (ymax - ymin < 5) { ymin = Math.max(0, ymin - 5); ymax = Math.min(100, ymax + 5); }
+    }
+    c.setOption({
+      tooltip: { trigger: "axis", ...ax.tooltip, valueFormatter: v => v == null ? "—" : v.toFixed(1).replace(".", ",") + "%" },
+      grid: { left: 8, right: 16, top: 20, bottom: 6, containLabel: true },
+      xAxis: { type: "category", data: dts, axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, fontSize: 10, formatter: v => v.slice(5) } },
+      yAxis: { type: "value", name: "% avance", min: ymin, max: ymax, nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: "{value}%" } },
+      series: [{ name: "Avance", type: "line", smooth: true, showSymbol: true, symbol: "circle", symbolSize: 8, lineStyle: { width: 3 }, color: "#a855f7", areaStyle: { opacity: 0.08 }, data }],
+    }, true);
+  }
+  fi.onchange = ff.onchange = apply; apply();
 }
 
 /* gráfico 2: avance por ramo por día (una línea por ramo) con filtro Desde/Hasta */
