@@ -757,12 +757,59 @@ function renderCronograma() {
   const c3 = `<div class="card fade" style="margin-top:16px"><h3>🚦 Fechas comprometidas de entrega y semáforo</h3>
     <div class="hint">Cada punto = HU por ramo y fecha comprometida · 🟢 entregada · 🟡 pendiente en plazo · 🔴 vencida sin entregar · tamaño = nº de HU</div>
     <div id="cCronoSem" class="chart tall"></div></div>`;
-  $("#content").innerHTML = head + kpis + c1 + c2 + c3;
+  $("#content").innerHTML = head + kpis + c1 + c2 + c3 + cronoPlantaSinHu() + cronoEstancadas();
   countUp();
   setupCronoAvance();
   setupCronoRamos();
   drawCronoSemaforo($("#cCronoSem"));
   animateBars();
+}
+
+/* etiqueta de área con punto de color (reusa AREA_LBL/AREA_COL) */
+function areaTag(a) {
+  if (!a) return '<span class="muted">—</span>';
+  return `<span class="rdot" style="background:${AREA_COL[a] || "#5d6678"};display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px"></span>${AREA_LBL[a] || a}`;
+}
+
+/* sección final 1: planta del proceso SIN HU asignada en Azure al corte (con cargo y área) */
+function cronoPlantaSinHu() {
+  const pp = CRONO && CRONO.planta_proceso;
+  if (!pp || !(pp.sin_hu || []).length) return "";
+  const rows = pp.sin_hu.map(p => `<tr>
+      <td>${areaTag(p.area)}</td>
+      <td><span class="chip2">${esc(p.cargo) || "—"}</span></td>
+      <td>${esc(p.nombre)}</td>
+    </tr>`).join("");
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>🪑 Planta del proceso sin HU asignada</h3>
+    <div class="hint">Personas de la planta de Positiva Core (cód. ${pp.cod_planta} · ${esc(pp.archivo)}) que <b>no tienen ninguna HU en Azure</b> al corte ${CRONO.corte} · <b>${pp.sin_hu.length}</b> sin HU de ${pp.total} (con HU: ${pp.con_hu})</div>
+    <div class="dwrap"><table class="dtbl"><thead><tr>
+      <th>Área</th><th>Cargo</th><th>Persona</th>
+    </tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
+}
+
+/* sección final 2: HU del cronograma con más tiempo en su etapa actual */
+function cronoEstancadas() {
+  const E = CRONO && CRONO.estancadas;
+  if (!E || !E.length) return "";
+  const crit = E.filter(e => e.dias != null && e.dias > 20).length;
+  const rows = E.map(e => `<tr>
+      <td class="num">${diasBadge(e.dias)}</td>
+      <td>HU ${e.id}</td>
+      <td class="muted">${esc(e.ramo) || "—"}</td>
+      <td>${esc(e.etapa)}</td>
+      <td class="muted">${esc(e.responsable)}</td>
+      <td>${areaTag(e.area)}</td>
+      <td class="muted">desde ${e.desde || "—"}</td>
+    </tr>`).join("");
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>⏳ HU más estancadas por etapa</h3>
+    <div class="hint">HU del cronograma con más tiempo en su etapa actual (excluye entregadas y removidas) · responsable, área y fecha desde que están en esa etapa · <b>${crit}</b> con +20 días · top ${E.length}</div>
+    <div class="dwrap"><table class="dtbl"><thead><tr>
+      <th class="num">Días</th><th>HU</th><th>Ramo</th><th>Etapa</th><th>Responsable</th><th>Área</th><th>Desde</th>
+    </tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
 }
 
 /* gráfico 1: avance global del cronograma por día (dispersión lineal) con filtro Desde/Hasta.
