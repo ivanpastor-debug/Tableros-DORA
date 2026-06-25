@@ -448,7 +448,7 @@ function paintProject() {
     <div id="cPlanta" class="chart"></div></div>` : "";
   const cCarga = cargaCard(p.codigo);
   const cAlertas = alertasCard(p.codigo);
-  // sección compacta de cumplimiento RQC (solo 421, solo perfiles directivo/gerencial)
+  // sección compacta de cumplimiento RQC (solo 421; perfiles General, Directivo y Gerencial)
   const cRqc = (p.codigo === RQC?.codigo && RQC) ? `<div class="card fade" style="margin-top:16px">
     <h3>📋 Cumplimiento RQC · contrato</h3>
     <div class="hint">RQC del contrato · corte ${RQC.corte} · cumplimiento = cumplidos ÷ (totales − removidos)</div>
@@ -479,7 +479,7 @@ function paintProject() {
         split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
     default:            // General: vista completa (nada se pierde)
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
+        cRecursos + cPlanta + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
   }
 
   $("#content").innerHTML = head + tabbar + body;
