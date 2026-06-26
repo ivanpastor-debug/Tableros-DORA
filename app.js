@@ -413,18 +413,29 @@ function drawCostosBar(c, w) {
     }],
   }, true);
 }
+/* tarjeta Costos vs Salidas (parametrizable por sufijo para reusarla varias veces en una vista) */
+function costosCard(cod, sfx = "", titulo) {
+  const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null;
+  if (!C) return "";
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>💸 Costos vs Salidas · planta por proceso${titulo ? " · " + titulo : ""}</h3>
+    <div class="hint">Costo operativo = <b>solo roles que generan valor</b> (analistas, desarrolladores, QA); excluye Scrum/Head/Coordinador/Líder. La planta se paga todos los días hábiles del periodo (<b>Nómina</b>), pero solo está justificada hasta su <b>última salida</b> de HU (<b>Ejecutado</b>); los días sin producción al final = <b>Variación</b> (sobrecosto). Filtra el rango de fechas para redimensionar el periodo.</div>
+    <div class="filterbar"><label>Desde <input type="date" id="coIni${sfx}"></label><label>Hasta <input type="date" id="coFin${sfx}"></label></div>
+    <div id="cCostosTbl${sfx}"></div>
+    <div id="cCostosBar${sfx}" class="chart"></div></div>`;
+}
 /* filtro Desde/Hasta que redimensiona la tabla + las barras de Costos vs Salidas */
-function setupCostos(cod) {
+function setupCostos(cod, sfx = "") {
   const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null;
   if (!C || !C.fechas || !C.fechas.length) return;
   const F = C.fechas, dmin = F[0], dmax = F[F.length - 1];
-  const fi = $("#coIni"), ff = $("#coFin"); if (!fi || !ff) return;
+  const fi = $("#coIni" + sfx), ff = $("#coFin" + sfx); if (!fi || !ff) return;
   fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
-  const c = mkChart($("#cCostosBar"));
+  const c = mkChart($("#cCostosBar" + sfx));
   function apply() {
     let a = fi.value || dmin, b = ff.value || dmax; if (a > b) { const t = a; a = b; b = t; }
     const w = costosWindow(C, a, b);
-    $("#cCostosTbl").innerHTML = costosTable(C, w);
+    $("#cCostosTbl" + sfx).innerHTML = costosTable(C, w);
     drawCostosBar(c, w);
   }
   fi.onchange = ff.onchange = apply; apply();
@@ -491,10 +502,11 @@ function render(key) {
 /* Cada pestaña reordena los MISMOS widgets según lo que necesita ese rol. La hoja
    Portafolio NO se toca. "General" conserva la vista completa para no perder nada. */
 const PROFILES = [
-  { id: "general", label: "General", icon: "▦" },
-  { id: "directivo", label: "Directivo", icon: "🎯" },          // antes Director de Operaciones
-  { id: "gerencial", label: "Gerencial", icon: "📋" },          // antes Gerente de Proyecto
-  { id: "operativo", label: "Operativo", icon: "🛠" },          // unifica Head/Líder + Scrum
+  { id: "general", label: "General", icon: "▦", color: "#6366f1" },
+  { id: "seguimiento", label: "Seguimiento", icon: "🔎", color: "#10b981" },  // recursos + HU/etapa + costos
+  { id: "directivo", label: "Directivo", icon: "🎯", color: "#a855f7" },      // antes Director de Operaciones
+  { id: "gerencial", label: "Gerencial", icon: "📋", color: "#38bdf8" },      // antes Gerente de Proyecto
+  { id: "operativo", label: "Operativo", icon: "🛠", color: "#f59e0b" },      // unifica Head/Líder + Scrum
 ];
 let PROJ = null, PROFILE_TAB = "general";
 
@@ -521,7 +533,7 @@ function paintProject() {
     ${p.estado ? `<span class="tag">${p.estado}</span>` : ""}
   </div>`;
   const tabbar = `<div class="tabbar">${PROFILES.map(pr =>
-    `<button class="tab${pr.id === PROFILE_TAB ? " on" : ""}" onclick="selectProfile('${pr.id}')">${pr.icon} ${pr.label}</button>`).join("")}</div>`;
+    `<button class="tab${pr.id === PROFILE_TAB ? " on" : ""}" style="--tc:${pr.color}" onclick="selectProfile('${pr.id}')">${pr.icon} ${pr.label}</button>`).join("")}</div>`;
 
   // ---- fragmentos reutilizables (mismas fuentes, distinta curaduría por perfil) ----
   // ---- tarjetas KPI individuales (se eligen por perfil) ----
@@ -545,19 +557,7 @@ function paintProject() {
       <div class="hint">Total de HU vs. puestas en producción</div><div id="cLine" class="chart"></div></div>`;
   const cGauge = `<div class="card fade"><h3>Productividad · real vs. requerida</h3>
       <div class="hint">Arco externo = real (verde si cumple / rojo si va por debajo) · arco interno = requerida (cierre QA)</div><div id="cGauge" class="chart"></div></div>`;
-  const cPivot = `<div class="card fade" style="margin-top:16px">
-    <h3>Tabla consolidada · HU por etapa y fecha</h3>
-    <div class="hint">Conteo de HU en cada etapa por día (tipo tabla dinámica). Cambia la métrica para ver variaciones o gestiones.</div>
-    <div class="filterbar"><label>Métrica
-        <select id="tblMode">
-          <option value="count">Conteo (HU en la etapa)</option>
-          <option value="delta">Δ Variación día a día</option>
-          <option value="ent">Entradas (gestión)</option>
-          <option value="sal">Salidas (gestión)</option>
-        </select></label>
-      <span class="hint" style="margin:0">▸ filas = etapas · columnas = fechas (desliza →)</span>
-    </div>
-    <div id="pivWrap" class="pivwrap"></div></div>`;
+  const cPivot = pivotCard(p);
   const cFlujo = `<div class="card fade" style="margin-top:16px">
     <h3>Variación de HU por etapa en el tiempo</h3>
     <div class="hint">Por día y etapa: <b>entradas hacia arriba (+)</b> y <b>salidas hacia abajo (−)</b>. Filtra por rango de fechas y por etapa.</div>
@@ -605,15 +605,8 @@ function paintProject() {
       <div class="hint" style="color:var(--text);font-weight:600;margin:10px 0 0"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${x.color};margin-right:6px"></span>${x.label} · meta ${x.tasa.toFixed(2)}/día hábil · base ${x.base} · cierre ${x.cierre}</div>
       <div id="cPV_${x.key}" class="chart"></div></div>`).join("")}
     </div>` : "";
-  // costos vs salidas: planta de cada proceso (REQ/DEV/QA) vs HU entregadas (perfiles Directivo/Gerencial)
-  // con filtro Desde/Hasta que REDIMENSIONA el periodo (tabla + barras se recalculan en setupCostos)
-  const costObj = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[p.codigo] : null;
-  const cCostos = costObj ? `<div class="card fade" style="margin-top:16px">
-    <h3>💸 Costos vs Salidas · planta por proceso</h3>
-    <div class="hint">Costo operativo = <b>solo roles que generan valor</b> (analistas, desarrolladores, QA); excluye Scrum/Head/Coordinador/Líder. La planta se paga todos los días hábiles del periodo (<b>Nómina</b>), pero solo está justificada hasta su <b>última salida</b> de HU (<b>Ejecutado</b>); los días sin producción al final = <b>Variación</b> (sobrecosto). Filtra el rango de fechas para redimensionar el periodo.</div>
-    <div class="filterbar"><label>Desde <input type="date" id="coIni"></label><label>Hasta <input type="date" id="coFin"></label></div>
-    <div id="cCostosTbl"></div>
-    <div id="cCostosBar" class="chart"></div></div>` : "";
+  // costos vs salidas: planta de cada proceso (REQ/DEV/QA) vs HU entregadas (solo vista Seguimiento)
+  const cCostos = costosCard(p.codigo);
 
   const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
   const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
@@ -621,21 +614,24 @@ function paintProject() {
 
   let body;
   switch (PROFILE_TAB) {
+    case "seguimiento":  // control: recursos + tabla HU por etapa + costos vs salidas (exclusivas aquí)
+      body = note("Seguimiento · recursos del equipo, HU por etapa y costos vs salidas") +
+        cRecursos + cPivot + cCostos; break;
     case "directivo":   // estratégico: resultado, cumplimiento y riesgo
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
         wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
-        two(cLine, cGauge) + cRqc + cRecursos + cPlanta + cProd + cCostos + cProdPD + cAlertas; break;
+        two(cLine, cGauge) + cRqc + cRecursos + cPlanta + cProd + cProdPD + cAlertas; break;
     case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
         wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
-        cRecursos + cPlanta + cProd + cCostos + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
+        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
     case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
-        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
+        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo; break;
     default:            // General: vista completa (nada se pierde) · productividad bajo la planta
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cPivot + cFlujo + cProdPD + cCarga + cAlertas;
+        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cProdPD + cCarga + cAlertas;
   }
 
   $("#content").innerHTML = head + tabbar + body;
@@ -714,8 +710,25 @@ function drawProdArea(c, pr, idx) {
 }
 
 /* tabla dinámica: filas = etapas, columnas = fechas, métrica seleccionable */
-function setupPivot(p) {
-  const sel = $("#tblMode"), wrap = $("#pivWrap");
+/* tarjeta de la tabla consolidada HU por etapa (parametrizable por sufijo de id para reusarla
+   varias veces en una misma vista, p.ej. cronograma con 416 y 355). */
+function pivotCard(p, sfx = "", titulo) {
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>Tabla consolidada · HU por etapa y fecha${titulo ? " · " + titulo : ""}</h3>
+    <div class="hint">Conteo de HU en cada etapa por día (tipo tabla dinámica). Cambia la métrica para ver variaciones o gestiones.</div>
+    <div class="filterbar"><label>Métrica
+        <select id="tblMode${sfx}">
+          <option value="count">Conteo (HU en la etapa)</option>
+          <option value="delta">Δ Variación día a día</option>
+          <option value="ent">Entradas (gestión)</option>
+          <option value="sal">Salidas (gestión)</option>
+        </select></label>
+      <span class="hint" style="margin:0">▸ filas = etapas · columnas = fechas (desliza →)</span>
+    </div>
+    <div id="pivWrap${sfx}" class="pivwrap"></div></div>`;
+}
+function setupPivot(p, sfx = "") {
+  const sel = $("#tblMode" + sfx), wrap = $("#pivWrap" + sfx); if (!sel || !wrap) return;
   const draw = () => { wrap.innerHTML = buildPivot(p, sel.value); wrap.scrollLeft = wrap.scrollWidth; };
   sel.onchange = draw;
   draw();
@@ -942,7 +955,14 @@ function drawRqcDonut(el) {
 
 /* ---------- vista TABLERO CONSOLIDADO DE CRONOGRAMA (Positiva Core 416+355) ---------- */
 /* No toca 416 ni 355: es una vista propia que lee data_cronograma.json. */
-function renderCronograma() {
+let CRONO_TAB = "cronograma";
+const CRONO_TABS = [
+  { id: "cronograma", label: "Cronograma", icon: "📅", color: "#6366f1" },
+  { id: "seguimiento", label: "Seguimiento", icon: "🔎", color: "#10b981" },
+];
+function renderCronograma() { CRONO_TAB = "cronograma"; paintCronograma(); }
+function selectCronoTab(id) { if (id === CRONO_TAB) return; CRONO_TAB = id; disposeCharts(); paintCronograma(); }
+function paintCronograma() {
   const C = CRONO;
   if (!C) { $("#content").innerHTML = `<div class="card">No hay datos de cronograma (data_cronograma.json).</div>`; return; }
   const r = C.semaforo_resumen, last = C.serie[C.serie.length - 1] || { avance: null };
@@ -953,30 +973,58 @@ function renderCronograma() {
     <span class="tag">inicio medición ${C.inicio_medicion}</span>
     <span class="tag">corte ${C.corte}</span>
   </div>`;
-  const kpis = `<div class="grid kpis">
-    ${kpi("HU del cronograma", "▦", "#6366f1", `<span data-count="${C.total_hu}">0</span>`, `416: ${C.por_proyecto["416"] || 0} · 355: ${C.por_proyecto["355"] || 0}`)}
-    ${kpi("% Avance ponderado", "◔", "#a855f7", last.avance == null ? "—" : `<span data-count="${last.avance * 100}" data-dec="1" data-suf="%">0</span>`, "promedio por etapa", last.avance)}
-    ${kpi("Entregadas", "✓", "#10b981", `<span data-count="${r.verde}">0</span>`, `de ${C.total_hu} · objetivo ${C.objetivo}`, C.total_hu ? r.verde / C.total_hu : null)}
-    ${kpi("En plazo", "◷", "#f59e0b", `<span data-count="${r.amarillo}">0</span>`, "pendientes dentro de fecha")}
-    ${kpi("Vencidas", "⚠", "#ef4444", `<span data-count="${r.rojo}">0</span>`, "sin entregar y vencidas")}
-    ${kpi("Sin fecha", "∅", "#94a3b8", `<span data-count="${r.sin_fecha}">0</span>`, "sin fecha comprometida")}
-  </div>`;
-  const c1 = `<div class="card fade" style="margin-top:16px"><h3>📈 Avance del cronograma · a diario</h3>
-    <div class="hint">% avance ponderado por etapa (promedio de las ${C.total_hu} HU) por fecha de corte · medición desde ${C.inicio_medicion} · filtra el rango</div>
-    <div class="filterbar"><label>Desde <input type="date" id="cavIni"></label><label>Hasta <input type="date" id="cavFin"></label></div>
-    <div id="cCronoAv" class="chart"></div></div>`;
-  const c2 = `<div class="card fade" style="margin-top:16px"><h3>📊 Avance por ramo · a diario</h3>
-    <div class="hint">% avance ponderado por ramo · una línea por ramo · filtra el rango de fechas</div>
-    <div class="filterbar"><label>Desde <input type="date" id="crIni"></label><label>Hasta <input type="date" id="crFin"></label></div>
-    <div id="cCronoRamo" class="chart tall"></div></div>`;
-  const c3 = `<div class="card fade" style="margin-top:16px"><h3>🚦 Fechas comprometidas de entrega y semáforo</h3>
-    <div class="hint">Cada punto = HU por ramo y fecha comprometida · 🟢 entregada · 🟡 pendiente en plazo · 🔴 vencida sin entregar · tamaño = nº de HU</div>
-    <div id="cCronoSem" class="chart tall"></div></div>`;
-  $("#content").innerHTML = head + kpis + c1 + c2 + c3 + cronoPlantaSinHu() + cronoEstancadas();
+  const tabbar = `<div class="tabbar">${CRONO_TABS.map(t =>
+    `<button class="tab${t.id === CRONO_TAB ? " on" : ""}" style="--tc:${t.color}" onclick="selectCronoTab('${t.id}')">${t.icon} ${t.label}</button>`).join("")}</div>`;
+  const note = (t) => `<div class="tabnote">${t}</div>`;
+
+  let body;
+  if (CRONO_TAB === "seguimiento") {
+    // Positiva Core = 416 + 355 (comparten planta 416): recursos una vez + por enfoque HU/etapa y costos
+    const rec416 = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos["416"] : null;
+    const enf = (cod) => {
+      const pp = DATA.proyectos.find(x => x.codigo === cod); if (!pp) return "";
+      return `<div class="project-title fade" style="margin-top:24px"><h2 style="font-size:18px">${etiqueta(pp)}</h2><span class="tag">${pp.kpis.hu_total} HU</span></div>`
+        + pivotCard(pp, cod, etiqueta(pp)) + costosCard(cod, cod, etiqueta(pp));
+    };
+    body = note("Seguimiento de Positiva Core · recursos del equipo y, por enfoque (416 y 355), HU por etapa y costos vs salidas") +
+      recursosCard(rec416, "Positiva Core", RECURSOS ? "Planta " + RECURSOS.planta_archivo : null) +
+      enf("416") + enf("355");
+  } else {
+    const kpis = `<div class="grid kpis">
+      ${kpi("HU del cronograma", "▦", "#6366f1", `<span data-count="${C.total_hu}">0</span>`, `416: ${C.por_proyecto["416"] || 0} · 355: ${C.por_proyecto["355"] || 0}`)}
+      ${kpi("% Avance ponderado", "◔", "#a855f7", last.avance == null ? "—" : `<span data-count="${last.avance * 100}" data-dec="1" data-suf="%">0</span>`, "promedio por etapa", last.avance)}
+      ${kpi("Entregadas", "✓", "#10b981", `<span data-count="${r.verde}">0</span>`, `de ${C.total_hu} · objetivo ${C.objetivo}`, C.total_hu ? r.verde / C.total_hu : null)}
+      ${kpi("En plazo", "◷", "#f59e0b", `<span data-count="${r.amarillo}">0</span>`, "pendientes dentro de fecha")}
+      ${kpi("Vencidas", "⚠", "#ef4444", `<span data-count="${r.rojo}">0</span>`, "sin entregar y vencidas")}
+      ${kpi("Sin fecha", "∅", "#94a3b8", `<span data-count="${r.sin_fecha}">0</span>`, "sin fecha comprometida")}
+    </div>`;
+    const c1 = `<div class="card fade" style="margin-top:16px"><h3>📈 Avance del cronograma · a diario</h3>
+      <div class="hint">% avance ponderado por etapa (promedio de las ${C.total_hu} HU) por fecha de corte · medición desde ${C.inicio_medicion} · filtra el rango</div>
+      <div class="filterbar"><label>Desde <input type="date" id="cavIni"></label><label>Hasta <input type="date" id="cavFin"></label></div>
+      <div id="cCronoAv" class="chart"></div></div>`;
+    const c2 = `<div class="card fade" style="margin-top:16px"><h3>📊 Avance por ramo · a diario</h3>
+      <div class="hint">% avance ponderado por ramo · una línea por ramo · filtra el rango de fechas</div>
+      <div class="filterbar"><label>Desde <input type="date" id="crIni"></label><label>Hasta <input type="date" id="crFin"></label></div>
+      <div id="cCronoRamo" class="chart tall"></div></div>`;
+    const c3 = `<div class="card fade" style="margin-top:16px"><h3>🚦 Fechas comprometidas de entrega y semáforo</h3>
+      <div class="hint">Cada punto = HU por ramo y fecha comprometida · 🟢 entregada · 🟡 pendiente en plazo · 🔴 vencida sin entregar · tamaño = nº de HU</div>
+      <div id="cCronoSem" class="chart tall"></div></div>`;
+    body = kpis + c1 + c2 + c3 + cronoPlantaSinHu() + cronoEstancadas();
+  }
+  $("#content").innerHTML = head + tabbar + body;
   countUp();
-  setupCronoAvance();
-  setupCronoRamos();
-  drawCronoSemaforo($("#cCronoSem"));
+  if (CRONO_TAB === "seguimiento") {
+    if ($("#recFecha")) setupRecursos(RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos["416"] : null);
+    ["416", "355"].forEach(cod => {
+      const pp = DATA.proyectos.find(x => x.codigo === cod); if (!pp) return;
+      if ($("#tblMode" + cod)) setupPivot(pp, cod);
+      if ($("#coIni" + cod)) setupCostos(cod, cod);
+    });
+  } else {
+    setupCronoAvance();
+    setupCronoRamos();
+    drawCronoSemaforo($("#cCronoSem"));
+  }
   animateBars();
 }
 
