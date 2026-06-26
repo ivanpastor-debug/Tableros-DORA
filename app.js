@@ -348,13 +348,53 @@ function setupPlantaEvol(resObj, ids) {
   apply();
 }
 
-/* costos vs salidas: barras de Variación (Ejecutado − Nómina) por proceso. Negativa = sobrecosto
-   por días de planta ociosa tras la última entrega de HU. Color rojo (≤0) / verde (=0). */
-function drawCostos(el, cod) {
-  const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null; if (!el || !C) return;
+/* costos vs salidas: recalcula el modelo para la ventana [a,b]. La planta se paga todos los días
+   hábiles del periodo (Nómina = costo/día × días) y solo está justificada hasta su última salida
+   dentro de la ventana (Ejecutado); Variación = Ejecutado − Nómina. Días hábiles = diferencia de
+   dias_hab acumulados (festivos CO ya excluidos al generarlos). */
+function costosWindow(C, a, b) {
+  const F = C.fechas, DH = C.dias_hab, KS = ["REQ", "DEV", "QA"];
+  const res = { areas: {}, total: { nomina: 0, ejecutado: 0, variacion: 0, salidas_tot: 0, personas: 0, dias_periodo: 0 } };
+  const idx = F.map((f, i) => i).filter(i => F[i] >= a && F[i] <= b);
+  const base = (k) => { const ar = C.areas[k]; return { proceso: ar.proceso, area: ar.area, personas: ar.personas, costo_dia: ar.costo_dia }; };
+  if (!idx.length) {
+    KS.forEach(k => { if (!C.areas[k]) return; res.areas[k] = { ...base(k), salidas_tot: 0, ultima_salida: null, dias_periodo: 0, dias_hasta_ultima: 0, dias_ociosos: 0, nomina: 0, ejecutado: 0, variacion: 0 }; res.total.personas += C.areas[k].personas; });
+    return res;
+  }
+  const first = idx[0], last = idx[idx.length - 1];
+  const diasPeriodo = DH[last] - DH[first] + 1;
+  res.total.dias_periodo = diasPeriodo;
+  KS.forEach(k => {
+    const ar = C.areas[k]; if (!ar) return;
+    let salTot = 0, uIdx = -1;
+    idx.forEach(i => { const s = ar.salidas[i] || 0; if (s > 0) { salTot += s; uIdx = i; } });
+    const diasHasta = uIdx >= 0 ? DH[uIdx] - DH[first] + 1 : 0;
+    const nomina = ar.costo_dia * diasPeriodo, ejecutado = ar.costo_dia * diasHasta;
+    res.areas[k] = { ...base(k), salidas_tot: salTot, ultima_salida: uIdx >= 0 ? F[uIdx] : null, dias_periodo: diasPeriodo, dias_hasta_ultima: diasHasta, dias_ociosos: diasPeriodo - diasHasta, nomina, ejecutado, variacion: ejecutado - nomina };
+    res.total.nomina += nomina; res.total.ejecutado += ejecutado; res.total.variacion += (ejecutado - nomina);
+    res.total.salidas_tot += salTot; res.total.personas += ar.personas;
+  });
+  return res;
+}
+function costosTable(C, w) {
+  const row = (a) => `<tr>
+    <td><span class="sw-i" style="background:${AREA_COL[a.area]}"></span>${a.proceso}</td>
+    <td class="num">${fmt(a.personas)}</td><td class="num">${fmtMoney(a.costo_dia)}</td>
+    <td class="num">${fmt(a.salidas_tot)}</td><td class="num">${a.ultima_salida || "—"}</td>
+    <td class="num">${a.dias_ociosos}</td><td class="num">${fmtMoney(a.nomina)}</td>
+    <td class="num">${fmtMoney(a.ejecutado)}</td>
+    <td class="num" style="color:${a.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:600">${fmtMoney(a.variacion)}</td></tr>`;
+  const ar = ["REQ", "DEV", "QA"].map(k => w.areas[k]).filter(Boolean), t = w.total;
+  return `<div class="hint" style="margin:0 0 6px">Periodo seleccionado: <b>${t.dias_periodo}</b> días hábiles · costo CTC medio ÷ ${COSTOS.dias_mes}</div>
+  <div class="dwrap"><table class="dtbl"><thead><tr>
+    <th>Proceso</th><th class="num">Personas</th><th class="num">Costo/día</th><th class="num">Salidas</th><th class="num">Última salida</th><th class="num">Días ociosos</th><th class="num">Nómina</th><th class="num">Ejecutado</th><th class="num">Variación</th>
+  </tr></thead><tbody>${ar.map(row).join("")}
+    <tr class="tot"><th>Total</th><td class="num">${fmt(t.personas)}</td><td class="num">—</td><td class="num">${fmt(t.salidas_tot)}</td><td class="num">—</td><td class="num">—</td><td class="num">${fmtMoney(t.nomina)}</td><td class="num">${fmtMoney(t.ejecutado)}</td><td class="num" style="color:${t.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:700">${fmtMoney(t.variacion)}</td></tr>
+  </tbody></table></div>`;
+}
+function drawCostosBar(c, w) {
   const ax = axisBase();
-  const ar = ["REQ", "DEV", "QA"].map(k => C.areas[k]).filter(Boolean);
-  const c = mkChart(el);
+  const ar = ["REQ", "DEV", "QA"].map(k => w.areas[k]).filter(Boolean);
   c.setOption({
     tooltip: {
       trigger: "axis", ...ax.tooltip, formatter: (ps) => {
@@ -372,6 +412,22 @@ function drawCostos(el, cod) {
       label: { show: true, position: "bottom", color: ax.textColor, fontSize: 11, formatter: (d) => fmtMoney(d.value) },
     }],
   }, true);
+}
+/* filtro Desde/Hasta que redimensiona la tabla + las barras de Costos vs Salidas */
+function setupCostos(cod) {
+  const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null;
+  if (!C || !C.fechas || !C.fechas.length) return;
+  const F = C.fechas, dmin = F[0], dmax = F[F.length - 1];
+  const fi = $("#coIni"), ff = $("#coFin"); if (!fi || !ff) return;
+  fi.min = ff.min = dmin; fi.max = ff.max = dmax; fi.value = dmin; ff.value = dmax;
+  const c = mkChart($("#cCostosBar"));
+  function apply() {
+    let a = fi.value || dmin, b = ff.value || dmax; if (a > b) { const t = a; a = b; b = t; }
+    const w = costosWindow(C, a, b);
+    $("#cCostosTbl").innerHTML = costosTable(C, w);
+    drawCostosBar(c, w);
+  }
+  fi.onchange = ff.onchange = apply; apply();
 }
 
 $("#themeBtn").onclick = () => {
@@ -550,30 +606,14 @@ function paintProject() {
       <div id="cPV_${x.key}" class="chart"></div></div>`).join("")}
     </div>` : "";
   // costos vs salidas: planta de cada proceso (REQ/DEV/QA) vs HU entregadas (perfiles Directivo/Gerencial)
+  // con filtro Desde/Hasta que REDIMENSIONA el periodo (tabla + barras se recalculan en setupCostos)
   const costObj = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[p.codigo] : null;
-  const cCostos = costObj ? (() => {
-    const ar = ["REQ", "DEV", "QA"].map(k => costObj.areas[k]).filter(Boolean);
-    const row = (a) => `<tr>
-      <td><span class="sw-i" style="background:${AREA_COL[a.area]}"></span>${a.proceso}</td>
-      <td class="num">${fmt(a.personas)}</td>
-      <td class="num">${fmtMoney(a.costo_dia)}</td>
-      <td class="num">${fmt(a.salidas_tot)}</td>
-      <td class="num">${a.ultima_salida || "—"}</td>
-      <td class="num">${a.dias_ociosos}</td>
-      <td class="num">${fmtMoney(a.nomina)}</td>
-      <td class="num">${fmtMoney(a.ejecutado)}</td>
-      <td class="num" style="color:${a.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:600">${fmtMoney(a.variacion)}</td></tr>`;
-    const t = costObj.total;
-    return `<div class="card fade" style="margin-top:16px">
+  const cCostos = costObj ? `<div class="card fade" style="margin-top:16px">
     <h3>💸 Costos vs Salidas · planta por proceso</h3>
-    <div class="hint">Costo operativo = <b>solo roles que generan valor</b> (analistas, desarrolladores, QA); excluye Scrum/Head/Coordinador/Líder. La planta se paga todos los días hábiles del periodo (<b>Nómina</b>), pero solo está justificada hasta su <b>última salida</b> de HU (<b>Ejecutado</b>); los días sin producción al final = <b>Variación</b> (sobrecosto). Costo = CTC medio ÷ ${COSTOS.dias_mes} · periodo ${costObj.dias_periodo} días hábiles · corte ${COSTOS.corte}</div>
-    <div class="dwrap"><table class="dtbl"><thead><tr>
-      <th>Proceso</th><th class="num">Personas</th><th class="num">Costo/día</th><th class="num">Salidas</th><th class="num">Última salida</th><th class="num">Días ociosos</th><th class="num">Nómina</th><th class="num">Ejecutado</th><th class="num">Variación</th>
-    </tr></thead><tbody>${ar.map(row).join("")}
-      <tr class="tot"><th>Total</th><td class="num">${fmt(t.personas)}</td><td class="num">—</td><td class="num">${fmt(t.salidas_tot)}</td><td class="num">—</td><td class="num">—</td><td class="num">${fmtMoney(t.nomina)}</td><td class="num">${fmtMoney(t.ejecutado)}</td><td class="num" style="color:${t.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:700">${fmtMoney(t.variacion)}</td></tr>
-    </tbody></table></div>
-    <div id="cCostosBar" class="chart"></div></div>`;
-  })() : "";
+    <div class="hint">Costo operativo = <b>solo roles que generan valor</b> (analistas, desarrolladores, QA); excluye Scrum/Head/Coordinador/Líder. La planta se paga todos los días hábiles del periodo (<b>Nómina</b>), pero solo está justificada hasta su <b>última salida</b> de HU (<b>Ejecutado</b>); los días sin producción al final = <b>Variación</b> (sobrecosto). Filtra el rango de fechas para redimensionar el periodo.</div>
+    <div class="filterbar"><label>Desde <input type="date" id="coIni"></label><label>Hasta <input type="date" id="coFin"></label></div>
+    <div id="cCostosTbl"></div>
+    <div id="cCostosBar" class="chart"></div></div>` : "";
 
   const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
   const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
@@ -612,7 +652,7 @@ function paintProject() {
   if ($("#cPlanta")) setupPlantaEvol(recObj);
   if ($("#cRqcDonut")) drawRqcDonut($("#cRqcDonut"));
   if ($(".prodarea")) setupProdVar(p.codigo);
-  if ($("#cCostosBar")) drawCostos($("#cCostosBar"), p.codigo);
+  if ($("#coIni")) setupCostos(p.codigo);
   animateBars();
 }
 
