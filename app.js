@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null, COSTOS = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -10,7 +10,7 @@ const fmt = (n) => n == null ? "—" : new Intl.NumberFormat("es-CO").format(Mat
 const pct = (n) => n == null ? "—" : (n * 100).toFixed(1).replace(".", ",") + "%";
 const pct0 = (n) => n == null ? "—" : Math.round(n * 100) + "%";
 /* moneda COP compacta (millones) para los cuadros de costo internos */
-const fmtMoney = (n) => n == null ? "—" : (n >= 1e6
+const fmtMoney = (n) => n == null ? "—" : (Math.abs(n) >= 1e6
   ? "$" + (n / 1e6).toLocaleString("es-CO", { maximumFractionDigits: 1 }) + " M"
   : "$" + new Intl.NumberFormat("es-CO").format(Math.round(n)));
 /* etiqueta homologada de proyecto (igual que el menú desplegable) */
@@ -46,6 +46,9 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // productividad diaria por proceso (meta vs real, variación); ausente -> no se muestra
   try { const pr = await fetch("data_productividad.json"); PRODUCTIV = pr.ok ? await pr.json() : null; }
   catch (_) { PRODUCTIV = null; }
+  // costos vs salidas por proyecto (nómina vs ejecutado vs variación; perfiles Directivo/Gerencial)
+  try { const co = await fetch("data_costos.json"); COSTOS = co.ok ? await co.json() : null; }
+  catch (_) { COSTOS = null; }
   const sel = $("#proySel");
   const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
   sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt +
@@ -302,8 +305,9 @@ function setupProdComp() {
 }
 
 /* evolución de la planta POR DÍA (dispersión lineal): nº de personas activas por día desde el
-   primer archivo de planta (23-jun-2026). Total + una línea por área. Usa el histórico híbrido
-   de data_recursos.json (snapRec resuelve la foto vigente a cada día). */
+   primer archivo de planta (la foto histórica más antigua, 10-abr-2026). Total + una línea por
+   área. Usa el histórico híbrido de data_recursos.json (snapRec resuelve la foto vigente a cada
+   día; el export 'Planta proyectos_histórico' aporta abr-may, los diarios de jun en adelante). */
 function dayRange(d0, d1) {            // días calendario inclusive, ISO YYYY-MM-DD
   const out = [], end = Date.parse(d1 + "T00:00:00Z");
   for (let t = Date.parse(d0 + "T00:00:00Z"); t <= end; t += 86400000) out.push(new Date(t).toISOString().slice(0, 10));
@@ -342,6 +346,32 @@ function setupPlantaEvol(resObj, ids) {
   }
   fi.onchange = ff.onchange = apply;
   apply();
+}
+
+/* costos vs salidas: barras de Variación (Ejecutado − Nómina) por proceso. Negativa = sobrecosto
+   por días de planta ociosa tras la última entrega de HU. Color rojo (≤0) / verde (=0). */
+function drawCostos(el, cod) {
+  const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null; if (!el || !C) return;
+  const ax = axisBase();
+  const ar = ["REQ", "DEV", "QA"].map(k => C.areas[k]).filter(Boolean);
+  const c = mkChart(el);
+  c.setOption({
+    tooltip: {
+      trigger: "axis", ...ax.tooltip, formatter: (ps) => {
+        const a = ar[ps[0].dataIndex];
+        return `<b>${a.proceso}</b><br>Nómina: ${fmtMoney(a.nomina)}<br>Ejecutado: ${fmtMoney(a.ejecutado)}`
+          + `<br>Variación: <b>${fmtMoney(a.variacion)}</b><br><span style="color:${ax.textColor}">${a.dias_ociosos} días hábiles ociosos · última salida ${a.ultima_salida || "—"}</span>`;
+      }
+    },
+    grid: { left: 8, right: 16, top: 16, bottom: 6, containLabel: true },
+    xAxis: { type: "category", data: ar.map(a => a.proceso), axisLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+    yAxis: { type: "value", name: "Variación (COP)", nameTextStyle: { color: ax.textColor, fontSize: 10 }, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: (v) => v === 0 ? "0" : "$" + (v / 1e6).toFixed(0) + "M" } },
+    series: [{
+      type: "bar", barWidth: "46%",
+      data: ar.map(a => ({ value: Math.round(a.variacion), itemStyle: { color: a.variacion < 0 ? "#ef4444" : "#10b981", borderRadius: [0, 0, 4, 4] } })),
+      label: { show: true, position: "bottom", color: ax.textColor, fontSize: 11, formatter: (d) => fmtMoney(d.value) },
+    }],
+  }, true);
 }
 
 $("#themeBtn").onclick = () => {
@@ -519,6 +549,30 @@ function paintProject() {
       <div class="hint" style="color:var(--text);font-weight:600;margin:10px 0 0"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${x.color};margin-right:6px"></span>${x.label} · meta ${x.tasa.toFixed(2)}/día hábil · base ${x.base} · cierre ${x.cierre}</div>
       <div id="cPV_${x.key}" class="chart"></div></div>`).join("")}
     </div>` : "";
+  // costos vs salidas: planta de cada proceso (REQ/DEV/QA) vs HU entregadas (perfiles Directivo/Gerencial)
+  const costObj = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[p.codigo] : null;
+  const cCostos = costObj ? (() => {
+    const ar = ["REQ", "DEV", "QA"].map(k => costObj.areas[k]).filter(Boolean);
+    const row = (a) => `<tr>
+      <td><span class="sw-i" style="background:${AREA_COL[a.area]}"></span>${a.proceso}</td>
+      <td class="num">${fmtMoney(a.costo_dia)}</td>
+      <td class="num">${fmt(a.salidas_tot)}</td>
+      <td class="num">${a.ultima_salida || "—"}</td>
+      <td class="num">${a.dias_ociosos}</td>
+      <td class="num">${fmtMoney(a.nomina)}</td>
+      <td class="num">${fmtMoney(a.ejecutado)}</td>
+      <td class="num" style="color:${a.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:600">${fmtMoney(a.variacion)}</td></tr>`;
+    const t = costObj.total;
+    return `<div class="card fade" style="margin-top:16px">
+    <h3>💸 Costos vs Salidas · planta por proceso</h3>
+    <div class="hint">La planta se paga todos los días hábiles del periodo (<b>Nómina</b>), pero solo está justificada hasta su <b>última salida</b> de HU (<b>Ejecutado</b>); los días sin producción al final = <b>Variación</b> (sobrecosto). Costo = CTC medio ÷ ${COSTOS.dias_mes} · periodo ${costObj.dias_periodo} días hábiles · corte ${COSTOS.corte}</div>
+    <div class="dwrap"><table class="dtbl"><thead><tr>
+      <th>Proceso</th><th class="num">Costo/día</th><th class="num">Salidas</th><th class="num">Última salida</th><th class="num">Días ociosos</th><th class="num">Nómina</th><th class="num">Ejecutado</th><th class="num">Variación</th>
+    </tr></thead><tbody>${ar.map(row).join("")}
+      <tr class="tot"><th>Total</th><td class="num">—</td><td class="num">${fmt(t.salidas_tot)}</td><td class="num">—</td><td class="num">—</td><td class="num">${fmtMoney(t.nomina)}</td><td class="num">${fmtMoney(t.ejecutado)}</td><td class="num" style="color:${t.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:700">${fmtMoney(t.variacion)}</td></tr>
+    </tbody></table></div>
+    <div id="cCostosBar" class="chart"></div></div>`;
+  })() : "";
 
   const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
   const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
@@ -529,11 +583,11 @@ function paintProject() {
     case "directivo":   // estratégico: resultado, cumplimiento y riesgo
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
         wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
-        two(cLine, cGauge) + cRqc + cRecursos + cPlanta + cProd + cProdPD + cAlertas; break;
+        two(cLine, cGauge) + cRqc + cRecursos + cPlanta + cProd + cCostos + cProdPD + cAlertas; break;
     case "gerencial":   // integral del proyecto
       body = note("Vista integral del proyecto") +
         wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
-        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
+        cRecursos + cPlanta + cProd + cCostos + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
     case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
@@ -557,6 +611,7 @@ function paintProject() {
   if ($("#cPlanta")) setupPlantaEvol(recObj);
   if ($("#cRqcDonut")) drawRqcDonut($("#cRqcDonut"));
   if ($(".prodarea")) setupProdVar(p.codigo);
+  if ($("#cCostosBar")) drawCostos($("#cCostosBar"), p.codigo);
   animateBars();
 }
 
