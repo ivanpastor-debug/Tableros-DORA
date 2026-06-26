@@ -628,7 +628,7 @@ function paintProject() {
     case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
-        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo; break;
+        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
     default:            // General: vista completa (nada se pierde) · productividad bajo la planta
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
         cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cProdPD + cCarga + cAlertas;
@@ -773,7 +773,13 @@ function buildPivot(p, mode) {
   const cell = (v) => {
     if (v == null) return `<td class="czero">·</td>`;
     if (mode === "count") return `<td>${v}</td>`;
-    const cls = v > 0 ? "cpos" : v < 0 ? "cneg" : "czero";
+    // colorimetría por GESTIÓN del equipo: SALIDAS (el equipo saca HU de la etapa) = verde;
+    // ENTRADAS (la etapa acumula HU) = rojo. En delta: el conteo baja (−) = salida neta = verde;
+    // sube (+) = entrada neta = rojo.
+    let cls = "czero";
+    if (mode === "sal") cls = v > 0 ? "cpos" : "czero";
+    else if (mode === "ent") cls = v > 0 ? "cneg" : "czero";
+    else cls = v > 0 ? "cneg" : v < 0 ? "cpos" : "czero";   // delta (invertido)
     return `<td class="${cls}">${v > 0 ? "+" + v : v}</td>`;
   };
 
