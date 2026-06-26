@@ -158,15 +158,16 @@ function toggleResp(cod, i) {
   document.querySelectorAll(`.det-${cod}-${i}`).forEach(tr => { tr.style.display = tr.style.display === "none" ? "" : "none"; });
   const car = document.getElementById(`car-${cod}-${i}`); if (car) car.textContent = car.textContent === "▸" ? "▾" : "▸";
 }
-function cargaCard(cod) {
-  const c = cargaObj(cod);
-  if (!c || !(c.responsables || []).length) return "";
+/* renderiza la tabla de carga a partir de una lista de responsables (reusable: un proyecto o el
+   combinado de varios). idp = prefijo único de ids para el colapso de detalle. */
+function cargaTable(responsables, idp, titulo, nota) {
+  if (!responsables || !responsables.length) return "";
   let body = "";
-  c.responsables.forEach((r, i) => {
+  responsables.forEach((r, i) => {
     const av = r.avance;
     const procs = [...new Set((r.hus || []).map(h => h.proceso || "—"))].join("|");
-    body += `<tr class="rclk" data-procs="${esc(procs)}" onclick="toggleResp('${cod}',${i})">
-        <td><span class="caret" id="car-${cod}-${i}">▸</span> ${esc(r.nombre)}</td>
+    body += `<tr class="rclk" data-procs="${esc(procs)}" onclick="toggleResp('${idp}',${i})">
+        <td><span class="caret" id="car-${idp}-${i}">▸</span> ${esc(r.nombre)}</td>
         <td><span class="chip2">${esc(r.cargo)}</span></td>
         <td class="muted">${esc(AREA_LBL[r.area] || r.area || "")}</td>
         <td class="num">${r.hu_total}</td>
@@ -174,22 +175,50 @@ function cargaCard(cod) {
         <td class="num">${av == null ? "—" : `<span class="tbar"><i style="width:${Math.round(av * 100)}%"></i></span>${pct0(av)}`}</td>
       </tr>`;
     (r.hus || []).forEach(h => {
-      body += `<tr class="rdetail det-${cod}-${i}" style="display:none">
+      body += `<tr class="rdetail det-${idp}-${i}" style="display:none">
         <td>↳ HU ${h.id}</td><td colspan="2" title="${esc(h.titulo)}">${esc((h.titulo || h.state || "").slice(0, 60))}</td>
         <td class="num">${h.pct == null ? "—" : h.pct + "%"}</td>
         <td class="num">${diasBadge(h.dias_sin_mov)}</td>
         <td class="muted">${esc(h.state)}</td></tr>`;
     });
   });
-  const todasHus = c.responsables.flatMap(r => r.hus || []);
+  const todasHus = responsables.flatMap(r => r.hus || []);
   return `<div class="card fade" style="margin-top:16px">
-    <h3>👤 Carga por responsable</h3>
-    <div class="hint">HU asignadas al responsable actual · avance ponderado por homologación · <b>clic en una fila</b> para ver sus HU · interno (no se publica)</div>
+    <h3>👤 Carga por responsable${titulo ? " · " + titulo : ""}</h3>
+    <div class="hint">${nota}</div>
     ${contadorEstado(todasHus)}
     <div class="dwrap"><table class="dtbl"><thead><tr>
       <th>Responsable</th><th>Cargo</th><th>Área</th><th class="num">HU</th><th class="num">Pend.</th><th class="num">Avance</th>
     </tr></thead><tbody>${body}</tbody></table></div>
   </div>`;
+}
+function cargaCard(cod) {
+  const c = cargaObj(cod);
+  if (!c || !(c.responsables || []).length) return "";
+  return cargaTable(c.responsables, cod, null,
+    "HU asignadas al responsable actual · avance ponderado por homologación · <b>clic en una fila</b> para ver sus HU");
+}
+/* carga combinada de varios proyectos (p.ej. Positiva Core 416+355): fusiona por persona (suma HU
+   y pendientes, concatena sus HU, avance ponderado por HU) y ordena de MAYOR a menor nº de HU. */
+function cargaCardMulti(cods, titulo) {
+  if (!CARGA || !CARGA.proyectos) return "";
+  const byKey = {};
+  cods.forEach(cod => {
+    const c = cargaObj(cod); if (!c) return;
+    (c.responsables || []).forEach(r => {
+      const k = (r.nombre || "") + "§" + (r.cargo || "");
+      const o = byKey[k] || (byKey[k] = { nombre: r.nombre, cargo: r.cargo, area: r.area, hus: [], hu_total: 0, pendientes: 0, _avs: 0, _avw: 0 });
+      o.hus.push(...(r.hus || []));
+      o.hu_total += r.hu_total || 0;
+      o.pendientes += r.pendientes || 0;
+      if (r.avance != null && r.hu_total) { o._avs += r.avance * r.hu_total; o._avw += r.hu_total; }
+    });
+  });
+  const responsables = Object.values(byKey)
+    .map(o => ({ nombre: o.nombre, cargo: o.cargo, area: o.area, hus: o.hus, hu_total: o.hu_total, pendientes: o.pendientes, avance: o._avw ? o._avs / o._avw : null }))
+    .sort((a, b) => b.hu_total - a.hu_total);
+  return cargaTable(responsables, "cargamulti", titulo,
+    "HU asignadas al responsable actual (combinado) · ordenado de mayor a menor nº de HU · avance ponderado · <b>clic en una fila</b> para ver sus HU · usa los chips para filtrar por proceso");
 }
 function alertasCard(cod) {
   const c = cargaObj(cod);
@@ -992,8 +1021,9 @@ function paintCronograma() {
       return `<div class="project-title fade" style="margin-top:24px"><h2 style="font-size:18px">${etiqueta(pp)}</h2><span class="tag">${pp.kpis.hu_total} HU</span></div>`
         + pivotCard(pp, cod, etiqueta(pp)) + costosCard(cod, cod, etiqueta(pp));
     };
-    body = note("Seguimiento de Positiva Core · recursos del equipo y, por enfoque (416 y 355), HU por etapa y costos vs salidas") +
+    body = note("Seguimiento de Positiva Core · recursos del equipo, carga por responsable y, por enfoque (416 y 355), HU por etapa y costos vs salidas") +
       recursosCard(rec416, "Positiva Core", RECURSOS ? "Planta " + RECURSOS.planta_archivo : null) +
+      cargaCardMulti(["416", "355"], "Positiva Core 416 + 355") +
       enf("416") + enf("355");
   } else {
     const kpis = `<div class="grid kpis">
@@ -1015,7 +1045,8 @@ function paintCronograma() {
     const c3 = `<div class="card fade" style="margin-top:16px"><h3>🚦 Fechas comprometidas de entrega y semáforo</h3>
       <div class="hint">Cada punto = HU por ramo y fecha comprometida · 🟢 entregada · 🟡 pendiente en plazo · 🔴 vencida sin entregar · tamaño = nº de HU</div>
       <div id="cCronoSem" class="chart tall"></div></div>`;
-    body = kpis + c1 + c2 + c3 + cronoPlantaSinHu() + cronoEstancadas();
+    body = kpis + c1 + c2 + c3 + cronoPlantaSinHu() +
+      cargaCardMulti(["416", "355"], "Positiva Core 416 + 355") + cronoEstancadas();
   }
   $("#content").innerHTML = head + tabbar + body;
   countUp();
