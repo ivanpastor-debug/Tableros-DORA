@@ -555,6 +555,7 @@ function paintProject() {
     const ar = ["REQ", "DEV", "QA"].map(k => costObj.areas[k]).filter(Boolean);
     const row = (a) => `<tr>
       <td><span class="sw-i" style="background:${AREA_COL[a.area]}"></span>${a.proceso}</td>
+      <td class="num">${fmt(a.personas)}</td>
       <td class="num">${fmtMoney(a.costo_dia)}</td>
       <td class="num">${fmt(a.salidas_tot)}</td>
       <td class="num">${a.ultima_salida || "—"}</td>
@@ -565,11 +566,11 @@ function paintProject() {
     const t = costObj.total;
     return `<div class="card fade" style="margin-top:16px">
     <h3>💸 Costos vs Salidas · planta por proceso</h3>
-    <div class="hint">La planta se paga todos los días hábiles del periodo (<b>Nómina</b>), pero solo está justificada hasta su <b>última salida</b> de HU (<b>Ejecutado</b>); los días sin producción al final = <b>Variación</b> (sobrecosto). Costo = CTC medio ÷ ${COSTOS.dias_mes} · periodo ${costObj.dias_periodo} días hábiles · corte ${COSTOS.corte}</div>
+    <div class="hint">Costo operativo = <b>solo roles que generan valor</b> (analistas, desarrolladores, QA); excluye Scrum/Head/Coordinador/Líder. La planta se paga todos los días hábiles del periodo (<b>Nómina</b>), pero solo está justificada hasta su <b>última salida</b> de HU (<b>Ejecutado</b>); los días sin producción al final = <b>Variación</b> (sobrecosto). Costo = CTC medio ÷ ${COSTOS.dias_mes} · periodo ${costObj.dias_periodo} días hábiles · corte ${COSTOS.corte}</div>
     <div class="dwrap"><table class="dtbl"><thead><tr>
-      <th>Proceso</th><th class="num">Costo/día</th><th class="num">Salidas</th><th class="num">Última salida</th><th class="num">Días ociosos</th><th class="num">Nómina</th><th class="num">Ejecutado</th><th class="num">Variación</th>
+      <th>Proceso</th><th class="num">Personas</th><th class="num">Costo/día</th><th class="num">Salidas</th><th class="num">Última salida</th><th class="num">Días ociosos</th><th class="num">Nómina</th><th class="num">Ejecutado</th><th class="num">Variación</th>
     </tr></thead><tbody>${ar.map(row).join("")}
-      <tr class="tot"><th>Total</th><td class="num">—</td><td class="num">${fmt(t.salidas_tot)}</td><td class="num">—</td><td class="num">—</td><td class="num">${fmtMoney(t.nomina)}</td><td class="num">${fmtMoney(t.ejecutado)}</td><td class="num" style="color:${t.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:700">${fmtMoney(t.variacion)}</td></tr>
+      <tr class="tot"><th>Total</th><td class="num">${fmt(t.personas)}</td><td class="num">—</td><td class="num">${fmt(t.salidas_tot)}</td><td class="num">—</td><td class="num">—</td><td class="num">${fmtMoney(t.nomina)}</td><td class="num">${fmtMoney(t.ejecutado)}</td><td class="num" style="color:${t.variacion < 0 ? "#ef4444" : "#10b981"};font-weight:700">${fmtMoney(t.variacion)}</td></tr>
     </tbody></table></div>
     <div id="cCostosBar" class="chart"></div></div>`;
   })() : "";
