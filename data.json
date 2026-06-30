@@ -1,7 +1,7 @@
 {
- "generado": "2026-06-26 11:57",
- "corte": "2026-06-26",
- "total_filas": 166430,
+ "generado": "2026-06-30 08:35",
+ "corte": "2026-06-30",
+ "total_filas": 169825,
  "procesos": [
   {
    "key": "REQUERIMIENTOS",
@@ -48,29 +48,29 @@
     "QA": "2026-12-31"
    },
    "kpis": {
-    "hu_total": 327,
-    "hu_prod": 197,
-    "pct_prod": 0.6024464831804281,
-    "pct_avance": 0.6829663608562692,
-    "hu_pendientes": 130,
-    "removidas": 41,
-    "dias_transcurridos": 45,
+    "hu_total": 320,
+    "hu_prod": 189,
+    "pct_prod": 0.590625,
+    "pct_avance": 0.6941875000000001,
+    "hu_pendientes": 131,
+    "removidas": 47,
+    "dias_transcurridos": 46,
     "dias_restantes": {
-     "REQ": 126,
-     "DEV": 126,
-     "QA": 126
+     "REQ": 125,
+     "DEV": 125,
+     "QA": 125
     },
-    "velocidad": 4.377777777777778,
-    "prod_actual": 4.377777777777778,
-    "prod_esperada": 1.0317460317460319
+    "velocidad": 4.108695652173913,
+    "prod_actual": 4.108695652173913,
+    "prod_esperada": 1.048
    },
    "por_proceso": {
-    "REQUERIMIENTOS": 114,
-    "DESARROLLO": 12,
+    "REQUERIMIENTOS": 113,
+    "DESARROLLO": 2,
     "QA": 4,
-    "CLIENTE": 0,
+    "CLIENTE": 12,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
-    "EN PRODUCCIÓN": 197
+    "EN PRODUCCIÓN": 189
    },
    "sin_proceso": 0,
    "serie": [
@@ -619,6 +619,20 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 197
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 320,
+     "removidas": 47,
+     "prod": 189,
+     "dias_hab": 47,
+     "avance": 0.6942,
+     "REQUERIMIENTOS": 113,
+     "DESARROLLO": 2,
+     "QA": 4,
+     "CLIENTE": 12,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
+     "EN PRODUCCIÓN": 189
     }
    ],
    "flujo": [
@@ -858,6 +872,17 @@
       "REQUERIMIENTOS": 1
      },
      "salidas": {}
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {
+      "CLIENTE": 12
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 10,
+      "EN PRODUCCIÓN": 8
+     }
     }
    ]
   },
@@ -877,23 +902,23 @@
     "hu_total": 537,
     "hu_prod": 235,
     "pct_prod": 0.4376163873370577,
-    "pct_avance": 0.7611173184357541,
+    "pct_avance": 0.7606517690875233,
     "hu_pendientes": 302,
     "removidas": 60,
-    "dias_transcurridos": 47,
+    "dias_transcurridos": 48,
     "dias_restantes": {
-     "REQ": 24,
-     "DEV": 24,
-     "QA": 24
+     "REQ": 23,
+     "DEV": 23,
+     "QA": 23
     },
-    "velocidad": 5.0,
-    "prod_actual": 5.0,
-    "prod_esperada": 12.583333333333334
+    "velocidad": 4.895833333333333,
+    "prod_actual": 4.895833333333333,
+    "prod_esperada": 13.130434782608695
    },
    "por_proceso": {
     "REQUERIMIENTOS": 76,
-    "DESARROLLO": 140,
-    "QA": 19,
+    "DESARROLLO": 138,
+    "QA": 21,
     "CLIENTE": 63,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
     "EN PRODUCCIÓN": 235
@@ -1459,6 +1484,20 @@
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
      "EN PRODUCCIÓN": 235
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 537,
+     "removidas": 60,
+     "prod": 235,
+     "dias_hab": 49,
+     "avance": 0.7607,
+     "REQUERIMIENTOS": 76,
+     "DESARROLLO": 138,
+     "QA": 21,
+     "CLIENTE": 63,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 4,
+     "EN PRODUCCIÓN": 235
     }
    ],
    "flujo": [
@@ -2001,6 +2040,15 @@
       "DESARROLLO": 3,
       "QA": 6
      }
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {
+      "QA": 2
+     },
+     "salidas": {
+      "DESARROLLO": 2
+     }
     }
    ]
   },
@@ -2023,15 +2071,15 @@
     "pct_avance": 0.9366515837104071,
     "hu_pendientes": 93,
     "removidas": 0,
-    "dias_transcurridos": 82,
+    "dias_transcurridos": 83,
     "dias_restantes": {
      "REQ": 0,
      "DEV": 0,
-     "QA": 2
+     "QA": 1
     },
-    "velocidad": 1.5609756097560976,
-    "prod_actual": 1.5609756097560976,
-    "prod_esperada": 46.5
+    "velocidad": 1.5421686746987953,
+    "prod_actual": 1.5421686746987953,
+    "prod_esperada": 93.0
    },
    "por_proceso": {
     "REQUERIMIENTOS": 0,
@@ -3106,6 +3154,20 @@
      "CLIENTE": 63,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
      "EN PRODUCCIÓN": 128
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 221,
+     "removidas": 0,
+     "prod": 128,
+     "dias_hab": 84,
+     "avance": 0.9367,
+     "REQUERIMIENTOS": 0,
+     "DESARROLLO": 9,
+     "QA": 19,
+     "CLIENTE": 63,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 2,
+     "EN PRODUCCIÓN": 128
     }
    ],
    "flujo": [
@@ -3736,6 +3798,11 @@
      "fecha": "2026-06-26",
      "entradas": {},
      "salidas": {}
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {},
+     "salidas": {}
     }
    ]
   },
@@ -3755,18 +3822,18 @@
     "hu_total": 242,
     "hu_prod": 0,
     "pct_prod": 0.0,
-    "pct_avance": 0.2604545454545455,
+    "pct_avance": 0.2594214876033058,
     "hu_pendientes": 242,
     "removidas": 0,
-    "dias_transcurridos": 74,
+    "dias_transcurridos": 75,
     "dias_restantes": {
-     "REQ": 24,
-     "DEV": 24,
-     "QA": 24
+     "REQ": 23,
+     "DEV": 23,
+     "QA": 23
     },
     "velocidad": 0.0,
     "prod_actual": 0.0,
-    "prod_esperada": 10.083333333333334
+    "prod_esperada": 10.521739130434783
    },
    "por_proceso": {
     "REQUERIMIENTOS": 172,
@@ -4561,6 +4628,20 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 242,
+     "removidas": 0,
+     "prod": 0,
+     "dias_hab": 76,
+     "avance": 0.2594,
+     "REQUERIMIENTOS": 172,
+     "DESARROLLO": 63,
+     "QA": 7,
+     "CLIENTE": 0,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
+     "EN PRODUCCIÓN": 0
     }
    ],
    "flujo": [
@@ -5087,6 +5168,11 @@
       "DESARROLLO": 2,
       "QA": 2
      }
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {},
+     "salidas": {}
     }
    ]
   },
@@ -5103,24 +5189,24 @@
     "QA": "2028-09-12"
    },
    "kpis": {
-    "hu_total": 596,
+    "hu_total": 598,
     "hu_prod": 0,
     "pct_prod": 0.0,
-    "pct_avance": 0.7176991150442479,
-    "hu_pendientes": 596,
+    "pct_avance": 0.7158730158730158,
+    "hu_pendientes": 598,
     "removidas": 80,
-    "dias_transcurridos": 73,
+    "dias_transcurridos": 74,
     "dias_restantes": {
-     "REQ": 569,
-     "DEV": 569,
-     "QA": 569
+     "REQ": 568,
+     "DEV": 568,
+     "QA": 568
     },
     "velocidad": 0.0,
     "prod_actual": 0.0,
-    "prod_esperada": 1.047451669595782
+    "prod_esperada": 1.0528169014084507
    },
    "por_proceso": {
-    "REQUERIMIENTOS": 8,
+    "REQUERIMIENTOS": 10,
     "DESARROLLO": 139,
     "QA": 418,
     "CLIENTE": 0,
@@ -6094,6 +6180,20 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 598,
+     "removidas": 80,
+     "prod": 0,
+     "dias_hab": 75,
+     "avance": 0.7159,
+     "REQUERIMIENTOS": 10,
+     "DESARROLLO": 139,
+     "QA": 418,
+     "CLIENTE": 0,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
+     "EN PRODUCCIÓN": 0
     }
    ],
    "flujo": [
@@ -6812,6 +6912,13 @@
       "DESARROLLO": 4
      },
      "salidas": {}
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {
+      "REQUERIMIENTOS": 2
+     },
+     "salidas": {}
     }
    ]
   },
@@ -6831,10 +6938,10 @@
     "hu_total": 283,
     "hu_prod": 0,
     "pct_prod": 0.0,
-    "pct_avance": 0.7209386281588448,
+    "pct_avance": 0.7220216606498195,
     "hu_pendientes": 283,
     "removidas": 3,
-    "dias_transcurridos": 42,
+    "dias_transcurridos": 43,
     "dias_restantes": {
      "REQ": null,
      "DEV": null,
@@ -6846,8 +6953,8 @@
    },
    "por_proceso": {
     "REQUERIMIENTOS": 9,
-    "DESARROLLO": 55,
-    "QA": 213,
+    "DESARROLLO": 54,
+    "QA": 214,
     "CLIENTE": 0,
     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
     "EN PRODUCCIÓN": 0
@@ -7455,6 +7562,20 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
      "EN PRODUCCIÓN": 0
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 283,
+     "removidas": 3,
+     "prod": 0,
+     "dias_hab": 44,
+     "avance": 0.722,
+     "REQUERIMIENTOS": 9,
+     "DESARROLLO": 54,
+     "QA": 214,
+     "CLIENTE": 0,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 0,
+     "EN PRODUCCIÓN": 0
     }
    ],
    "flujo": [
@@ -7801,6 +7922,15 @@
       "DESARROLLO": 3
      },
      "salidas": {}
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {
+      "QA": 1
+     },
+     "salidas": {
+      "DESARROLLO": 1
+     }
     }
    ]
   },
@@ -7817,29 +7947,29 @@
     "QA": "2026-09-30"
    },
    "kpis": {
-    "hu_total": 688,
-    "hu_prod": 365,
-    "pct_prod": 0.5305232558139535,
-    "pct_avance": 0.7499854651162791,
+    "hu_total": 692,
+    "hu_prod": 369,
+    "pct_prod": 0.5332369942196532,
+    "pct_avance": 0.7528612716763006,
     "hu_pendientes": 323,
     "removidas": 167,
-    "dias_transcurridos": 78,
+    "dias_transcurridos": 79,
     "dias_restantes": {
-     "REQ": 65,
-     "DEV": 65,
-     "QA": 65
+     "REQ": 64,
+     "DEV": 64,
+     "QA": 64
     },
-    "velocidad": 4.67948717948718,
-    "prod_actual": 4.67948717948718,
-    "prod_esperada": 4.969230769230769
+    "velocidad": 4.670886075949367,
+    "prod_actual": 4.670886075949367,
+    "prod_esperada": 5.046875
    },
    "por_proceso": {
-    "REQUERIMIENTOS": 135,
-    "DESARROLLO": 37,
-    "QA": 75,
-    "CLIENTE": 13,
-    "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 63,
-    "EN PRODUCCIÓN": 365
+    "REQUERIMIENTOS": 138,
+    "DESARROLLO": 44,
+    "QA": 68,
+    "CLIENTE": 12,
+    "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 61,
+    "EN PRODUCCIÓN": 369
    },
    "sin_proceso": 0,
    "serie": [
@@ -8906,6 +9036,20 @@
      "CLIENTE": 13,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 63,
      "EN PRODUCCIÓN": 365
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 692,
+     "removidas": 167,
+     "prod": 369,
+     "dias_hab": 80,
+     "avance": 0.7529,
+     "REQUERIMIENTOS": 138,
+     "DESARROLLO": 44,
+     "QA": 68,
+     "CLIENTE": 12,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 61,
+     "EN PRODUCCIÓN": 369
     }
    ],
    "flujo": [
@@ -9849,6 +9993,23 @@
       "DESARROLLO": 5,
       "QA": 2
      }
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {
+      "REQUERIMIENTOS": 4,
+      "DESARROLLO": 10,
+      "QA": 3,
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 1,
+      "EN PRODUCCIÓN": 4
+     },
+     "salidas": {
+      "REQUERIMIENTOS": 1,
+      "DESARROLLO": 3,
+      "QA": 10,
+      "CLIENTE": 1,
+      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 3
+     }
     }
    ]
   },
@@ -9871,15 +10032,15 @@
     "pct_avance": 0.3892413793103448,
     "hu_pendientes": 145,
     "removidas": 0,
-    "dias_transcurridos": 23,
+    "dias_transcurridos": 24,
     "dias_restantes": {
-     "REQ": 24,
-     "DEV": 24,
-     "QA": 24
+     "REQ": 23,
+     "DEV": 23,
+     "QA": 23
     },
     "velocidad": 0.0,
     "prod_actual": 0.0,
-    "prod_esperada": 6.041666666666667
+    "prod_esperada": 6.304347826086956
    },
    "por_proceso": {
     "REQUERIMIENTOS": 78,
@@ -10226,6 +10387,20 @@
      "CLIENTE": 0,
      "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 42,
      "EN PRODUCCIÓN": 0
+    },
+    {
+     "fecha": "2026-06-30",
+     "total": 145,
+     "removidas": 0,
+     "prod": 0,
+     "dias_hab": 25,
+     "avance": 0.3892,
+     "REQUERIMIENTOS": 78,
+     "DESARROLLO": 25,
+     "QA": 0,
+     "CLIENTE": 0,
+     "PENDIENTE POR DESPLEGAR EN PRODUCCIÓN": 42,
+     "EN PRODUCCIÓN": 0
     }
    ],
    "flujo": [
@@ -10430,6 +10605,11 @@
      "salidas": {
       "QA": 12
      }
+    },
+    {
+     "fecha": "2026-06-30",
+     "entradas": {},
+     "salidas": {}
     }
    ]
   }
