@@ -446,8 +446,8 @@ function drawCostosBar(c, w) {
   }, true);
 }
 /* tarjeta Costos vs Salidas (parametrizable por sufijo para reusarla varias veces en una vista) */
-function costosCard(cod, sfx = "", titulo) {
-  const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null;
+function costosCard(cod, sfx = "", titulo, srcC) {
+  const C = srcC || (COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null);
   if (!C) return "";
   return `<div class="card fade" style="margin-top:16px">
     <h3>💸 Costos vs Salidas · planta por proceso${titulo ? " · " + titulo : ""}</h3>
@@ -457,8 +457,8 @@ function costosCard(cod, sfx = "", titulo) {
     <div id="cCostosBar${sfx}" class="chart"></div></div>`;
 }
 /* filtro Desde/Hasta que redimensiona la tabla + las barras de Costos vs Salidas */
-function setupCostos(cod, sfx = "") {
-  const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null;
+function setupCostos(cod, sfx = "", srcC) {
+  const C = srcC || (COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cod] : null);
   if (!C || !C.fechas || !C.fechas.length) return;
   const F = C.fechas, dmin = F[0], dmax = F[F.length - 1];
   const fi = $("#coIni" + sfx), ff = $("#coFin" + sfx); if (!fi || !ff) return;
@@ -1146,6 +1146,59 @@ function drawRqcDonut(el) {
 /* ---------- vista TABLERO CONSOLIDADO DE CRONOGRAMA (Positiva Core 416+355) ---------- */
 /* No toca 416 ni 355: es una vista propia que lee data_cronograma.json. */
 let CRONO_TAB = "cronograma";
+let CRONO_SEG_PROY = "__all__";   // filtro de enfoque en Seguimiento: __all__ (combinado) | 416 | 355
+function cronoSegSelProy(id) { if (id === CRONO_SEG_PROY) return; CRONO_SEG_PROY = id; disposeCharts(); paintCronograma(); }
+/* objeto-proyecto COMBINADO (suma serie + flujo de varios enfoques) para reusar pivote y costo/HU */
+function mergeProy(cods) {
+  const ps = cods.map(c => DATA.proyectos.find(x => x.codigo === c)).filter(Boolean);
+  if (!ps.length) return null;
+  const byF = {};
+  ps.forEach(p => (p.serie || []).forEach(s => {
+    const o = byF[s.fecha] || (byF[s.fecha] = { fecha: s.fecha, total: 0, removidas: 0, prod: 0, dias_hab: s.dias_hab || 0, _avs: 0, _avw: 0 });
+    PROCS.forEach(pr => { o[pr.key] = (o[pr.key] || 0) + (s[pr.key] || 0); });
+    o.total += s.total || 0; o.removidas += s.removidas || 0; o.prod += s.prod || 0;
+    o.dias_hab = Math.max(o.dias_hab, s.dias_hab || 0);
+    if (s.avance != null && s.total) { o._avs += s.avance * s.total; o._avw += s.total; }
+  }));
+  const serie = Object.values(byF).sort((a, b) => a.fecha < b.fecha ? -1 : 1);
+  serie.forEach(o => { o.avance = o._avw ? o._avs / o._avw : null; delete o._avs; delete o._avw; });
+  const byFl = {};
+  ps.forEach(p => (p.flujo || []).forEach(f => {
+    const o = byFl[f.fecha] || (byFl[f.fecha] = { fecha: f.fecha, entradas: {}, salidas: {} });
+    Object.entries(f.entradas || {}).forEach(([k, v]) => { o.entradas[k] = (o.entradas[k] || 0) + v; });
+    Object.entries(f.salidas || {}).forEach(([k, v]) => { o.salidas[k] = (o.salidas[k] || 0) + v; });
+  }));
+  const flujo = Object.values(byFl).sort((a, b) => a.fecha < b.fecha ? -1 : 1);
+  return { codigo: cods.join("+"), nombre: "Positiva Core (416+355)", serie, flujo };
+}
+/* costos vs salidas COMBINADO: 416 y 355 comparten planta 416 -> costo de planta UNA vez (del 416) y
+   salidas SUMADAS (mismo modelo que build_costos_salidas, recalculado sobre el flujo combinado). */
+function costosCombinado(cods) {
+  const base = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[cods[0]] : null;
+  const merged = mergeProy(cods);
+  if (!base || !merged) return null;
+  const dh = {}; merged.serie.forEach(s => { dh[s.fecha] = s.dias_hab; });
+  const fechas = merged.flujo.map(f => f.fecha);
+  const dias_hab = fechas.map(f => dh[f] || 0);
+  const dias_periodo = merged.serie.length ? merged.serie[merged.serie.length - 1].dias_hab : 0;
+  const areas = {}, tot = { nomina: 0, ejecutado: 0, variacion: 0, salidas_tot: 0, personas: 0 };
+  Object.keys(base.areas).forEach(key => {
+    const b = base.areas[key], proc = b.proceso, costo_dia = b.costo_dia;
+    const salidas = merged.flujo.map(f => (f.salidas[proc] || 0));
+    const salidas_tot = salidas.reduce((a, x) => a + x, 0);
+    let ultima = null; for (let i = fechas.length - 1; i >= 0; i--) { if (salidas[i] > 0) { ultima = fechas[i]; break; } }
+    const dias_hasta = ultima ? (dh[ultima] || 0) : 0;
+    const nomina = costo_dia * dias_periodo, ejecutado = costo_dia * dias_hasta;
+    areas[key] = { proceso: proc, area: b.area, personas: b.personas, costo_mes: b.costo_mes, costo_dia,
+      salidas_tot, ultima_salida: ultima, dias_periodo, dias_hasta_ultima: dias_hasta,
+      dias_ociosos: dias_periodo - dias_hasta, nomina: Math.round(nomina), ejecutado: Math.round(ejecutado),
+      variacion: Math.round(ejecutado - nomina), costo_por_hu: salidas_tot ? Math.round(nomina / salidas_tot) : null, salidas };
+    tot.nomina += nomina; tot.ejecutado += ejecutado; tot.variacion += (ejecutado - nomina);
+    tot.salidas_tot += salidas_tot; tot.personas += b.personas;
+  });
+  ["nomina", "ejecutado", "variacion"].forEach(k => { tot[k] = Math.round(tot[k]); });
+  return { dias_periodo, fechas, dias_hab, areas, total: tot };
+}
 const CRONO_TABS = [
   { id: "cronograma", label: "Cronograma", icon: "📅", color: "#6366f1" },
   { id: "seguimiento", label: "Seguimiento", icon: "🔎", color: "#10b981" },
@@ -1168,18 +1221,39 @@ function paintCronograma() {
   const note = (t) => `<div class="tabnote">${t}</div>`;
 
   let body;
+  // estado de las tablas unificadas de Seguimiento (combinado por defecto; chips 416/355)
+  let segSrc = null, segRec = "416", segCos = null, segCod = "416";
   if (CRONO_TAB === "seguimiento") {
-    // Positiva Core = 416 + 355 (comparten planta 416): recursos una vez + por enfoque HU/etapa y costos
+    // Positiva Core = 416 + 355 (comparten planta 416): planta una vez + tablas UNIFICADAS con filtro
     const rec416 = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos["416"] : null;
-    const enf = (cod) => {
-      const pp = DATA.proyectos.find(x => x.codigo === cod); if (!pp) return "";
-      return `<div class="project-title fade" style="margin-top:24px"><h2 style="font-size:18px">${etiqueta(pp)}</h2><span class="tag">${pp.kpis.hu_total} HU</span></div>`
-        + pivotCard(pp, cod, etiqueta(pp)) + costoHuCard(pp, cod, cod) + costosCard(cod, cod, etiqueta(pp));
-    };
-    body = note("Seguimiento de Positiva Core · recursos del equipo, carga por responsable y, por enfoque (416 y 355), HU por etapa y costos vs salidas") +
+    const e416 = DATA.proyectos.find(x => x.codigo === "416"), e355 = DATA.proyectos.find(x => x.codigo === "355");
+    let scopeLbl;
+    if (CRONO_SEG_PROY === "416" || CRONO_SEG_PROY === "355") {
+      segCod = CRONO_SEG_PROY;
+      segSrc = DATA.proyectos.find(x => x.codigo === segCod);
+      segRec = segCod; segCos = null;             // costos directos de COSTOS[cod]
+      scopeLbl = segSrc ? etiqueta(segSrc) : segCod;
+    } else {
+      segCod = "416"; segSrc = mergeProy(["416", "355"]); segRec = "416";
+      segCos = costosCombinado(["416", "355"]);    // costos combinados (planta única + salidas sumadas)
+      scopeLbl = "Positiva Core (416 + 355)";
+    }
+    const chip = (id, lbl) => `<span class="rchip${CRONO_SEG_PROY === id ? " on" : ""}" onclick="cronoSegSelProy('${id}')">${lbl}</span>`;
+    const filtro = `<div class="card fade" style="margin-top:16px">
+      <div class="hint">Filtra las tablas por enfoque · por defecto, combinado (Positiva Core)</div>
+      <div class="rchips" style="margin:6px 0">${chip("__all__", "Positiva Core (416 + 355)")}${chip("416", e416 ? etiqueta(e416) : "416")}${chip("355", e355 ? etiqueta(e355) : "355")}</div></div>`;
+    const _pl0 = RECURSOS && RECURSOS.plantas && RECURSOS.plantas.length ? RECURSOS.plantas[0].fecha : null;
+    const cPlanta = (rec416 && _pl0) ? `<div class="card fade" style="margin-top:16px">
+      <h3>👥 Evolución de la planta · por día</h3>
+      <div class="hint">Nº de personas activas por día desde el primer archivo de planta (${_pl0}) · planta 416 (compartida 416 y 355) · filtra el rango</div>
+      <div class="filterbar"><label>Desde <input type="date" id="plIni"></label><label>Hasta <input type="date" id="plFin"></label></div>
+      <div id="cPlanta" class="chart"></div></div>` : "";
+    const tablas = segSrc ? (pivotCard(segSrc, "pc", scopeLbl) + costoHuCard(segSrc, segRec, "pc") +
+      (segCos ? costosCard(segCod, "pc", scopeLbl, segCos) : costosCard(segCod, "pc", scopeLbl))) : "";
+    body = note("Seguimiento de Positiva Core · planta del equipo y, unificadas con filtro por enfoque, HU por etapa · costo unitario · costos vs salidas") +
       recursosCard(rec416, "Positiva Core", RECURSOS ? "Planta " + RECURSOS.planta_archivo : null) +
-      cargaCardMulti(["416", "355"], "Positiva Core 416 + 355") +
-      enf("416") + enf("355");
+      cPlanta + cargaCardMulti(["416", "355"], "Positiva Core 416 + 355") +
+      filtro + tablas;
   } else {
     const kpis = `<div class="grid kpis">
       ${kpi("HU del cronograma", "▦", "#6366f1", `<span data-count="${C.total_hu}">0</span>`, `416: ${C.por_proyecto["416"] || 0} · 355: ${C.por_proyecto["355"] || 0}`)}
@@ -1206,13 +1280,12 @@ function paintCronograma() {
   $("#content").innerHTML = head + tabbar + body;
   countUp();
   if (CRONO_TAB === "seguimiento") {
-    if ($("#recFecha")) setupRecursos(RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos["416"] : null);
-    ["416", "355"].forEach(cod => {
-      const pp = DATA.proyectos.find(x => x.codigo === cod); if (!pp) return;
-      if ($("#tblMode" + cod)) setupPivot(pp, cod);
-      if ($("#chWrap" + cod)) setupCostoHu(pp, cod, cod);
-      if ($("#coIni" + cod)) setupCostos(cod, cod);
-    });
+    const rec416 = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos["416"] : null;
+    if ($("#recFecha")) setupRecursos(rec416);
+    if ($("#cPlanta")) setupPlantaEvol(rec416);
+    if (segSrc && $("#tblModepc")) setupPivot(segSrc, "pc");
+    if (segSrc && $("#chWrappc")) setupCostoHu(segSrc, segRec, "pc");
+    if ($("#coInipc")) setupCostos(segCod, "pc", segCos);
   } else {
     setupCronoAvance();
     setupCronoRamos();
