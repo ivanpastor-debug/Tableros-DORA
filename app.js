@@ -54,7 +54,10 @@ fetch("data.json").then(r => r.json()).then(async d => {
   catch (_) { CONTROLES = null; }
   const sel = $("#proySel");
   const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
-  sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt +
+  // 419 consolidado (DEP + RAMA) si ambos enfoques existen en data.json
+  const has419 = d.proyectos.some(p => p.codigo === "419-DEP") && d.proyectos.some(p => p.codigo === "419-RAMA");
+  const cons419Opt = has419 ? `<option value="__419__">⚖️ 419 · Consolidado (Depósitos + Rama Judicial)</option>` : "";
+  sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt + cons419Opt +
     d.proyectos.map(p => `<option value="${p.codigo}">${p.codigo} · ${p.nombre}</option>`).join("");
   sel.onchange = () => render(sel.value);
   render("__all__");
@@ -526,6 +529,7 @@ function render(key) {
   disposeCharts();
   if (CURRENT === "__all__") renderPortfolio();
   else if (CURRENT === "__crono__") renderCronograma();
+  else if (CURRENT === "__419__") render419();
   else renderProject(DATA.proyectos.find(p => p.codigo === CURRENT));
   animateBars();
 }
@@ -1149,7 +1153,7 @@ let CRONO_TAB = "cronograma";
 let CRONO_SEG_PROY = "__all__";   // filtro de enfoque en Seguimiento: __all__ (combinado) | 416 | 355
 function cronoSegSelProy(id) { if (id === CRONO_SEG_PROY) return; CRONO_SEG_PROY = id; disposeCharts(); paintCronograma(); }
 /* objeto-proyecto COMBINADO (suma serie + flujo de varios enfoques) para reusar pivote y costo/HU */
-function mergeProy(cods) {
+function mergeProy(cods, meta) {
   const ps = cods.map(c => DATA.proyectos.find(x => x.codigo === c)).filter(Boolean);
   if (!ps.length) return null;
   const byF = {};
@@ -1169,7 +1173,23 @@ function mergeProy(cods) {
     Object.entries(f.salidas || {}).forEach(([k, v]) => { o.salidas[k] = (o.salidas[k] || 0) + v; });
   }));
   const flujo = Object.values(byFl).sort((a, b) => a.fecha < b.fecha ? -1 : 1);
-  return { codigo: cods.join("+"), nombre: "Positiva Core (416+355)", serie, flujo };
+  // objeto-proyecto completo (kpis/por_proceso/sin_proceso) para reusar también las gráficas generales
+  const lastS = serie[serie.length - 1] || {};
+  const por_proceso = {}; PROCS.forEach(pr => { por_proceso[pr.key] = lastS[pr.key] || 0; });
+  const sum6 = PROCS.reduce((a, pr) => a + (por_proceso[pr.key] || 0), 0);
+  const tot = lastS.total || 0, prod = lastS.prod || 0, dt = lastS.dias_hab || 0;
+  const kpis = {
+    hu_total: tot, hu_prod: prod, pct_prod: tot ? prod / tot : null, pct_avance: lastS.avance ?? null,
+    hu_pendientes: tot - prod, removidas: lastS.removidas || 0, dias_transcurridos: dt,
+    velocidad: dt ? prod / dt : 0, prod_actual: dt ? prod / dt : 0,
+    dias_restantes: (meta && meta.dias_restantes) || {}, prod_esperada: null,
+  };
+  return {
+    codigo: cods.join("+"), nombre: (meta && meta.nombre) || cods.join("+"),
+    producto: meta && meta.producto, estado: meta && meta.estado,
+    cierre: (meta && meta.cierre) || {}, fecha_inicio: null,
+    serie, flujo, por_proceso, sin_proceso: Math.max(0, tot - sum6), kpis,
+  };
 }
 /* costos vs salidas COMBINADO: 416 y 355 comparten planta 416 -> costo de planta UNA vez (del 416) y
    salidas SUMADAS (mismo modelo que build_costos_salidas, recalculado sobre el flujo combinado). */
@@ -1291,6 +1311,77 @@ function paintCronograma() {
     setupCronoRamos();
     drawCronoSemaforo($("#cCronoSem"));
   }
+  animateBars();
+}
+
+/* ===== Vista consolidada 419 (Depósitos + Rama Judicial) — comparten planta 419 =====
+   Réplica de lo hecho en Positiva: gráficas e info combinadas (DEP+RAMA) + tablas unificadas con
+   filtro por enfoque + planta del equipo (419, compartida) como en los demás proyectos. */
+let CONS419_PROY = "__all__";   // filtro de enfoque: __all__ (consolidado) | 419-DEP | 419-RAMA
+function cons419SelProy(id) { if (id === CONS419_PROY) return; CONS419_PROY = id; disposeCharts(); paint419(); }
+function render419() { paint419(); }
+function paint419() {
+  const dep = DATA.proyectos.find(x => x.codigo === "419-DEP"), rama = DATA.proyectos.find(x => x.codigo === "419-RAMA");
+  if (!dep || !rama) { $("#content").innerHTML = `<div class="card">Faltan datos de 419-DEP / 419-RAMA.</div>`; return; }
+  const meta = { nombre: "419 · Consolidado (Depósitos + Rama Judicial)", producto: dep.producto, estado: dep.estado, cierre: dep.cierre };
+  const m = mergeProy(["419-DEP", "419-RAMA"], meta);   // objeto combinado (gráficas + KPIs)
+  const k = m.kpis;
+  const head = `<div class="project-title fade"><h2>${meta.nombre}</h2><span class="tag">DEP + RAMA</span>${meta.producto ? `<span class="tag">${meta.producto}</span>` : ""}<span class="tag">${fmt(k.hu_total)} HU</span></div>`;
+  // KPIs combinados (419 está en etapa temprana: 0 en producción)
+  const kHU = kpi("HU Totales", "▦", "#6366f1", `<span data-count="${k.hu_total}">0</span>`, `${fmt(k.hu_pendientes)} pendientes de producción`);
+  const kRem = kpi("HU Removidas", "✕", "#94a3b8", `<span data-count="${k.removidas || 0}">0</span>`, "Removido/Cancelado · fuera del conteo");
+  const kProd = kpi("En Producción", "✓", "#10b981", `<span data-count="${k.hu_prod}">0</span>`, `de ${fmt(k.hu_total)} HU`, k.pct_prod);
+  const kAv = kpi("% Avance ponderado", "◔", "#a855f7", k.pct_avance == null ? "—" : `<span data-count="${k.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, "promedio por etapa", k.pct_avance);
+  const _c10 = (cargaObj("419-DEP")?.alertas || []).concat(cargaObj("419-RAMA")?.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
+  const kEst = kpi("HU +10 días sin avanzar", "⚠", "#ef4444", `<span data-count="${_c10}">0</span>`, "mismo estado · más de 10 días");
+  const wrapKpis = (cards) => `<div class="grid kpis">${cards.join("")}</div>`;
+  // gráficas COMBINADAS (siempre DEP+RAMA)
+  const cArea = `<div class="card fade"><h3>Avance por proceso en el tiempo</h3><div class="hint">HU en cada etapa por fecha de corte (apilado) · DEP + RAMA</div><div id="cArea" class="chart tall"></div></div>`;
+  const cDonut = `<div class="card fade"><h3>Distribución actual</h3><div class="hint">HU por proceso al ${DATA.corte} · DEP + RAMA</div><div id="cDonut" class="chart tall"></div></div>`;
+  const cFlujo = `<div class="card fade" style="margin-top:16px"><h3>Variación de HU por etapa en el tiempo</h3>
+    <div class="hint">Por día y etapa: <b>entradas (+)</b> y <b>salidas (−)</b> · DEP + RAMA · filtra por rango y etapa</div>
+    <div class="filterbar"><label>Desde <input type="date" id="flIni"></label><label>Hasta <input type="date" id="flFin"></label>
+      <label>Etapa <select id="flProc"><option value="__all__">Todas las etapas</option>${PROCS.map(pr => `<option value="${pr.key}">${pr.label}</option>`).join("")}</select></label></div>
+    <div id="cFlujo" class="chart tall"></div></div>`;
+  // planta del equipo (419, compartida) — como en los demás proyectos
+  const rec419 = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos["419-DEP"] : null;
+  const _pl0 = RECURSOS && RECURSOS.plantas && RECURSOS.plantas.length ? RECURSOS.plantas[0].fecha : null;
+  const cPlanta = (rec419 && _pl0) ? `<div class="card fade" style="margin-top:16px"><h3>👥 Evolución de la planta · por día</h3>
+    <div class="hint">Nº de personas activas por día desde el primer archivo de planta (${_pl0}) · planta 419 (compartida DEP y RAMA) · filtra el rango</div>
+    <div class="filterbar"><label>Desde <input type="date" id="plIni"></label><label>Hasta <input type="date" id="plFin"></label></div>
+    <div id="cPlanta" class="chart"></div></div>` : "";
+  // tablas UNIFICADAS con filtro de enfoque
+  let src, recCod, cos, cod, scopeLbl;
+  if (CONS419_PROY === "419-DEP" || CONS419_PROY === "419-RAMA") {
+    cod = CONS419_PROY; src = DATA.proyectos.find(x => x.codigo === cod); recCod = cod; cos = null;
+    scopeLbl = src ? etiqueta(src) : cod;
+  } else {
+    cod = "419-DEP"; src = m; recCod = "419-DEP"; cos = costosCombinado(["419-DEP", "419-RAMA"]);
+    scopeLbl = "419 Consolidado (DEP + RAMA)";
+  }
+  const chip = (id, l) => `<span class="rchip${CONS419_PROY === id ? " on" : ""}" onclick="cons419SelProy('${id}')">${l}</span>`;
+  const filtro = `<div class="card fade" style="margin-top:16px">
+    <div class="hint">Filtra las tablas por enfoque · por defecto, consolidado (DEP + RAMA)</div>
+    <div class="rchips" style="margin:6px 0">${chip("__all__", "Consolidado (DEP + RAMA)")}${chip("419-DEP", etiqueta(dep))}${chip("419-RAMA", etiqueta(rama))}</div></div>`;
+  const tablas = src ? (pivotCard(src, "419", scopeLbl) + costoHuCard(src, recCod, "419") +
+    (cos ? costosCard(cod, "419", scopeLbl, cos) : costosCard(cod, "419", scopeLbl))) : "";
+
+  const body = wrapKpis([kHU, kRem, kProd, kAv, kEst]) +
+    `<div class="grid charts" style="margin-top:16px">${cArea}${cDonut}</div>` + cFlujo +
+    recursosCard(rec419, "419 (planta compartida)", RECURSOS ? "Planta " + RECURSOS.planta_archivo : null) +
+    cPlanta + cargaCardMulti(["419-DEP", "419-RAMA"], "419 · DEP + RAMA") +
+    projPlantaSinHu("419-DEP") + filtro + tablas;
+
+  $("#content").innerHTML = head + body;
+  countUp();
+  if ($("#cArea")) drawArea($("#cArea"), m);
+  if ($("#cDonut")) drawDonut($("#cDonut"), m);
+  if ($("#cFlujo")) drawFlujo($("#cFlujo"), m);
+  if ($("#recFecha")) setupRecursos(rec419);
+  if ($("#cPlanta")) setupPlantaEvol(rec419);
+  if (src && $("#tblMode419")) setupPivot(src, "419");
+  if (src && $("#chWrap419")) setupCostoHu(src, recCod, "419");
+  if ($("#coIni419")) setupCostos(cod, "419", cos);
   animateBars();
 }
 
