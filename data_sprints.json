@@ -1,0 +1,1308 @@
+{
+ "generado": "2026-06-30 16:27",
+ "corte_global": "2026-06-30",
+ "proyectos": {
+  "004": {
+   "codigo": "004",
+   "corte": "2026-06-30",
+   "sprints": [
+    {
+     "sprint": "Sprint 0",
+     "num": 0,
+     "n_hu": 85,
+     "n_done": 1,
+     "sp_total": 18.0,
+     "sp_done": 1.0,
+     "sin_sp": 79,
+     "dias": 37
+    },
+    {
+     "sprint": "Sprint 2",
+     "num": 2,
+     "n_hu": 2,
+     "n_done": 0,
+     "sp_total": 5.0,
+     "sp_done": 0.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 3",
+     "num": 3,
+     "n_hu": 11,
+     "n_done": 4,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 11,
+     "dias": 47
+    },
+    {
+     "sprint": "Sprint 4",
+     "num": 4,
+     "n_hu": 7,
+     "n_done": 3,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 7,
+     "dias": 35
+    },
+    {
+     "sprint": "Sprint 5",
+     "num": 5,
+     "n_hu": 8,
+     "n_done": 8,
+     "sp_total": 29.0,
+     "sp_done": 29.0,
+     "sin_sp": 6,
+     "dias": 3
+    },
+    {
+     "sprint": "Sprint 6",
+     "num": 6,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 13.0,
+     "sp_done": 13.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 7",
+     "num": 7,
+     "n_hu": 20,
+     "n_done": 20,
+     "sp_total": 110.0,
+     "sp_done": 110.0,
+     "sin_sp": 13,
+     "dias": 3
+    },
+    {
+     "sprint": "Sprint 8",
+     "num": 8,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 9",
+     "num": 9,
+     "n_hu": 30,
+     "n_done": 30,
+     "sp_total": 22.0,
+     "sp_done": 22.0,
+     "sin_sp": 25,
+     "dias": 43
+    },
+    {
+     "sprint": "Sprint 10",
+     "num": 10,
+     "n_hu": 24,
+     "n_done": 24,
+     "sp_total": 72.0,
+     "sp_done": 72.0,
+     "sin_sp": 15,
+     "dias": 1
+    },
+    {
+     "sprint": "Sin sprint",
+     "num": null,
+     "n_hu": 131,
+     "n_done": 97,
+     "sp_total": 345.0,
+     "sp_done": 238.0,
+     "sin_sp": 54,
+     "dias": 48
+    }
+   ],
+   "resumen": {
+    "n_sprints": 10,
+    "sp_done_total": 485.0,
+    "sp_total": 614.0,
+    "n_done_total": 189,
+    "n_hu_total": 320,
+    "vel_prom_sp": 41.0,
+    "vel_prom_hu": 14.0,
+    "ultimo_sprint": "Sprint 10"
+   }
+  },
+  "355": {
+   "codigo": "355",
+   "corte": "2026-06-30",
+   "sprints": [
+    {
+     "sprint": "Sprint 1",
+     "num": 1,
+     "n_hu": 2,
+     "n_done": 0,
+     "sp_total": 16.0,
+     "sp_done": 0.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 3",
+     "num": 3,
+     "n_hu": 123,
+     "n_done": 11,
+     "sp_total": 624.0,
+     "sp_done": 90.0,
+     "sin_sp": 56,
+     "dias": 26
+    },
+    {
+     "sprint": "Sprint 4",
+     "num": 4,
+     "n_hu": 50,
+     "n_done": 1,
+     "sp_total": 422.0,
+     "sp_done": 8.0,
+     "sin_sp": 7,
+     "dias": 15
+    },
+    {
+     "sprint": "Sprint 5",
+     "num": 5,
+     "n_hu": 7,
+     "n_done": 2,
+     "sp_total": 10.0,
+     "sp_done": 0.0,
+     "sin_sp": 6,
+     "dias": 15
+    },
+    {
+     "sprint": "Sprint 6",
+     "num": 6,
+     "n_hu": 8,
+     "n_done": 0,
+     "sp_total": 35.0,
+     "sp_done": 0.0,
+     "sin_sp": 4,
+     "dias": 3
+    },
+    {
+     "sprint": "Sprint 12",
+     "num": 12,
+     "n_hu": 1,
+     "n_done": 0,
+     "sp_total": 10.0,
+     "sp_done": 0.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 42",
+     "num": 42,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 43",
+     "num": 43,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 44",
+     "num": 44,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 8.0,
+     "sp_done": 8.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 45",
+     "num": 45,
+     "n_hu": 5,
+     "n_done": 2,
+     "sp_total": 16.0,
+     "sp_done": 16.0,
+     "sin_sp": 3,
+     "dias": 43
+    },
+    {
+     "sprint": "Sin sprint",
+     "num": null,
+     "n_hu": 338,
+     "n_done": 216,
+     "sp_total": 2522.0,
+     "sp_done": 1970.0,
+     "sin_sp": 79,
+     "dias": 44
+    }
+   ],
+   "resumen": {
+    "n_sprints": 10,
+    "sp_done_total": 2092.0,
+    "sp_total": 3663.0,
+    "n_done_total": 235,
+    "n_hu_total": 537,
+    "vel_prom_sp": 4.0,
+    "vel_prom_hu": 0.8,
+    "ultimo_sprint": "Sprint 45"
+   }
+  },
+  "397": {
+   "codigo": "397",
+   "corte": "2026-06-30",
+   "sprints": [
+    {
+     "sprint": "Sprint 1",
+     "num": 1,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 36.0,
+     "sp_done": 36.0,
+     "sin_sp": 0,
+     "dias": 64
+    },
+    {
+     "sprint": "Sprint 3",
+     "num": 3,
+     "n_hu": 6,
+     "n_done": 6,
+     "sp_total": 118.0,
+     "sp_done": 118.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 4",
+     "num": 4,
+     "n_hu": 13,
+     "n_done": 12,
+     "sp_total": 227.0,
+     "sp_done": 219.0,
+     "sin_sp": 0,
+     "dias": 60
+    },
+    {
+     "sprint": "Sprint 6",
+     "num": 6,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 5.0,
+     "sp_done": 5.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 7",
+     "num": 7,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 10.0,
+     "sp_done": 10.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 10",
+     "num": 10,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 16.0,
+     "sp_done": 16.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 11",
+     "num": 11,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 15",
+     "num": 15,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 5.0,
+     "sp_done": 5.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 17",
+     "num": 17,
+     "n_hu": 7,
+     "n_done": 6,
+     "sp_total": 84.0,
+     "sp_done": 29.0,
+     "sin_sp": 2,
+     "dias": 82
+    },
+    {
+     "sprint": "Sprint 18",
+     "num": 18,
+     "n_hu": 5,
+     "n_done": 5,
+     "sp_total": 37.0,
+     "sp_done": 37.0,
+     "sin_sp": 0,
+     "dias": 40
+    },
+    {
+     "sprint": "Sprint 19",
+     "num": 19,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 26.0,
+     "sp_done": 26.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 20",
+     "num": 20,
+     "n_hu": 5,
+     "n_done": 5,
+     "sp_total": 55.0,
+     "sp_done": 55.0,
+     "sin_sp": 4,
+     "dias": 64
+    },
+    {
+     "sprint": "Sprint 21",
+     "num": 21,
+     "n_hu": 10,
+     "n_done": 10,
+     "sp_total": 73.0,
+     "sp_done": 73.0,
+     "sin_sp": 5,
+     "dias": 64
+    },
+    {
+     "sprint": "Sprint 22",
+     "num": 22,
+     "n_hu": 8,
+     "n_done": 8,
+     "sp_total": 238.0,
+     "sp_done": 238.0,
+     "sin_sp": 1,
+     "dias": 64
+    },
+    {
+     "sprint": "Sprint 23",
+     "num": 23,
+     "n_hu": 8,
+     "n_done": 8,
+     "sp_total": 15.0,
+     "sp_done": 15.0,
+     "sin_sp": 5,
+     "dias": 37
+    },
+    {
+     "sprint": "Sprint 29",
+     "num": 29,
+     "n_hu": 23,
+     "n_done": 17,
+     "sp_total": 92.0,
+     "sp_done": 27.0,
+     "sin_sp": 12,
+     "dias": 72
+    },
+    {
+     "sprint": "Sprint 30",
+     "num": 30,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 31",
+     "num": 31,
+     "n_hu": 3,
+     "n_done": 2,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 9
+    },
+    {
+     "sprint": "Sprint 32",
+     "num": 32,
+     "n_hu": 12,
+     "n_done": 1,
+     "sp_total": 78.0,
+     "sp_done": 13.0,
+     "sin_sp": 5,
+     "dias": 59
+    },
+    {
+     "sprint": "Sprint 33",
+     "num": 33,
+     "n_hu": 8,
+     "n_done": 6,
+     "sp_total": 13.0,
+     "sp_done": 5.0,
+     "sin_sp": 1,
+     "dias": 77
+    },
+    {
+     "sprint": "Sprint 34",
+     "num": 34,
+     "n_hu": 2,
+     "n_done": 0,
+     "sp_total": 13.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 35",
+     "num": 35,
+     "n_hu": 13,
+     "n_done": 6,
+     "sp_total": 29.0,
+     "sp_done": 0.0,
+     "sin_sp": 10,
+     "dias": 23
+    },
+    {
+     "sprint": "Sprint 36",
+     "num": 36,
+     "n_hu": 19,
+     "n_done": 0,
+     "sp_total": 6.0,
+     "sp_done": 0.0,
+     "sin_sp": 17,
+     "dias": 23
+    },
+    {
+     "sprint": "Sprint 37",
+     "num": 37,
+     "n_hu": 3,
+     "n_done": 0,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 3,
+     "dias": 15
+    },
+    {
+     "sprint": "Sprint 38",
+     "num": 38,
+     "n_hu": 12,
+     "n_done": 0,
+     "sp_total": 21.0,
+     "sp_done": 0.0,
+     "sin_sp": 7,
+     "dias": 18
+    },
+    {
+     "sprint": "Sprint 40",
+     "num": 40,
+     "n_hu": 23,
+     "n_done": 0,
+     "sp_total": 60.0,
+     "sp_done": 0.0,
+     "sin_sp": 19,
+     "dias": 21
+    },
+    {
+     "sprint": "Sin sprint",
+     "num": null,
+     "n_hu": 28,
+     "n_done": 23,
+     "sp_total": 56.0,
+     "sp_done": 56.0,
+     "sin_sp": 19,
+     "dias": 77
+    }
+   ],
+   "resumen": {
+    "n_sprints": 26,
+    "sp_done_total": 983.0,
+    "sp_total": 1313.0,
+    "n_done_total": 128,
+    "n_hu_total": 221,
+    "vel_prom_sp": 0.0,
+    "vel_prom_hu": 1.0,
+    "ultimo_sprint": "Sprint 40"
+   }
+  },
+  "416": {
+   "codigo": "416",
+   "corte": "2026-06-30",
+   "sprints": [
+    {
+     "sprint": "Sprint 0",
+     "num": 0,
+     "n_hu": 1,
+     "n_done": 0,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": null
+    },
+    {
+     "sprint": "Sprint 4",
+     "num": 4,
+     "n_hu": 112,
+     "n_done": 0,
+     "sp_total": 272.0,
+     "sp_done": 0.0,
+     "sin_sp": 57,
+     "dias": null
+    },
+    {
+     "sprint": "Sprint 5",
+     "num": 5,
+     "n_hu": 2,
+     "n_done": 0,
+     "sp_total": 3.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": null
+    },
+    {
+     "sprint": "Sin sprint",
+     "num": null,
+     "n_hu": 127,
+     "n_done": 0,
+     "sp_total": 203.0,
+     "sp_done": 0.0,
+     "sin_sp": 42,
+     "dias": null
+    }
+   ],
+   "resumen": {
+    "n_sprints": 3,
+    "sp_done_total": 0.0,
+    "sp_total": 478.0,
+    "n_done_total": 0,
+    "n_hu_total": 242,
+    "vel_prom_sp": 0.0,
+    "vel_prom_hu": 0.0,
+    "ultimo_sprint": "Sprint 5"
+   }
+  },
+  "419-DEP": {
+   "codigo": "419-DEP",
+   "corte": "2026-06-30",
+   "sprints": [
+    {
+     "sprint": "Sprint 1",
+     "num": 1,
+     "n_hu": 167,
+     "n_done": 0,
+     "sp_total": 1189.0,
+     "sp_done": 0.0,
+     "sin_sp": 44,
+     "dias": 81
+    },
+    {
+     "sprint": "Sprint 2",
+     "num": 2,
+     "n_hu": 53,
+     "n_done": 0,
+     "sp_total": 489.0,
+     "sp_done": 0.0,
+     "sin_sp": 19,
+     "dias": 75
+    },
+    {
+     "sprint": "Sprint 3",
+     "num": 3,
+     "n_hu": 62,
+     "n_done": 0,
+     "sp_total": 139.0,
+     "sp_done": 0.0,
+     "sin_sp": 45,
+     "dias": 53
+    },
+    {
+     "sprint": "Sprint 4",
+     "num": 4,
+     "n_hu": 148,
+     "n_done": 0,
+     "sp_total": 167.0,
+     "sp_done": 0.0,
+     "sin_sp": 128,
+     "dias": 49
+    },
+    {
+     "sprint": "Sprint 5",
+     "num": 5,
+     "n_hu": 41,
+     "n_done": 0,
+     "sp_total": 84.0,
+     "sp_done": 0.0,
+     "sin_sp": 37,
+     "dias": 12
+    },
+    {
+     "sprint": "Sprint 6",
+     "num": 6,
+     "n_hu": 48,
+     "n_done": 0,
+     "sp_total": 29.0,
+     "sp_done": 0.0,
+     "sin_sp": 45,
+     "dias": 13
+    },
+    {
+     "sprint": "Sprint 7",
+     "num": 7,
+     "n_hu": 25,
+     "n_done": 0,
+     "sp_total": 13.0,
+     "sp_done": 0.0,
+     "sin_sp": 24,
+     "dias": 11
+    },
+    {
+     "sprint": "Sprint 8",
+     "num": 8,
+     "n_hu": 4,
+     "n_done": 0,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 4,
+     "dias": 12
+    },
+    {
+     "sprint": "Sprint 9",
+     "num": 9,
+     "n_hu": 17,
+     "n_done": 0,
+     "sp_total": 13.0,
+     "sp_done": 0.0,
+     "sin_sp": 16,
+     "dias": 1
+    },
+    {
+     "sprint": "Sin sprint",
+     "num": null,
+     "n_hu": 33,
+     "n_done": 0,
+     "sp_total": 33.0,
+     "sp_done": 0.0,
+     "sin_sp": 28,
+     "dias": 95
+    }
+   ],
+   "resumen": {
+    "n_sprints": 9,
+    "sp_done_total": 0.0,
+    "sp_total": 2156.0,
+    "n_done_total": 0,
+    "n_hu_total": 598,
+    "vel_prom_sp": 0.0,
+    "vel_prom_hu": 0.0,
+    "ultimo_sprint": "Sprint 9"
+   }
+  },
+  "419-RAMA": {
+   "codigo": "419-RAMA",
+   "corte": "2026-06-30",
+   "sprints": [
+    {
+     "sprint": "Sprint 1",
+     "num": 1,
+     "n_hu": 46,
+     "n_done": 0,
+     "sp_total": 515.0,
+     "sp_done": 0.0,
+     "sin_sp": 0,
+     "dias": 77
+    },
+    {
+     "sprint": "Sprint 2",
+     "num": 2,
+     "n_hu": 53,
+     "n_done": 0,
+     "sp_total": 438.0,
+     "sp_done": 0.0,
+     "sin_sp": 16,
+     "dias": 77
+    },
+    {
+     "sprint": "Sprint 3",
+     "num": 3,
+     "n_hu": 87,
+     "n_done": 0,
+     "sp_total": 164.0,
+     "sp_done": 0.0,
+     "sin_sp": 71,
+     "dias": 30
+    },
+    {
+     "sprint": "Sprint 4",
+     "num": 4,
+     "n_hu": 29,
+     "n_done": 0,
+     "sp_total": 34.0,
+     "sp_done": 0.0,
+     "sin_sp": 24,
+     "dias": 3
+    },
+    {
+     "sprint": "Sprint 5",
+     "num": 5,
+     "n_hu": 33,
+     "n_done": 0,
+     "sp_total": 26.0,
+     "sp_done": 0.0,
+     "sin_sp": 29,
+     "dias": 10
+    },
+    {
+     "sprint": "Sprint 6",
+     "num": 6,
+     "n_hu": 19,
+     "n_done": 0,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 19,
+     "dias": 14
+    },
+    {
+     "sprint": "Sprint 7",
+     "num": 7,
+     "n_hu": 1,
+     "n_done": 0,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 8",
+     "num": 8,
+     "n_hu": 15,
+     "n_done": 0,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 15,
+     "dias": 10
+    }
+   ],
+   "resumen": {
+    "n_sprints": 8,
+    "sp_done_total": 0.0,
+    "sp_total": 1177.0,
+    "n_done_total": 0,
+    "n_hu_total": 283,
+    "vel_prom_sp": 0.0,
+    "vel_prom_hu": 0.0,
+    "ultimo_sprint": "Sprint 8"
+   }
+  },
+  "421": {
+   "codigo": "421",
+   "corte": "2026-06-30",
+   "sprints": [
+    {
+     "sprint": "Sprint 1",
+     "num": 1,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 24.0,
+     "sp_done": 24.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 2",
+     "num": 2,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 24.0,
+     "sp_done": 24.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 3",
+     "num": 3,
+     "n_hu": 8,
+     "n_done": 8,
+     "sp_total": 69.0,
+     "sp_done": 69.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 4",
+     "num": 4,
+     "n_hu": 4,
+     "n_done": 4,
+     "sp_total": 32.0,
+     "sp_done": 32.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 5",
+     "num": 5,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 21.0,
+     "sp_done": 21.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 6",
+     "num": 6,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 16.0,
+     "sp_done": 16.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 8",
+     "num": 8,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 55.0,
+     "sp_done": 55.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 9",
+     "num": 9,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 42.0,
+     "sp_done": 42.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 10",
+     "num": 10,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 16.0,
+     "sp_done": 16.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 11",
+     "num": 11,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 8.0,
+     "sp_done": 8.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 12",
+     "num": 12,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 8.0,
+     "sp_done": 8.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 13",
+     "num": 13,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 34.0,
+     "sp_done": 34.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 14",
+     "num": 14,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 13.0,
+     "sp_done": 13.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 16",
+     "num": 16,
+     "n_hu": 23,
+     "n_done": 23,
+     "sp_total": 324.0,
+     "sp_done": 324.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 17",
+     "num": 17,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 21.0,
+     "sp_done": 21.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 18",
+     "num": 18,
+     "n_hu": 8,
+     "n_done": 8,
+     "sp_total": 94.0,
+     "sp_done": 94.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 19",
+     "num": 19,
+     "n_hu": 33,
+     "n_done": 33,
+     "sp_total": 533.0,
+     "sp_done": 533.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 21",
+     "num": 21,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 50.0,
+     "sp_done": 50.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 22",
+     "num": 22,
+     "n_hu": 17,
+     "n_done": 17,
+     "sp_total": 280.0,
+     "sp_done": 280.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 23",
+     "num": 23,
+     "n_hu": 6,
+     "n_done": 6,
+     "sp_total": 94.0,
+     "sp_done": 94.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 25",
+     "num": 25,
+     "n_hu": 6,
+     "n_done": 6,
+     "sp_total": 84.0,
+     "sp_done": 84.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 26",
+     "num": 26,
+     "n_hu": 7,
+     "n_done": 7,
+     "sp_total": 97.0,
+     "sp_done": 97.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 27",
+     "num": 27,
+     "n_hu": 5,
+     "n_done": 5,
+     "sp_total": 60.0,
+     "sp_done": 60.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 28",
+     "num": 28,
+     "n_hu": 37,
+     "n_done": 37,
+     "sp_total": 549.0,
+     "sp_done": 549.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 29",
+     "num": 29,
+     "n_hu": 5,
+     "n_done": 5,
+     "sp_total": 81.0,
+     "sp_done": 81.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 30",
+     "num": 30,
+     "n_hu": 8,
+     "n_done": 8,
+     "sp_total": 79.0,
+     "sp_done": 79.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 31",
+     "num": 31,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 26.0,
+     "sp_done": 26.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 32",
+     "num": 32,
+     "n_hu": 25,
+     "n_done": 25,
+     "sp_total": 440.0,
+     "sp_done": 440.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 33",
+     "num": 33,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 63.0,
+     "sp_done": 63.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 34",
+     "num": 34,
+     "n_hu": 18,
+     "n_done": 16,
+     "sp_total": 317.0,
+     "sp_done": 317.0,
+     "sin_sp": 2,
+     "dias": 7
+    },
+    {
+     "sprint": "Sprint 35",
+     "num": 35,
+     "n_hu": 5,
+     "n_done": 5,
+     "sp_total": 89.0,
+     "sp_done": 89.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 36",
+     "num": 36,
+     "n_hu": 2,
+     "n_done": 2,
+     "sp_total": 110.0,
+     "sp_done": 110.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 37",
+     "num": 37,
+     "n_hu": 1,
+     "n_done": 1,
+     "sp_total": 55.0,
+     "sp_done": 55.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 38",
+     "num": 38,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 76.0,
+     "sp_done": 76.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 39",
+     "num": 39,
+     "n_hu": 10,
+     "n_done": 10,
+     "sp_total": 178.0,
+     "sp_done": 178.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 40",
+     "num": 40,
+     "n_hu": 10,
+     "n_done": 10,
+     "sp_total": 220.0,
+     "sp_done": 220.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 43",
+     "num": 43,
+     "n_hu": 32,
+     "n_done": 16,
+     "sp_total": 519.0,
+     "sp_done": 233.0,
+     "sin_sp": 2,
+     "dias": 6
+    },
+    {
+     "sprint": "Sprint 44",
+     "num": 44,
+     "n_hu": 7,
+     "n_done": 6,
+     "sp_total": 173.0,
+     "sp_done": 118.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 45",
+     "num": 45,
+     "n_hu": 3,
+     "n_done": 3,
+     "sp_total": 63.0,
+     "sp_done": 63.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 46",
+     "num": 46,
+     "n_hu": 6,
+     "n_done": 1,
+     "sp_total": 123.0,
+     "sp_done": 21.0,
+     "sin_sp": 0,
+     "dias": 1
+    },
+    {
+     "sprint": "Sprint 47",
+     "num": 47,
+     "n_hu": 38,
+     "n_done": 30,
+     "sp_total": 736.0,
+     "sp_done": 584.0,
+     "sin_sp": 1,
+     "dias": 4
+    },
+    {
+     "sprint": "Sprint 48",
+     "num": 48,
+     "n_hu": 16,
+     "n_done": 13,
+     "sp_total": 196.0,
+     "sp_done": 157.0,
+     "sin_sp": 0,
+     "dias": 3
+    },
+    {
+     "sprint": "Sprint 49",
+     "num": 49,
+     "n_hu": 19,
+     "n_done": 8,
+     "sp_total": 274.0,
+     "sp_done": 70.0,
+     "sin_sp": 0,
+     "dias": 6
+    },
+    {
+     "sprint": "Sprint 50",
+     "num": 50,
+     "n_hu": 28,
+     "n_done": 6,
+     "sp_total": 359.0,
+     "sp_done": 57.0,
+     "sin_sp": 1,
+     "dias": 5
+    },
+    {
+     "sprint": "Sprint 51",
+     "num": 51,
+     "n_hu": 40,
+     "n_done": 5,
+     "sp_total": 353.0,
+     "sp_done": 23.0,
+     "sin_sp": 3,
+     "dias": 6
+    },
+    {
+     "sprint": "Sprint 52",
+     "num": 52,
+     "n_hu": 70,
+     "n_done": 5,
+     "sp_total": 356.0,
+     "sp_done": 12.0,
+     "sin_sp": 3,
+     "dias": 7
+    },
+    {
+     "sprint": "Sprint 53",
+     "num": 53,
+     "n_hu": 1,
+     "n_done": 0,
+     "sp_total": 0.0,
+     "sp_done": 0.0,
+     "sin_sp": 1,
+     "dias": 1
+    },
+    {
+     "sprint": "Sin sprint",
+     "num": null,
+     "n_hu": 159,
+     "n_done": 5,
+     "sp_total": 797.0,
+     "sp_done": 52.0,
+     "sin_sp": 74,
+     "dias": 41
+    }
+   ],
+   "resumen": {
+    "n_sprints": 47,
+    "sp_done_total": 5672.0,
+    "sp_total": 8231.0,
+    "n_done_total": 369,
+    "n_hu_total": 692,
+    "vel_prom_sp": 53.2,
+    "vel_prom_hu": 6.2,
+    "ultimo_sprint": "Sprint 53"
+   }
+  }
+ }
+}

@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null, COSTOS = null, CONTROLES = null, FLUJO = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null, COSTOS = null, CONTROLES = null, FLUJO = null, SPRINTS = null, SPRINTS_COSTO = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -55,6 +55,11 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // flujo & tiempos (lead time, WIP por etapa, aging); agregados sin identificadores -> se publica
   try { const fl = await fetch("data_flujo.json"); FLUJO = fl.ok ? await fl.json() : null; }
   catch (_) { FLUJO = null; }
+  // sprints: velocidad/completitud (público) + costo por sprint (INTERNO, gitignored -> ausente en público)
+  try { const sp = await fetch("data_sprints.json"); SPRINTS = sp.ok ? await sp.json() : null; }
+  catch (_) { SPRINTS = null; }
+  try { const sc = await fetch("data_sprints_costo.json"); SPRINTS_COSTO = sc.ok ? await sc.json() : null; }
+  catch (_) { SPRINTS_COSTO = null; }
   const sel = $("#proySel");
   const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
   // 419 consolidado (DEP + RAMA) si ambos enfoques existen en data.json
@@ -703,6 +708,8 @@ function paintProject() {
   const cSinHu = projPlantaSinHu(p.codigo);
   // Flujo & Tiempos (Nivel 1): Lead Time + WIP por etapa + Aging (Seguimiento y Operativo)
   const cFlujoTiempos = flujoTiemposCard(p.codigo);
+  // Sprints (Etapa 2): alcance vs entregado + costo por sprint (Directivo/Gerencial/Operativo)
+  const cSprints = sprintsCard(p.codigo);
   // visuales gerenciales nuevos: proyección de cierre, eficiencia costo/HU, Top-3 decisiones
   const _proy = proyeccionCierre(p);
   const kProy = kpi("Proyección de cierre", "🗓", _proy.sev >= 3 ? "#ef4444" : _proy.sev >= 2 ? "#f59e0b" : "#10b981",
@@ -721,15 +728,15 @@ function paintProject() {
     case "gerencial":   // TÁCTICO: Gerentes de Proyecto / Integral / Aseguramiento
       body = note("Gerencial · gestión del proyecto: avance vs plan, carga del equipo, calidad y cumplimiento") +
         cTop3 + wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
-        cRecursos + split(cArea, cDonut) + cProd + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
+        cRecursos + split(cArea, cDonut) + cFlujoTiempos + cSprints + cProd + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
     case "operativo":   // EJECUCIÓN: Head de fábrica + Scrum
       body = note("Operativo · ejecución y día a día: flujo, capacidad, carga y costos de fábrica") +
         cTop3 + wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
-        split(cArea, cDonut) + cFlujoTiempos + cFlujo + cPivot + cCostoHu + cCostos + cProdPD + cRecursos + cPlanta + cCarga + cAlertas + cSinHu; break;
+        split(cArea, cDonut) + cFlujoTiempos + cSprints + cFlujo + cPivot + cCostoHu + cCostos + cProdPD + cRecursos + cPlanta + cCarga + cAlertas + cSinHu; break;
     default:            // DIRECTIVO (estratégico): Presidente / VP / CTO / Director de Operaciones
       body = note("Directivo · ¿vamos a cumplir? ¿cuánto cuesta? ¿dónde está el riesgo?") +
         cTop3 + wrapKpis([kPctProd, kAvance, kProy, kEfic, kCierre, kEstanc]) +
-        two(cLine, cGauge) + cProd + cCostos + cRqc;
+        two(cLine, cGauge) + cSprints + cProd + cCostos + cRqc;
   }
 
   $("#content").innerHTML = head + tabbar + body;
@@ -749,6 +756,7 @@ function paintProject() {
   if ($(".prodarea")) setupProdVar(p.codigo);
   if ($("#coIni")) setupCostos(p.codigo);
   if ($("#ftLead") || $("#ftWip") || $("#ftAge")) setupFlujoTiempos(p.codigo);
+  if ($("#spChart")) setupSprints(p.codigo);
   animateBars();
 }
 
@@ -1148,6 +1156,94 @@ function setupFlujoTiempos(cod) {
     };
     sel.onchange = apply; apply();
   }
+}
+
+/* ===== SPRINTS (Etapa 2): alcance vs entregado por sprint + costo (Cargos.xlsx, interno) =====
+   Fuentes: data_sprints.json (velocidad/completitud, pública) + data_sprints_costo.json (costo,
+   INTERNO/gitignored → ausente en la versión pública, la línea de costo simplemente no aparece).
+   Mide completitud ACTUAL por sprint (alcance vs entregado a hoy), no velocidad por timebox. */
+function sprintsCard(cod) {
+  const S = SPRINTS && SPRINTS.proyectos ? SPRINTS.proyectos[cod] : null;
+  if (!S || !S.sprints.length) return "";
+  const C = SPRINTS_COSTO && SPRINTS_COSTO.proyectos ? SPRINTS_COSTO.proyectos[cod] : null;
+  const r = S.resumen, sinSpr = S.sprints.find(s => s.num == null);
+  const kpis = [
+    ftStatBox("spVelSp", "#6366f1", "⚡", "Velocidad media", "SP entregados/sprint (últ. 6)"),
+    ftStatBox("spVelHu", "#38bdf8", "▦", "Velocidad media", "HU entregadas/sprint (últ. 6)"),
+    ftStatBox("spDone", "#10b981", "✓", "SP entregados", "de " + fmt(r.sp_total) + " del alcance"),
+  ];
+  if (C) {
+    kpis.push(ftStatBox("spCostoDia", "#f59e0b", "💲", "Costo equipo/día", fmt(C.n_personas) + " personas · nómina"));
+    kpis.push(ftStatBox("spCostoUlt", "#ef4444", "🗓", "Costo último sprint", "días háb. × nómina/día"));
+  }
+  const costoNota = C ? " · <b>línea de costo</b> (nómina interna)" : "";
+  const backlog = sinSpr ? `<div class="hint" style="margin:2px 0 0">📥 Backlog sin sprint asignado: <b>${fmt(sinSpr.n_hu)}</b> HU · ${fmt(sinSpr.sp_total)} SP (${fmt(sinSpr.n_done)} en producción)</div>` : "";
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>🏃 Sprints · alcance vs entregado${C ? " y costo" : ""}</h3>
+    <div class="hint">Por sprint (Iteration Path): barras = <b>entregado</b> (en producción) vs <b>alcance</b>; completitud a hoy${costoNota}. <i>Mide completitud actual por sprint, no velocidad por timebox (eso exige el historial de revisiones de ADO).</i></div>
+    <div class="filterbar">
+      <label>Métrica <select id="spMetric"><option value="sp">Story Points</option><option value="hu">HU</option></select></label>
+      <label>Mostrar <select id="spLast"><option value="6">Últimos 6</option><option value="10">Últimos 10</option><option value="20">Últimos 20</option><option value="999">Todos</option></select></label>
+    </div>
+    <div class="grid kpis" style="margin:2px 0">${kpis.join("")}</div>
+    ${backlog}
+    <div id="spChart" class="chart tall"></div></div>`;
+}
+function setupSprints(cod) {
+  const S = SPRINTS && SPRINTS.proyectos ? SPRINTS.proyectos[cod] : null; if (!S) return;
+  const C = SPRINTS_COSTO && SPRINTS_COSTO.proyectos ? SPRINTS_COSTO.proyectos[cod] : null;
+  const costMap = {}; if (C) C.sprints.forEach(s => costMap[s.num] = s);
+  const conNum = S.sprints.filter(s => s.num != null), r = S.resumen, last = conNum[conNum.length - 1];
+  const setT = (id, v) => { const e = $("#" + id); if (e) e.textContent = v; };
+  setT("spVelSp", r.vel_prom_sp != null ? fmt(r.vel_prom_sp) : "—");
+  setT("spVelHu", r.vel_prom_hu != null ? fmt(r.vel_prom_hu) : "—");
+  setT("spDone", fmt(r.sp_done_total));
+  if (C) {
+    setT("spCostoDia", fmtMoney(C.costo_dia));
+    // "último sprint" = el de mayor número con alcance real (ignora sprints recién abiertos sin SP)
+    const lastReal = [...conNum].reverse().find(s => s.sp_total > 0) || last;
+    const cl = lastReal ? costMap[lastReal.num] : null;
+    setT("spCostoUlt", cl ? fmtMoney(cl.costo) : "—");
+    const foot = document.querySelector("#spCostoUlt")?.parentElement?.querySelector(".foot");
+    if (foot && lastReal) foot.textContent = `Sprint ${lastReal.num} · ${cl ? cl.dias : "—"} días háb.`;
+  }
+  const elc = $("#spChart"); if (!elc) return;
+  const c = mkChart(elc), ax = axisBase(), metric = $("#spMetric"), lastSel = $("#spLast");
+  const apply = () => {
+    const m = metric.value, n = +lastSel.value, arr = conNum.slice(-n);
+    const cats = arr.map(s => "S" + s.num);
+    const done = arr.map(s => m === "sp" ? s.sp_done : s.n_done);
+    const tot = arr.map(s => m === "sp" ? s.sp_total : s.n_hu);
+    const pend = tot.map((t, i) => Math.max(0, +(t - done[i]).toFixed(1)));
+    const series = [
+      { name: "Entregado", type: "bar", stack: "a", color: "#10b981", data: done },
+      { name: "Pendiente", type: "bar", stack: "a", color: "#3a4256", data: pend },
+    ];
+    const yAxes = [{ type: "value", splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } }];
+    const legend = ["Entregado", "Pendiente"];
+    if (C) {
+      const costo = arr.map(s => { const cc = costMap[s.num]; return cc ? +(cc.costo / 1e6).toFixed(1) : null; });
+      yAxes.push({ type: "value", name: "M$", position: "right", splitLine: { show: false }, axisLabel: { color: "#f59e0b" }, nameTextStyle: { color: "#f59e0b" } });
+      series.push({ name: "Costo (M$)", type: "line", yAxisIndex: 1, color: "#f59e0b", smooth: true, symbol: "circle", symbolSize: 6, lineStyle: { width: 2.5 }, data: costo });
+      legend.push("Costo (M$)");
+    }
+    c.setOption({
+      tooltip: {
+        trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" }, formatter: ps => {
+          const i = ps[0].dataIndex, s = arr[i], cc = costMap[s.num];
+          const u = m === "sp" ? "SP" : "HU", t = m === "sp" ? s.sp_total : s.n_hu, dn = m === "sp" ? s.sp_done : s.n_done;
+          let h = `<b>Sprint ${s.num}</b><br/>Entregado: ${fmt(dn)} / ${fmt(t)} ${u} (${t ? Math.round(100 * dn / t) : 0}%)`;
+          if (cc) h += `<br/>Costo: ${fmtMoney(cc.costo)} · ${cc.dias} días háb.<br/>Costo/${u}: ${fmtMoney(u === "SP" ? cc.costo_sp : cc.costo_hu)}`;
+          return h;
+        }
+      },
+      legend: { data: legend, textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "roundRect" },
+      grid: { left: 8, right: C ? 40 : 14, top: 30, bottom: 6, containLabel: true },
+      xAxis: { type: "category", data: cats, axisLabel: { color: ax.textColor, fontSize: 10 }, axisLine: { lineStyle: { color: ax.line } } },
+      yAxis: yAxes, series,
+    });
+  };
+  metric.onchange = lastSel.onchange = apply; apply();
 }
 
 /* variación de HU por etapa en el tiempo: entradas (+) arriba, salidas (−) abajo.
