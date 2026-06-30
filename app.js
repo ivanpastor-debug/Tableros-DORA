@@ -636,6 +636,8 @@ function paintProject() {
     </div>` : "";
   // costos vs salidas: planta de cada proceso (REQ/DEV/QA) vs HU entregadas (solo vista Seguimiento)
   const cCostos = costosCard(p.codigo);
+  // planta del proceso (REQ/DEV/QA) sin HU asignada en Azure (referencia: cronograma Positiva)
+  const cSinHu = projPlantaSinHu(p.codigo);
 
   const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
   const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
@@ -660,7 +662,7 @@ function paintProject() {
         split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
     default:            // General: vista completa (nada se pierde) · productividad bajo la planta
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cProdPD + cCarga + cAlertas;
+        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cProdPD + cCarga + cAlertas + cSinHu;
   }
 
   $("#content").innerHTML = head + tabbar + body;
@@ -770,6 +772,17 @@ function buildPivot(p, mode) {
   const hasSH = p.serie.some(s => (s.total - sum6(s)) > 0);
   const hasRem = p.serie.some(s => (s.removidas || 0) > 0);
 
+  // agrupación de columnas por mes (encabezado de 2 niveles) + separador en el inicio de cada mes
+  const MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  const groups = [];
+  dates.forEach((d, i) => {
+    const m = d.slice(0, 7);
+    if (!groups.length || groups[groups.length - 1].m !== m)
+      groups.push({ m, start: i, n: 0, label: `${MES[+d.slice(5, 7) - 1]} '${d.slice(2, 4)}` });
+    groups[groups.length - 1].n++;
+  });
+  const monStart = new Set(groups.map(g => g.start));   // índices que abren mes (borde izq)
+
   // valor de una etapa 'key' en la fecha índice i, según la métrica
   const val = (key, i) => {
     const s = p.serie[i];
@@ -799,9 +812,10 @@ function buildPivot(p, mode) {
     const o = (mode === "ent" ? f.entradas : f.salidas);
     return PROCS.reduce((a, pr) => a + (o[pr.key] || 0), 0);
   };
-  const cell = (v) => {
-    if (v == null) return `<td class="czero">·</td>`;
-    if (mode === "count") return `<td>${v}</td>`;
+  const cell = (v, i) => {
+    const ms = monStart.has(i) ? " monstart" : "";
+    if (v == null) return `<td class="czero${ms}">·</td>`;
+    if (mode === "count") return `<td class="cnt${ms}">${v}</td>`;
     // colorimetría por GESTIÓN del equipo: SALIDAS (el equipo saca HU de la etapa) = verde;
     // ENTRADAS (la etapa acumula HU) = rojo. En delta: el conteo baja (−) = salida neta = verde;
     // sube (+) = entrada neta = rojo.
@@ -809,24 +823,22 @@ function buildPivot(p, mode) {
     if (mode === "sal") cls = v > 0 ? "cpos" : "czero";
     else if (mode === "ent") cls = v > 0 ? "cneg" : "czero";
     else cls = v > 0 ? "cneg" : v < 0 ? "cpos" : "czero";   // delta (invertido)
-    return `<td class="${cls}">${v > 0 ? "+" + v : v}</td>`;
+    return `<td class="${cls}${ms}">${v > 0 ? "+" + v : v}</td>`;
   };
+  const row = (label, sw, valfn) =>
+    `<tr><th><span class="sw-i" style="background:${sw}"></span>${label}</th>` +
+    dates.map((d, i) => cell(valfn(i), i)).join("") + `</tr>`;
 
-  let h = `<table class="piv"><thead><tr><th>Etapa</th>` +
-    dates.map(d => `<th>${d.slice(5)}</th>`).join("") + `</tr></thead><tbody>`;
-  for (const pr of PROCS) {
-    h += `<tr><th><span class="sw-i" style="background:${pr.color}"></span>${pr.label}</th>` +
-      dates.map((d, i) => cell(val(pr.key, i))).join("") + `</tr>`;
-  }
-  if (hasSH) {
-    h += `<tr><th><span class="sw-i" style="background:#5d6678"></span>Sin homologar</th>` +
-      dates.map((d, i) => cell(shVal(i))).join("") + `</tr>`;
-  }
-  if (hasRem) {
-    h += `<tr><th><span class="sw-i" style="background:#94a3b8"></span>Removidas</th>` +
-      dates.map((d, i) => cell(remVal(i))).join("") + `</tr>`;
-  }
-  h += `<tr class="tot"><th>Total HU<br><span style="font-weight:400;font-size:10px;color:var(--muted)">(sin removidas)</span></th>` + dates.map((d, i) => cell(totVal(i))).join("") + `</tr>`;
+  // encabezado de 2 niveles: fila 1 = mes (agrupado), fila 2 = día
+  let h = `<table class="piv"><thead><tr><th class="corner" rowspan="2">Etapa</th>` +
+    groups.map(g => `<th class="mongrp" colspan="${g.n}">${g.label}</th>`).join("") + `</tr><tr>` +
+    dates.map((d, i) => `<th class="${monStart.has(i) ? "monstart" : ""}">${d.slice(8)}</th>`).join("") +
+    `</tr></thead><tbody>`;
+  for (const pr of PROCS) h += row(pr.label, pr.color, i => val(pr.key, i));
+  if (hasSH) h += row("Sin homologar", "#5d6678", shVal);
+  if (hasRem) h += row("Removidas", "#94a3b8", remVal);
+  h += `<tr class="tot"><th>Total HU<br><span style="font-weight:400;font-size:10px;color:var(--muted)">(sin removidas)</span></th>` +
+    dates.map((d, i) => cell(totVal(i), i)).join("") + `</tr>`;
   return h + `</tbody></table>`;
 }
 
@@ -1094,6 +1106,40 @@ function cronoPlantaSinHu() {
   return `<div class="card fade" style="margin-top:16px">
     <h3>🪑 Planta del proceso sin HU asignada</h3>
     <div class="hint">Personal de <b>Requerimientos, Desarrollo y QA</b> de Positiva Core (cód. ${pp.cod_planta} · ${esc(pp.archivo)}) que <b>no tiene ninguna HU en Azure</b> al corte ${CRONO.corte} · <b>${pp.sin_hu.length}</b> sin HU de ${pp.total} (con HU: ${pp.con_hu})</div>
+    ${counter}
+    <div class="dwrap"><table class="dtbl"><thead><tr>
+      <th>Área</th><th>Cargo</th><th>Persona</th>
+    </tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
+}
+
+/* planta del proceso (REQ/DEV/QA) SIN HU asignada en Azure, en la vista General de cada proyecto.
+   Modelado igual que cronoPlantaSinHu (referencia: cronograma de Positiva), pero por proyecto vía
+   data_carga.planta_sin_hu. Proyectos que comparten planta (419-DEP/RAMA, 416/355) ven la misma
+   lista (con HU = unión de los que comparten planta). */
+function projPlantaSinHu(cod) {
+  const C = cargaObj(cod), pp = C && C.planta_sin_hu;
+  if (!pp || !(pp.sin_hu || []).length) return "";
+  const rows = pp.sin_hu.map(p => `<tr data-area="${esc(p.area)}">
+      <td>${areaTag(p.area)}</td>
+      <td><span class="chip2">${esc(p.cargo) || "—"}</span></td>
+      <td>${esc(p.nombre)}</td>
+    </tr>`).join("");
+  const AREAS3 = ["REQUERIMIENTOS", "DESARROLLO", "PRUEBAS QA Y TESTER"];
+  const cnt = {}; AREAS3.forEach(a => cnt[a] = 0);
+  pp.sin_hu.forEach(p => { if (p.area in cnt) cnt[p.area]++; });
+  const casilla = (a) => `<div class="card kpi fade" style="cursor:pointer" data-fkey="area" data-fval="${esc(a)}" onclick="chipFilter(this)">
+      <div class="label"><span class="ic" style="background:${AREA_COL[a]}20;color:${AREA_COL[a]}">○</span>${AREA_LBL[a]}</div>
+      <div class="val"><span data-count="${cnt[a]}">0</span></div>
+      <div class="foot">sin HU asignada</div>
+      <div class="bar-mini"><i style="width:0" data-w="${pp.sin_hu.length ? Math.min(100, cnt[a] / pp.sin_hu.length * 100) : 0}"></i></div>
+    </div>`;
+  const counter = `<div class="grid kpis" style="margin:4px 0 2px">${AREAS3.map(casilla).join("")}</div>`;
+  const corte = (CARGA && CARGA.corte) || DATA.corte;
+  const compart = (pp.cod_planta && cod !== pp.cod_planta) ? ` · planta compartida (cód. ${pp.cod_planta})` : "";
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>🪑 Planta del proceso sin HU asignada</h3>
+    <div class="hint">Personal de <b>Requerimientos, Desarrollo y QA</b> (planta cód. ${pp.cod_planta} · ${esc(pp.archivo)})${compart} que <b>no tiene ninguna HU en Azure</b> al corte ${corte} · <b>${pp.sin_hu.length}</b> sin HU de ${pp.total} (con HU: ${pp.con_hu})</div>
     ${counter}
     <div class="dwrap"><table class="dtbl"><thead><tr>
       <th>Área</th><th>Cargo</th><th>Persona</th>
