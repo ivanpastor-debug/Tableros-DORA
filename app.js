@@ -595,6 +595,7 @@ function paintProject() {
   const cGauge = `<div class="card fade"><h3>Productividad · real vs. requerida</h3>
       <div class="hint">Arco externo = real (verde si cumple / rojo si va por debajo) · arco interno = requerida (cierre QA)</div><div id="cGauge" class="chart"></div></div>`;
   const cPivot = pivotCard(p);
+  const cCostoHu = costoHuCard(p, p.codigo, "");   // costo unitario por HU gestionada (junto a la pivote)
   const cFlujo = `<div class="card fade" style="margin-top:16px">
     <h3>Variación de HU por etapa en el tiempo</h3>
     <div class="hint">Por día y etapa: <b>entradas hacia arriba (+)</b> y <b>salidas hacia abajo (−)</b>. Filtra por rango de fechas y por etapa.</div>
@@ -655,7 +656,7 @@ function paintProject() {
   switch (PROFILE_TAB) {
     case "seguimiento":  // control: recursos + tabla HU por etapa + costos vs salidas (exclusivas aquí)
       body = note("Seguimiento · recursos del equipo, HU por etapa y costos vs salidas") +
-        cRecursos + cPivot + cCostos; break;
+        cRecursos + cPivot + cCostoHu + cCostos; break;
     case "directivo":   // estratégico: resultado, cumplimiento y riesgo
       body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
         wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
@@ -667,7 +668,7 @@ function paintProject() {
     case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
-        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
+        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot + cCostoHu; break;
     case "controles": {  // réplica de la vista general SOLO sobre las HU de control de cambio (Tags CC)
       const ck = ccObj.kpis, restQAc = ck.dias_restantes?.QA;
       const cc10 = (ccObj.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
@@ -680,13 +681,13 @@ function paintProject() {
       const kkEst = kpi("HU +10 días sin avanzar", "⚠", "#ef4444", `<span data-count="${cc10}">0</span>`, "mismo estado · más de 10 días");
       body = note("Controles de Cambios · réplica de la vista general sobre las HU de control de cambio (Tags CC) del proyecto") +
         wrapKpis([kkHU, kkProd, kkPct, kkAv, kkVel, kkCierre, kkEst]) +
-        split(cArea, cDonut) + two(cLine, cGauge) + cFlujo + cPivot +
+        split(cArea, cDonut) + two(cLine, cGauge) + cFlujo + cPivot + costoHuCard(ccObj, p.codigo, "") +
         cargaCard(p.codigo, ccObj) + alertasCard(p.codigo, ccObj);
       break;
     }
     default:            // General: vista completa (nada se pierde) · productividad bajo la planta
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cPivot + cProdPD + cCarga + cAlertas + cSinHu;
+        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cPivot + cCostoHu + cProdPD + cCarga + cAlertas + cSinHu;
   }
 
   $("#content").innerHTML = head + tabbar + body;
@@ -700,6 +701,7 @@ function paintProject() {
   if ($("#cLine")) drawLine($("#cLine"), dsrc);
   if ($("#cGauge")) drawGauge($("#cGauge"), dsrc, dsrc.kpis);
   if ($("#tblMode")) setupPivot(dsrc);
+  if ($("#chWrap")) setupCostoHu(dsrc, p.codigo, "");   // costo unitario por HU (CC usa ccObj vía dsrc; planta = p.codigo)
   if ($("#cFlujo")) drawFlujo($("#cFlujo"), dsrc);
   if ($("#cProdPD")) setupProdPersona(p.codigo);
   if ($("#cPlanta")) setupPlantaEvol(recObj);
@@ -866,6 +868,121 @@ function buildPivot(p, mode) {
   h += `<tr class="tot"><th>Total HU<br><span style="font-weight:400;font-size:10px;color:var(--muted)">(sin removidas)</span></th>` +
     dates.map((d, i) => cell(totVal(i), i)).join("") + `</tr>`;
   return h + `</tbody></table>`;
+}
+
+/* ===== Costo unitario por HU gestionada (salidas) · por proceso y fecha =====
+   Misma forma que la tabla consolidada, pero SOLO salidas y cada celda muestra el COSTO UNITARIO:
+     costo = (nómina mensual del área en esa fecha ÷ 20) × días hábiles desde la salida anterior ÷ HU.
+   Se EXCLUYE la primera salida de cada proceso (artefacto de inicialización) usándola como inicio del
+   conteo de días. La nómina del área a cada fecha sale de RECURSOS (planta productiva, la más cercana
+   si la fecha es anterior al histórico). `recCod` = código de planta a usar (proyecto; CC usa 397). */
+const COSTO_HU_PROCS = [
+  { key: "REQUERIMIENTOS", area: "REQUERIMIENTOS" },
+  { key: "DESARROLLO", area: "DESARROLLO" },
+  { key: "QA", area: "PRUEBAS QA Y TESTER" },
+];
+const DIAS_MES_HU = 20;   // días hábiles/mes para pasar nómina mensual -> costo/día
+function costoHuCells(src, recCod) {
+  const rec = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[recCod] : null;
+  const flujo = (src && src.flujo) || [];
+  const dh = {}; ((src && src.serie) || []).forEach(s => { dh[s.fecha] = s.dias_hab; });
+  const out = {};
+  COSTO_HU_PROCS.forEach(pp => {
+    out[pp.key] = {};
+    let prevDh = null;                                   // días hábiles acum. de la salida anterior
+    for (const f of flujo) {
+      const hu = (f.salidas || {})[pp.key] || 0;
+      if (hu <= 0) continue;
+      const cur = dh[f.fecha];
+      if (prevDh == null) { prevDh = cur; continue; }    // 1ª salida = artefacto: solo marca el inicio
+      const dias = (cur - prevDh) + 1;                   // incluye el día de la salida anterior
+      let costo = null;
+      if (rec && dias > 0) {
+        const pa = (snapRec(rec, RECURSOS.fechas, f.fecha) || { por_area: {} }).por_area[pp.area];
+        const cmes = pa ? (pa.c_prod ? pa.c_prod[1] : pa.c) : 0;
+        costo = cmes ? (cmes / DIAS_MES_HU) * dias / hu : 0;
+      }
+      out[pp.key][f.fecha] = { hu, costo };
+      prevDh = cur;
+    }
+  });
+  return out;
+}
+/* formato: <1M -> 0.1/0.2/...  ·  >=1M -> 1.2M/2M/10M/250M */
+function fmtCostoHu(v) {
+  if (v == null) return null;
+  const m = v / 1e6;
+  if (m < 1) return m.toFixed(1);
+  const r = Math.round(m * 10) / 10;
+  return (Number.isInteger(r) ? r.toFixed(0) : r.toFixed(1)) + "M";
+}
+let COSTOHU = {};   // sfx -> {draw, area}; estado del selector de área de Mín/Máx
+function costoHuSelArea(sfx, a) {
+  const st = COSTOHU[sfx]; if (!st) return;
+  st.area = (a === "__all__") ? null : a;
+  st.draw();
+}
+function costoHuCard(src, recCod, sfx = "") {
+  if (!RECURSOS || !RECURSOS.proyectos || !RECURSOS.proyectos[recCod]) return "";
+  const cells = costoHuCells(src, recCod);
+  if (!COSTO_HU_PROCS.some(pp => Object.keys(cells[pp.key]).length)) return "";
+  const chip = (a, lbl) => `<span class="rchip" id="chSel${sfx}_${a}" onclick="costoHuSelArea('${sfx}','${a}')">${a === "__all__" ? "" : `<span class="rdot" style="background:${AREA_COL[a]}"></span>`}${lbl}</span>`;
+  const chips = chip("__all__", "Todas") + COSTO_HU_PROCS.map(pp => chip(pp.area, AREA_LBL[pp.area])).join("");
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>💲 Costo unitario por HU gestionada · por proceso y fecha</h3>
+    <div class="hint">Por celda: (nómina mensual del área ÷ 20) × días hábiles desde la salida anterior ÷ HU que salieron · <b>solo salidas</b> (gestión del equipo) · REQ/DEV/QA · <b>&lt;1M</b> en decimales (0,2) y <b>≥1M</b> con M (1,2M)</div>
+    <div class="filterbar">
+      <label>Desde <input type="date" id="chIni${sfx}"></label>
+      <label>Hasta <input type="date" id="chFin${sfx}"></label>
+      <span class="hint" style="margin:0">▸ por defecto, últimos 10 días hábiles · ajusta el rango</span>
+    </div>
+    <div class="hint" style="margin:2px 0 0">Mín/Máx por área:</div>
+    <div class="rchips" style="margin:4px 0">${chips}</div>
+    <div class="grid kpis" style="margin:2px 0">
+      <div class="card kpi fade"><div class="label"><span class="ic" style="background:#10b98120;color:#10b981">▼</span>Mínimo del rango <span id="chMinA${sfx}" class="muted"></span></div><div class="val" id="chMin${sfx}">—</div><div class="foot">menor costo/HU visible</div></div>
+      <div class="card kpi fade"><div class="label"><span class="ic" style="background:#ef444420;color:#ef4444">▲</span>Máximo del rango <span id="chMaxA${sfx}" class="muted"></span></div><div class="val" id="chMax${sfx}">—</div><div class="foot">mayor costo/HU visible</div></div>
+    </div>
+    <div id="chWrap${sfx}" class="pivwrap"></div></div>`;
+}
+function setupCostoHu(src, recCod, sfx = "") {
+  const wrap = $("#chWrap" + sfx); if (!wrap) return;
+  const cells = costoHuCells(src, recCod);
+  const fechas = (src.flujo || []).map(f => f.fecha);
+  if (!fechas.length) return;
+  const ini = $("#chIni" + sfx), fin = $("#chFin" + sfx), elMin = $("#chMin" + sfx), elMax = $("#chMax" + sfx);
+  const dmin = fechas[0], dmax = fechas[fechas.length - 1];
+  const def = fechas.length > 10 ? fechas[fechas.length - 10] : dmin;   // últimos ~10 días hábiles
+  ini.min = fin.min = dmin; ini.max = fin.max = dmax; ini.value = def; fin.value = dmax;
+  const st = COSTOHU[sfx] || (COSTOHU[sfx] = { area: null });
+  st.draw = () => {
+    const a = ini.value, b = fin.value, areaSel = st.area;   // areaSel = clave de área (o null = todas)
+    const cols = fechas.filter(f => f >= a && f <= b);
+    const vals = [];   // costos visibles para el Mín/Máx (filtrados por área seleccionada)
+    let h = `<table class="piv"><thead><tr><th class="corner">Proceso</th>` +
+      cols.map(d => `<th>${d.slice(5)}</th>`).join("") + `</tr></thead><tbody>`;
+    for (const pp of COSTO_HU_PROCS) {
+      h += `<tr><th><span class="sw-i" style="background:${AREA_COL[pp.area]}"></span>${AREA_LBL[pp.area]}</th>` +
+        cols.map(d => {
+          const c = cells[pp.key][d];
+          if (!c || c.costo == null) return `<td class="czero">·</td>`;
+          if (!areaSel || areaSel === pp.area) vals.push(c.costo);
+          return `<td title="${c.hu} HU gestionadas">${fmtCostoHu(c.costo)}</td>`;
+        }).join("") + `</tr>`;
+    }
+    h += `</tbody></table>`;
+    wrap.innerHTML = h; wrap.scrollLeft = wrap.scrollWidth;
+    elMin.textContent = vals.length ? fmtCostoHu(Math.min(...vals)) : "—";
+    elMax.textContent = vals.length ? fmtCostoHu(Math.max(...vals)) : "—";
+    const aLbl = areaSel ? "· " + AREA_LBL[areaSel] : "· todas";
+    $("#chMinA" + sfx).textContent = aLbl; $("#chMaxA" + sfx).textContent = aLbl;
+    // resalta el chip activo
+    ["__all__", ...COSTO_HU_PROCS.map(pp => pp.area)].forEach(k => {
+      const el = $("#chSel" + sfx + "_" + k);
+      if (el) el.classList.toggle("on", (areaSel || "__all__") === k);
+    });
+  };
+  ini.onchange = fin.onchange = st.draw;
+  st.draw();
 }
 
 /* variación de HU por etapa en el tiempo: entradas (+) arriba, salidas (−) abajo.
@@ -1057,7 +1174,7 @@ function paintCronograma() {
     const enf = (cod) => {
       const pp = DATA.proyectos.find(x => x.codigo === cod); if (!pp) return "";
       return `<div class="project-title fade" style="margin-top:24px"><h2 style="font-size:18px">${etiqueta(pp)}</h2><span class="tag">${pp.kpis.hu_total} HU</span></div>`
-        + pivotCard(pp, cod, etiqueta(pp)) + costosCard(cod, cod, etiqueta(pp));
+        + pivotCard(pp, cod, etiqueta(pp)) + costoHuCard(pp, cod, cod) + costosCard(cod, cod, etiqueta(pp));
     };
     body = note("Seguimiento de Positiva Core · recursos del equipo, carga por responsable y, por enfoque (416 y 355), HU por etapa y costos vs salidas") +
       recursosCard(rec416, "Positiva Core", RECURSOS ? "Planta " + RECURSOS.planta_archivo : null) +
@@ -1093,6 +1210,7 @@ function paintCronograma() {
     ["416", "355"].forEach(cod => {
       const pp = DATA.proyectos.find(x => x.codigo === cod); if (!pp) return;
       if ($("#tblMode" + cod)) setupPivot(pp, cod);
+      if ($("#chWrap" + cod)) setupCostoHu(pp, cod, cod);
       if ($("#coIni" + cod)) setupCostos(cod, cod);
     });
   } else {
