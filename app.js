@@ -662,7 +662,7 @@ function paintProject() {
         split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
     default:            // General: vista completa (nada se pierde) · productividad bajo la planta
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cProdPD + cCarga + cAlertas + cSinHu;
+        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cPivot + cProdPD + cCarga + cAlertas + cSinHu;
   }
 
   $("#content").innerHTML = head + tabbar + body;
