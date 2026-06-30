@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null, COSTOS = null, CONTROLES = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null, COSTOS = null, CONTROLES = null, FLUJO = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -52,12 +52,18 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // controles de cambio (vista general replicada sobre las HU CC; pestaña solo donde haya datos)
   try { const cc = await fetch("data_controles.json"); CONTROLES = cc.ok ? await cc.json() : null; }
   catch (_) { CONTROLES = null; }
+  // flujo & tiempos (lead time, WIP por etapa, aging); agregados sin identificadores -> se publica
+  try { const fl = await fetch("data_flujo.json"); FLUJO = fl.ok ? await fl.json() : null; }
+  catch (_) { FLUJO = null; }
   const sel = $("#proySel");
   const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
   // 419 consolidado (DEP + RAMA) si ambos enfoques existen en data.json
   const has419 = d.proyectos.some(p => p.codigo === "419-DEP") && d.proyectos.some(p => p.codigo === "419-RAMA");
   const cons419Opt = has419 ? `<option value="__419__">⚖️ 419 · Consolidado (Depósitos + Rama Judicial)</option>` : "";
-  sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt + cons419Opt +
+  // controles de cambio (una entrada por proyecto con datos CC)
+  const ccOpts = CONTROLES && CONTROLES.proyectos
+    ? Object.keys(CONTROLES.proyectos).map(c => `<option value="__cc_${c}__">🔧 ${c} · Controles de Cambios</option>`).join("") : "";
+  sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt + cons419Opt + ccOpts +
     d.proyectos.map(p => `<option value="${p.codigo}">${p.codigo} · ${p.nombre}</option>`).join("");
   sel.onchange = () => render(sel.value);
   render("__all__");
@@ -530,6 +536,7 @@ function render(key) {
   if (CURRENT === "__all__") renderPortfolio();
   else if (CURRENT === "__crono__") renderCronograma();
   else if (CURRENT === "__419__") render419();
+  else if (CURRENT.startsWith("__cc_")) renderCC(CURRENT.slice(5, -2));
   else renderProject(DATA.proyectos.find(p => p.codigo === CURRENT));
   animateBars();
 }
@@ -538,20 +545,65 @@ function render(key) {
 /* Cada pestaña reordena los MISMOS widgets según lo que necesita ese rol. La hoja
    Portafolio NO se toca. "General" conserva la vista completa para no perder nada. */
 const PROFILES = [
-  { id: "general", label: "General", icon: "▦", color: "#6366f1" },
-  { id: "seguimiento", label: "Seguimiento", icon: "🔎", color: "#10b981" },  // recursos + HU/etapa + costos
-  { id: "directivo", label: "Directivo", icon: "🎯", color: "#a855f7" },      // antes Director de Operaciones
-  { id: "gerencial", label: "Gerencial", icon: "📋", color: "#38bdf8" },      // antes Gerente de Proyecto
-  { id: "operativo", label: "Operativo", icon: "🛠", color: "#f59e0b" },      // unifica Head/Líder + Scrum
-  { id: "controles", label: "Controles de Cambios", icon: "🔧", color: "#e11d48" },  // solo proyectos con datos CC
+  // 3 ventanas por ALTITUD de decisión (propuesta por rol)
+  { id: "directivo", label: "Directivo", icon: "🎯", color: "#a855f7" },   // estratégico: Presidente/VP/CTO/Dir.Ops
+  { id: "gerencial", label: "Gerencial", icon: "📋", color: "#38bdf8" },   // táctico: Gerentes + Aseguramiento
+  { id: "operativo", label: "Operativo", icon: "🛠", color: "#f59e0b" },   // ejecución: Head de fábrica + Scrum
 ];
 // objeto-proyecto de controles de cambio (misma forma que un proyecto); null si el proyecto no tiene CC
 function controlesObj(cod) { return CONTROLES && CONTROLES.proyectos ? CONTROLES.proyectos[cod] : null; }
-let PROJ = null, PROFILE_TAB = "general";
+
+/* ===== Visuales gerenciales (propuesta por rol) ===== */
+/* Proyección de cierre: a la velocidad actual, ¿cuántos días hábiles faltan vs el cierre QA? */
+function proyeccionCierre(p) {
+  const k = p.kpis || {}, vel = k.velocidad || 0, pend = k.hu_pendientes || 0;
+  const rest = k.dias_restantes ? k.dias_restantes.QA : null;
+  if (!vel) return { sev: 2, dias_nec: null, rest, estado: "sin ritmo medible", accion: `${fmt(pend)} HU pendientes sin producción medible — definir arranque/medición` };
+  const dias_nec = Math.ceil(pend / vel);
+  let sev = 1, estado = "🟢 en plazo";
+  if (rest == null) { sev = 1; estado = "sin fecha de cierre"; }
+  else if (dias_nec > rest * 1.15) { sev = 3; estado = "🔴 desviado"; }
+  else if (dias_nec > rest) { sev = 2; estado = "🟡 en riesgo"; }
+  const exceso = rest != null ? Math.max(0, dias_nec - rest) : 0;
+  return { sev, dias_nec, rest, estado, accion: sev >= 2 && exceso ? `Cierre proyectado supera el plazo por ~${fmt(exceso)} días hábiles — replanificar o sumar capacidad` : null };
+}
+/* Eficiencia: costo unitario PROMEDIO por HU gestionada (reusa la tabla de costo/HU) */
+function eficienciaHu(p, recCod) {
+  const cells = costoHuCells(p, recCod || p.codigo);
+  const vals = [];
+  COSTO_HU_PROCS.forEach(pp => Object.values(cells[pp.key] || {}).forEach(c => { if (c.costo != null) vals.push(c.costo); }));
+  return vals.length ? { avg: vals.reduce((a, x) => a + x, 0) / vals.length, n: vals.length } : null;
+}
+/* Top 3 decisiones: alertas accionables priorizadas por severidad (estancamiento, cierre, costo, foco) */
+function topDecisiones(p, recCod) {
+  const acc = [];
+  const c = cargaObj(p.codigo);
+  const e10 = c && c.alertas ? c.alertas.filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length : 0;
+  if (e10 > 0) acc.push({ sev: e10 > 20 ? 3 : 2, icon: "⚠", txt: `<b>${e10} HU</b> llevan +10 días sin avanzar — priorizar desbloqueo` });
+  const proy = proyeccionCierre(p);
+  if (proy.accion) acc.push({ sev: proy.sev, icon: "⏳", txt: proy.accion });
+  const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[recCod || p.codigo] : null;
+  if (C && C.total && C.total.variacion < 0) { const m = Math.abs(C.total.variacion); if (m > 5e6) acc.push({ sev: m > 50e6 ? 3 : 2, icon: "💸", txt: `Sobrecosto de planta <b>${fmtMoney(m)}</b> por días sin producción — revisar capacidad` }); }
+  const pend = {}; PROCS.forEach(pr => { if (pr.key !== "EN PRODUCCIÓN" && (p.por_proceso || {})[pr.key]) pend[pr.key] = p.por_proceso[pr.key]; });
+  const top = Object.entries(pend).sort((a, b) => b[1] - a[1])[0];
+  if (top && top[1] > 0) { const lbl = (PROCS.find(x => x.key === top[0]) || {}).label || top[0]; acc.push({ sev: 1, icon: "📌", txt: `Mayor acumulación de HU en <b>${lbl}</b> (${top[1]}) — foco de gestión` }); }
+  return acc.sort((a, b) => b.sev - a.sev).slice(0, 3);
+}
+function cTop3Html(p, recCod) {
+  const ds = topDecisiones(p, recCod);
+  if (!ds.length) return "";
+  return `<div class="card fade" style="border-left:3px solid #6366f1">
+    <h3>🎯 Top 3 · decisiones sugeridas</h3>
+    <div class="hint">Acciones priorizadas con los datos al ${DATA.corte}</div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-top:8px">
+      ${ds.map(d => `<div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:16px;line-height:1.2">${d.icon}</span><span style="color:var(--text)">${d.txt}</span></div>`).join("")}
+    </div></div>`;
+}
+let PROJ = null, PROFILE_TAB = "directivo";
 
 function renderProject(p) {
   PROJ = p;
-  PROFILE_TAB = "general";        // al abrir un proyecto, arranca en General
+  if (!["directivo", "gerencial", "operativo"].includes(PROFILE_TAB)) PROFILE_TAB = "directivo";
   paintProject();
 }
 function selectProfile(id) {
@@ -564,8 +616,6 @@ function paintProject() {
   const p = PROJ, k = p.kpis;
   const restQA = k.dias_restantes?.QA;
   const recObj = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null;
-  const ccObj = controlesObj(p.codigo);   // controles de cambio (si el proyecto tiene datos CC)
-  if (PROFILE_TAB === "controles" && !ccObj) PROFILE_TAB = "general";   // proyecto sin CC -> General
 
   const head = `<div class="project-title fade">
     <h2>${p.nombre}</h2>
@@ -573,7 +623,7 @@ function paintProject() {
     ${p.producto ? `<span class="tag">${p.producto}</span>` : ""}
     ${p.estado ? `<span class="tag">${p.estado}</span>` : ""}
   </div>`;
-  const tabbar = `<div class="tabbar">${PROFILES.filter(pr => pr.id !== "controles" || ccObj).map(pr =>
+  const tabbar = `<div class="tabbar">${PROFILES.map(pr =>
     `<button class="tab${pr.id === PROFILE_TAB ? " on" : ""}" style="--tc:${pr.color}" onclick="selectProfile('${pr.id}')">${pr.icon} ${pr.label}</button>`).join("")}</div>`;
 
   // ---- fragmentos reutilizables (mismas fuentes, distinta curaduría por perfil) ----
@@ -651,6 +701,16 @@ function paintProject() {
   const cCostos = costosCard(p.codigo);
   // planta del proceso (REQ/DEV/QA) sin HU asignada en Azure (referencia: cronograma Positiva)
   const cSinHu = projPlantaSinHu(p.codigo);
+  // Flujo & Tiempos (Nivel 1): Lead Time + WIP por etapa + Aging (Seguimiento y Operativo)
+  const cFlujoTiempos = flujoTiemposCard(p.codigo);
+  // visuales gerenciales nuevos: proyección de cierre, eficiencia costo/HU, Top-3 decisiones
+  const _proy = proyeccionCierre(p);
+  const kProy = kpi("Proyección de cierre", "🗓", _proy.sev >= 3 ? "#ef4444" : _proy.sev >= 2 ? "#f59e0b" : "#10b981",
+    _proy.dias_nec == null ? "—" : `<span data-count="${_proy.dias_nec}">0</span> <small>días háb.</small>`,
+    `${_proy.estado}${_proy.rest != null ? " · faltan " + fmt(_proy.rest) + " al cierre QA" : ""}`);
+  const _efic = eficienciaHu(p);
+  const kEfic = kpi("Costo unitario por HU", "💲", "#10b981", _efic ? fmtCostoHu(_efic.avg) : "—", "promedio gestionado · REQ/DEV/QA");
+  const cTop3 = cTop3Html(p);
 
   const split = (a, b) => `<div class="grid charts" style="margin-top:16px">${a}${b}</div>`;   // 1.2 / .8
   const two = (a, b) => `<div class="grid charts-2" style="margin-top:16px">${a}${b}</div>`;    // 1 / 1
@@ -658,60 +718,37 @@ function paintProject() {
 
   let body;
   switch (PROFILE_TAB) {
-    case "seguimiento":  // control: recursos + tabla HU por etapa + costos vs salidas (exclusivas aquí)
-      body = note("Seguimiento · recursos del equipo, HU por etapa y costos vs salidas") +
-        cRecursos + cPivot + cCostoHu + cCostos; break;
-    case "directivo":   // estratégico: resultado, cumplimiento y riesgo
-      body = note("Vista estratégica · salud del proyecto y cumplimiento de cierre") +
-        wrapKpis([kPctProd, kAvance, kCierre, kEstanc]) +
-        two(cLine, cGauge) + cRqc + cRecursos + cPlanta + cProd + cProdPD + cAlertas; break;
-    case "gerencial":   // integral del proyecto
-      body = note("Vista integral del proyecto") +
-        wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
-        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
-    case "operativo":   // ejecución y día a día (unifica Head/Líder + Scrum)
-      body = note("Vista operativa · ejecución por área y día a día del equipo") +
-        wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
-        split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot + cCostoHu; break;
-    case "controles": {  // réplica de la vista general SOLO sobre las HU de control de cambio (Tags CC)
-      const ck = ccObj.kpis, restQAc = ck.dias_restantes?.QA;
-      const cc10 = (ccObj.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
-      const kkHU = kpi("HU de control de cambio", "🔧", "#e11d48", `<span data-count="${ck.hu_total}">0</span>`, `${fmt(ck.hu_pendientes)} pendientes de producción`);
-      const kkProd = kpi("En Producción", "✓", "#10b981", `<span data-count="${ck.hu_prod}">0</span>`, `de ${fmt(ck.hu_total)} HU CC`, ck.pct_prod);
-      const kkPct = kpi("% Puesta en Producción", "◎", "#38bdf8", `<span data-count="${(ck.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`, "HU CC en producción / totales", ck.pct_prod);
-      const kkAv = kpi("% Avance ponderado", "◔", "#a855f7", ck.pct_avance == null ? "—" : `<span data-count="${ck.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, ck.pct_avance == null ? "sin homologación" : "promedio por etapa", ck.pct_avance);
-      const kkVel = kpi("Velocidad", "⚡", "#f59e0b", `<span data-count="${ck.velocidad || 0}" data-dec="2">0</span> <small>HU/día</small>`, `${fmt(ck.dias_transcurridos)} días hábiles transcurridos`);
-      const kkCierre = kpi("Días hábiles a cierre QA", "⏳", restQAc != null && restQAc <= 10 ? "#ef4444" : "#38bdf8", restQAc == null ? "—" : `<span data-count="${restQAc}">0</span>`, ccObj.cierre?.QA ? `cierre QA ${ccObj.cierre.QA}` : "sin fecha de cierre");
-      const kkEst = kpi("HU +10 días sin avanzar", "⚠", "#ef4444", `<span data-count="${cc10}">0</span>`, "mismo estado · más de 10 días");
-      body = note("Controles de Cambios · réplica de la vista general sobre las HU de control de cambio (Tags CC) del proyecto") +
-        wrapKpis([kkHU, kkProd, kkPct, kkAv, kkVel, kkCierre, kkEst]) +
-        split(cArea, cDonut) + two(cLine, cGauge) + cFlujo + cPivot + costoHuCard(ccObj, p.codigo, "") +
-        cargaCard(p.codigo, ccObj) + alertasCard(p.codigo, ccObj);
-      break;
-    }
-    default:            // General: vista completa (nada se pierde) · productividad bajo la planta
-      body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
-        cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cPivot + cCostoHu + cProdPD + cCarga + cAlertas + cSinHu;
+    case "gerencial":   // TÁCTICO: Gerentes de Proyecto / Integral / Aseguramiento
+      body = note("Gerencial · gestión del proyecto: avance vs plan, carga del equipo, calidad y cumplimiento") +
+        cTop3 + wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
+        cRecursos + split(cArea, cDonut) + cProd + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
+    case "operativo":   // EJECUCIÓN: Head de fábrica + Scrum
+      body = note("Operativo · ejecución y día a día: flujo, capacidad, carga y costos de fábrica") +
+        cTop3 + wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
+        split(cArea, cDonut) + cFlujoTiempos + cFlujo + cPivot + cCostoHu + cCostos + cProdPD + cRecursos + cPlanta + cCarga + cAlertas + cSinHu; break;
+    default:            // DIRECTIVO (estratégico): Presidente / VP / CTO / Director de Operaciones
+      body = note("Directivo · ¿vamos a cumplir? ¿cuánto cuesta? ¿dónde está el riesgo?") +
+        cTop3 + wrapKpis([kPctProd, kAvance, kProy, kEfic, kCierre, kEstanc]) +
+        two(cLine, cGauge) + cProd + cCostos + cRqc;
   }
 
   $("#content").innerHTML = head + tabbar + body;
   countUp();
-  // dibuja/cablea SOLO lo que está presente en la pestaña activa
-  // fuente de datos HU: en la pestaña Controles de Cambios se usa el objeto CC (misma forma)
-  const dsrc = (PROFILE_TAB === "controles" && ccObj) ? ccObj : p;
+  // dibuja/cablea SOLO lo que está presente en la ventana activa
   if ($("#recFecha")) setupRecursos(recObj);
-  if ($("#cArea")) drawArea($("#cArea"), dsrc);
-  if ($("#cDonut")) drawDonut($("#cDonut"), dsrc);
-  if ($("#cLine")) drawLine($("#cLine"), dsrc);
-  if ($("#cGauge")) drawGauge($("#cGauge"), dsrc, dsrc.kpis);
-  if ($("#tblMode")) setupPivot(dsrc);
-  if ($("#chWrap")) setupCostoHu(dsrc, p.codigo, "");   // costo unitario por HU (CC usa ccObj vía dsrc; planta = p.codigo)
-  if ($("#cFlujo")) drawFlujo($("#cFlujo"), dsrc);
+  if ($("#cArea")) drawArea($("#cArea"), p);
+  if ($("#cDonut")) drawDonut($("#cDonut"), p);
+  if ($("#cLine")) drawLine($("#cLine"), p);
+  if ($("#cGauge")) drawGauge($("#cGauge"), p, k);
+  if ($("#tblMode")) setupPivot(p);
+  if ($("#chWrap")) setupCostoHu(p, p.codigo, "");
+  if ($("#cFlujo")) drawFlujo($("#cFlujo"), p);
   if ($("#cProdPD")) setupProdPersona(p.codigo);
   if ($("#cPlanta")) setupPlantaEvol(recObj);
   if ($("#cRqcDonut")) drawRqcDonut($("#cRqcDonut"));
   if ($(".prodarea")) setupProdVar(p.codigo);
   if ($("#coIni")) setupCostos(p.codigo);
+  if ($("#ftLead") || $("#ftWip") || $("#ftAge")) setupFlujoTiempos(p.codigo);
   animateBars();
 }
 
@@ -987,6 +1024,130 @@ function setupCostoHu(src, recCod, sfx = "") {
   };
   ini.onchange = fin.onchange = st.draw;
   st.draw();
+}
+
+/* ===== FLUJO & TIEMPOS (Nivel 1): Lead Time, WIP por etapa, Aging =====
+   Fuente: data_flujo.json (agregados sin identificadores). Cada tarjeta trae su filtro
+   dinámico (sprint o proceso) que recalcula KPIs + gráfico en cliente. */
+const ftColor = (k) => (PROCS.find(p => p.key === k) || {}).color || "#5d6678";
+const ftLabel = (k) => (PROCS.find(p => p.key === k) || {}).label || (k || "Sin homologar");
+function ftStatBox(id, color, icon, label, foot) {
+  return `<div class="card kpi fade"><div class="label"><span class="ic" style="background:${color}20;color:${color}">${icon}</span>${label}</div><div class="val" id="${id}">—</div><div class="foot">${foot}</div></div>`;
+}
+function flujoTiemposCard(cod) {
+  const F = FLUJO && FLUJO.proyectos ? FLUJO.proyectos[cod] : null;
+  if (!F) return "";
+  let out = "";
+  // --- Lead Time de entrega (Creación -> Resolución) ---
+  if (F.lead_time && F.lead_time.items.length) {
+    const sprOpts = `<option value="__all__">Todos los sprints</option>` +
+      (F.sprints || []).map(s => `<option value="${s}">${s}</option>`).join("");
+    out += `<div class="card fade" style="margin-top:16px">
+      <h3>⏱️ Lead Time de entrega · Creación → Resolución</h3>
+      <div class="hint">Días calendario desde que se crea la HU hasta que se resuelve. <b>Mediana</b> = tiempo típico · <b>p85</b> = plazo confiable (85% entrega en ≤ ese tiempo). Filtra por sprint (Iteration Path).</div>
+      <div class="filterbar"><label>Sprint <select id="ftLtSpr">${sprOpts}</select></label></div>
+      <div class="grid kpis" style="margin:2px 0">
+        ${ftStatBox("ftLtMed", "#6366f1", "◐", "Mediana", "días (p50)")}
+        ${ftStatBox("ftLtP85", "#a855f7", "◔", "p85", "días (85% en ≤)")}
+        ${ftStatBox("ftLtN", "#38bdf8", "▦", "HU resueltas", "con fecha de cierre")}
+        ${ftStatBox("ftLtMax", "#ef4444", "▲", "Máximo", "días (peor caso)")}
+      </div>
+      <div id="ftLead" class="chart"></div></div>`;
+  }
+  // --- WIP por etapa (cuellos de botella) ---
+  if (F.wip && F.wip.etapas.length) {
+    const procs = [...new Set(F.wip.etapas.map(e => e.proceso))];
+    const opts = `<option value="__all__">Todos los procesos</option>` +
+      procs.map(k => `<option value="${k}">${ftLabel(k)}</option>`).join("");
+    out += `<div class="card fade" style="margin-top:16px">
+      <h3>🚧 WIP por etapa · cuellos de botella</h3>
+      <div class="hint">HU detenidas en cada etapa al corte ${F.corte} (excluye producción y removidas). Barras más largas = colas / cuellos de botella. Filtra por proceso.</div>
+      <div class="filterbar"><label>Proceso <select id="ftWipProc">${opts}</select></label></div>
+      <div id="ftWip" class="chart tall"></div></div>`;
+  }
+  // --- Aging (HU estancadas) ---
+  if (F.aging && F.aging.items.length) {
+    const procs = [...new Set(F.aging.items.map(i => i.proc))];
+    const opts = `<option value="__all__">Todos los procesos</option>` +
+      procs.map(k => `<option value="${k}">${ftLabel(k)}</option>`).join("");
+    out += `<div class="card fade" style="margin-top:16px">
+      <h3>⏳ HU estancadas · antigüedad sin movimiento</h3>
+      <div class="hint">Días desde el último cambio de estado (corte − <i>Changed Date</i>) en las HU activas. Más antiguas = riesgo de no cerrar. Filtra por proceso.</div>
+      <div class="filterbar"><label>Proceso <select id="ftAgeProc">${opts}</select></label></div>
+      <div class="grid kpis" style="margin:2px 0">
+        ${ftStatBox("ftAgeN", "#38bdf8", "▦", "HU activas", "sin prod / removidas")}
+        ${ftStatBox("ftAge30", "#ef4444", "▲", "+30 días", "sin moverse")}
+        ${ftStatBox("ftAgeMax", "#f59e0b", "◔", "Máximo", "días detenida")}
+      </div>
+      <div id="ftAge" class="chart"></div></div>`;
+  }
+  return out;
+}
+function setupFlujoTiempos(cod) {
+  const F = FLUJO && FLUJO.proyectos ? FLUJO.proyectos[cod] : null; if (!F) return;
+  // --- Lead Time: histograma + KPIs, recalculado por sprint ---
+  if ($("#ftLead") && F.lead_time) {
+    const items = F.lead_time.items, sel = $("#ftLtSpr"), c = mkChart($("#ftLead")), ax = axisBase();
+    const EDGES = [30, 60, 90, 180, 365, Infinity], LBL = ["0–30", "31–60", "61–90", "91–180", "181–365", ">365"];
+    const apply = () => {
+      const s = sel.value;
+      const arr = (s === "__all__" ? items : items.filter(i => i.sprint === s)).map(i => i.lt).sort((a, b) => a - b);
+      const q = (p) => arr.length ? arr[Math.min(arr.length - 1, Math.round(p * (arr.length - 1)))] : null;
+      $("#ftLtMed").textContent = arr.length ? q(.5) : "—";
+      $("#ftLtP85").textContent = arr.length ? q(.85) : "—";
+      $("#ftLtN").textContent = fmt(arr.length);
+      $("#ftLtMax").textContent = arr.length ? arr[arr.length - 1] : "—";
+      const counts = LBL.map(() => 0);
+      arr.forEach(v => { for (let i = 0; i < LBL.length; i++) { if (v <= EDGES[i]) { counts[i]++; break; } } });
+      c.setOption({
+        tooltip: { trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" }, formatter: ps => `${ps[0].name} días<br/><b>${ps[0].value}</b> HU` },
+        grid: { left: 8, right: 14, top: 16, bottom: 6, containLabel: true },
+        xAxis: { type: "category", data: LBL, axisLabel: { color: ax.textColor, fontSize: 10 }, axisLine: { lineStyle: { color: ax.line } } },
+        yAxis: { type: "value", splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+        series: [{ type: "bar", data: counts, barWidth: "55%", itemStyle: { color: "#6366f1", borderRadius: [4, 4, 0, 0] }, label: { show: true, position: "top", color: ax.textColor, fontSize: 11, fontWeight: 600 } }],
+      });
+    };
+    sel.onchange = apply; apply();
+  }
+  // --- WIP por etapa: barras horizontales ordenadas (cuello arriba), filtro por proceso ---
+  if ($("#ftWip") && F.wip) {
+    const sel = $("#ftWipProc"), c = mkChart($("#ftWip")), ax = axisBase();
+    const apply = () => {
+      const s = sel.value;
+      const e = (s === "__all__" ? F.wip.etapas : F.wip.etapas.filter(x => x.proceso === s)).slice().sort((a, b) => a.n - b.n);
+      c.setOption({
+        tooltip: { trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" }, formatter: ps => `${ps[0].name}<br/><b>${ps[0].value}</b> HU detenidas` },
+        grid: { left: 8, right: 28, top: 8, bottom: 6, containLabel: true },
+        xAxis: { type: "value", splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+        yAxis: { type: "category", data: e.map(x => x.estado), axisLabel: { color: ax.textColor, fontSize: 10 }, axisLine: { lineStyle: { color: ax.line } } },
+        series: [{ type: "bar", barWidth: "62%", data: e.map(x => ({ value: x.n, itemStyle: { color: x.color, borderRadius: [0, 4, 4, 0] } })), label: { show: true, position: "right", color: ax.textColor, fontSize: 11, fontWeight: 600 } }],
+      });
+    };
+    sel.onchange = apply; apply();
+  }
+  // --- Aging: histograma por buckets + KPIs, filtro por proceso ---
+  if ($("#ftAge") && F.aging) {
+    const items = F.aging.items, sel = $("#ftAgeProc"), c = mkChart($("#ftAge")), ax = axisBase();
+    const EDGES = [3, 7, 14, 30, Infinity], LBL = ["0–3", "4–7", "8–14", "15–30", ">30"];
+    const COLS = ["#10b981", "#84cc16", "#f59e0b", "#f97316", "#ef4444"];
+    const apply = () => {
+      const s = sel.value;
+      const arr = s === "__all__" ? items : items.filter(i => i.proc === s);
+      $("#ftAgeN").textContent = fmt(arr.length);
+      $("#ftAge30").textContent = arr.filter(i => i.dias > 30).length;
+      $("#ftAgeMax").textContent = arr.length ? Math.max(...arr.map(i => i.dias)) : "—";
+      const counts = LBL.map(() => 0);
+      arr.forEach(i => { for (let k = 0; k < LBL.length; k++) { if (i.dias <= EDGES[k]) { counts[k]++; break; } } });
+      c.setOption({
+        tooltip: { trigger: "axis", ...ax.tooltip, axisPointer: { type: "shadow" }, formatter: ps => `${ps[0].name} días<br/><b>${ps[0].value}</b> HU` },
+        grid: { left: 8, right: 14, top: 16, bottom: 6, containLabel: true },
+        xAxis: { type: "category", data: LBL, axisLabel: { color: ax.textColor, fontSize: 10 }, axisLine: { lineStyle: { color: ax.line } } },
+        yAxis: { type: "value", splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor } },
+        series: [{ type: "bar", barWidth: "55%", data: counts.map((v, i) => ({ value: v, itemStyle: { color: COLS[i], borderRadius: [4, 4, 0, 0] } })), label: { show: true, position: "top", color: ax.textColor, fontSize: 11, fontWeight: 600 } }],
+      });
+    };
+    sel.onchange = apply; apply();
+  }
 }
 
 /* variación de HU por etapa en el tiempo: entradas (+) arriba, salidas (−) abajo.
@@ -1385,6 +1546,40 @@ function paint419() {
   animateBars();
 }
 
+/* ===== Vista Controles de Cambios (HU con Tags=CC) — réplica de la vista general sobre ese subconjunto ===== */
+function renderCC(cod) {
+  const cc = controlesObj(cod);
+  if (!cc) { $("#content").innerHTML = `<div class="card">Sin datos de controles de cambio para ${cod}.</div>`; return; }
+  const ck = cc.kpis, cc10 = (cc.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
+  const head = `<div class="project-title fade"><h2>🔧 ${cod} · Controles de Cambios</h2><span class="tag">Tags CC</span><span class="tag">${fmt(ck.hu_total)} HU CC</span></div>`;
+  const K = [
+    kpi("HU de control de cambio", "🔧", "#e11d48", `<span data-count="${ck.hu_total}">0</span>`, `${fmt(ck.hu_pendientes)} pendientes de producción`),
+    kpi("En Producción", "✓", "#10b981", `<span data-count="${ck.hu_prod}">0</span>`, `de ${fmt(ck.hu_total)} HU CC`, ck.pct_prod),
+    kpi("% Puesta en Producción", "◎", "#38bdf8", `<span data-count="${(ck.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`, "en producción / totales", ck.pct_prod),
+    kpi("% Avance ponderado", "◔", "#a855f7", ck.pct_avance == null ? "—" : `<span data-count="${ck.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, "promedio por etapa", ck.pct_avance),
+    kpi("HU +10 días sin avanzar", "⚠", "#ef4444", `<span data-count="${cc10}">0</span>`, "mismo estado · más de 10 días"),
+  ];
+  const cArea = `<div class="card fade"><h3>Avance por proceso en el tiempo</h3><div class="hint">HU CC en cada etapa por fecha de corte (apilado)</div><div id="cArea" class="chart tall"></div></div>`;
+  const cDonut = `<div class="card fade"><h3>Distribución actual</h3><div class="hint">HU CC por proceso al ${DATA.corte}</div><div id="cDonut" class="chart tall"></div></div>`;
+  const cFlujo = `<div class="card fade" style="margin-top:16px"><h3>Variación de HU por etapa en el tiempo</h3>
+    <div class="hint">entradas (+) / salidas (−) por día y etapa · HU CC · filtra rango y etapa</div>
+    <div class="filterbar"><label>Desde <input type="date" id="flIni"></label><label>Hasta <input type="date" id="flFin"></label>
+      <label>Etapa <select id="flProc"><option value="__all__">Todas las etapas</option>${PROCS.map(pr => `<option value="${pr.key}">${pr.label}</option>`).join("")}</select></label></div>
+    <div id="cFlujo" class="chart tall"></div></div>`;
+  const body = `<div class="grid kpis">${K.join("")}</div>` +
+    `<div class="grid charts" style="margin-top:16px">${cArea}${cDonut}</div>` + cFlujo +
+    pivotCard(cc, "", "Control de cambio") + costoHuCard(cc, cod, "") +
+    cargaCard(cod, cc) + alertasCard(cod, cc);
+  $("#content").innerHTML = head + body;
+  countUp();
+  if ($("#cArea")) drawArea($("#cArea"), cc);
+  if ($("#cDonut")) drawDonut($("#cDonut"), cc);
+  if ($("#cFlujo")) drawFlujo($("#cFlujo"), cc);
+  if ($("#tblMode")) setupPivot(cc, "");
+  if ($("#chWrap")) setupCostoHu(cc, cod, "");
+  animateBars();
+}
+
 /* etiqueta de área con punto de color (reusa AREA_LBL/AREA_COL) */
 function areaTag(a) {
   if (!a) return '<span class="muted">—</span>';
@@ -1565,6 +1760,35 @@ function drawCronoSemaforo(el) {
 }
 
 /* ---------- vista portafolio ---------- */
+/* Scorecard RAG del portafolio (resumen ejecutivo): semáforo por proyecto = max(cierre, costo, riesgo) */
+function scorecardRAGCard(allp) {
+  const sem = (s) => s >= 3 ? "🔴" : s >= 2 ? "🟡" : "🟢";
+  const rows = allp.map(p => {
+    const k = p.kpis, proy = proyeccionCierre(p);
+    const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[p.codigo] : null;
+    const sobre = C && C.total ? C.total.variacion : 0;
+    const costoSev = sobre < -50e6 ? 3 : sobre < -5e6 ? 2 : 1;
+    const c10 = (cargaObj(p.codigo)?.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
+    const riesgoSev = c10 > 20 ? 3 : c10 > 5 ? 2 : 1;
+    return { p, k, proy, sobre, costoSev, c10, riesgoSev, overall: Math.max(proy.sev || 1, costoSev, riesgoSev) };
+  }).sort((a, b) => b.overall - a.overall);
+  const tr = rows.map(r => `<tr>
+    <td style="font-size:15px">${sem(r.overall)}</td>
+    <td><a href="#" onclick="render('${r.p.codigo}');return false" style="color:var(--text);font-weight:700">${r.p.codigo}</a> <span class="muted">${esc(r.p.nombre)}</span></td>
+    <td>${sem(r.proy.sev)} <span class="muted">${r.proy.estado}</span></td>
+    <td class="num">${r.k.pct_avance == null ? "—" : Math.round(r.k.pct_avance * 100) + "%"}</td>
+    <td class="num">${fmt(r.k.hu_pendientes)}</td>
+    <td class="num" style="color:${r.sobre < 0 ? "#ef4444" : "var(--muted)"}">${r.sobre ? fmtMoney(r.sobre) : "—"}</td>
+    <td class="num">${sem(r.riesgoSev)} ${r.c10}</td>
+  </tr>`).join("");
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>🚦 Scorecard del portafolio · resumen ejecutivo</h3>
+    <div class="hint">Semáforo por proyecto = peor de: cumplimiento de cierre (proyección a ritmo actual), sobrecosto de planta, riesgo de estancamiento (HU +10 días) · ordenado por mayor riesgo · <b>clic en el código</b> para el detalle</div>
+    <div class="dwrap"><table class="dtbl"><thead><tr>
+      <th>Estado</th><th>Proyecto</th><th>Cierre (proyección)</th><th class="num">% Avance</th><th class="num">HU pend.</th><th class="num">Sobrecosto</th><th class="num">HU +10d</th>
+    </tr></thead><tbody>${tr}</tbody></table></div></div>`;
+}
+
 function renderPortfolio() {
   const allp = DATA.proyectos;
   const [dmin, dmax] = domainFechas(allp);
@@ -1651,7 +1875,7 @@ function renderPortfolio() {
     </div>
     <div id="cPlantaPort" class="chart tall"></div>
   </div>` : "";
-  $("#content").innerHTML = head + kpis + recursos + plantaPort + charts;
+  $("#content").innerHTML = head + kpis + scorecardRAGCard(allp) + recursos + plantaPort + charts;
   if (RECURSOS) setupRecursos(RECURSOS.portafolio);
 
   // filtros (gobiernan todo el portafolio) — el estado vive en PORT_INI/PORT_FIN
