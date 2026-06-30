@@ -1,6 +1,6 @@
 /* Tableros DORA — dashboard web (datos: data.json generado por build_dashboard_data.py) */
 /* Los procesos (key/label/color) vienen del JSON -> sin strings de proceso hardcodeados. */
-let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null, COSTOS = null;
+let DATA = null, CURRENT = null, CHARTS = [], PROCS = [], PORT_INI = null, PORT_FIN = null, RECURSOS = null, CARGA = null, CRONO = null, RQC = null, PRODUCTIV = null, COSTOS = null, CONTROLES = null;
 /* paleta por proyecto (gráfico de productividad en el tiempo) */
 const PALETTE = ["#6366f1", "#10b981", "#f59e0b", "#38bdf8", "#a855f7", "#ef4444", "#f472b6", "#22d3ee"];
 
@@ -49,6 +49,9 @@ fetch("data.json").then(r => r.json()).then(async d => {
   // costos vs salidas por proyecto (nómina vs ejecutado vs variación; perfiles Directivo/Gerencial)
   try { const co = await fetch("data_costos.json"); COSTOS = co.ok ? await co.json() : null; }
   catch (_) { COSTOS = null; }
+  // controles de cambio (vista general replicada sobre las HU CC; pestaña solo donde haya datos)
+  try { const cc = await fetch("data_controles.json"); CONTROLES = cc.ok ? await cc.json() : null; }
+  catch (_) { CONTROLES = null; }
   const sel = $("#proySel");
   const cronoOpt = CRONO ? `<option value="__crono__">📅 ${CRONO.nombre}</option>` : "";
   sel.innerHTML = `<option value="__all__">▦ Portafolio (todos)</option>` + cronoOpt +
@@ -192,8 +195,8 @@ function cargaTable(responsables, idp, titulo, nota) {
     </tr></thead><tbody>${body}</tbody></table></div>
   </div>`;
 }
-function cargaCard(cod) {
-  const c = cargaObj(cod);
+function cargaCard(cod, src) {
+  const c = src || cargaObj(cod);   // src permite reusar la tarjeta con otra fuente (p.ej. controles)
   if (!c || !(c.responsables || []).length) return "";
   return cargaTable(c.responsables, cod, null,
     "HU asignadas al responsable actual · avance ponderado por homologación · <b>clic en una fila</b> para ver sus HU");
@@ -220,8 +223,8 @@ function cargaCardMulti(cods, titulo) {
   return cargaTable(responsables, "cargamulti", titulo,
     "HU asignadas al responsable actual (combinado) · ordenado de mayor a menor nº de HU · avance ponderado · <b>clic en una fila</b> para ver sus HU · usa los chips para filtrar por proceso");
 }
-function alertasCard(cod) {
-  const c = cargaObj(cod);
+function alertasCard(cod, src) {
+  const c = src || cargaObj(cod);   // src permite reusar la tarjeta con otra fuente (p.ej. controles)
   if (!c || !(c.alertas || []).length) return "";
   const A = c.alertas, cap = 150;
   const crit = A.filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 20).length;
@@ -536,7 +539,10 @@ const PROFILES = [
   { id: "directivo", label: "Directivo", icon: "🎯", color: "#a855f7" },      // antes Director de Operaciones
   { id: "gerencial", label: "Gerencial", icon: "📋", color: "#38bdf8" },      // antes Gerente de Proyecto
   { id: "operativo", label: "Operativo", icon: "🛠", color: "#f59e0b" },      // unifica Head/Líder + Scrum
+  { id: "controles", label: "Controles de Cambios", icon: "🔧", color: "#e11d48" },  // solo proyectos con datos CC
 ];
+// objeto-proyecto de controles de cambio (misma forma que un proyecto); null si el proyecto no tiene CC
+function controlesObj(cod) { return CONTROLES && CONTROLES.proyectos ? CONTROLES.proyectos[cod] : null; }
 let PROJ = null, PROFILE_TAB = "general";
 
 function renderProject(p) {
@@ -554,6 +560,8 @@ function paintProject() {
   const p = PROJ, k = p.kpis;
   const restQA = k.dias_restantes?.QA;
   const recObj = RECURSOS && RECURSOS.proyectos ? RECURSOS.proyectos[p.codigo] : null;
+  const ccObj = controlesObj(p.codigo);   // controles de cambio (si el proyecto tiene datos CC)
+  if (PROFILE_TAB === "controles" && !ccObj) PROFILE_TAB = "general";   // proyecto sin CC -> General
 
   const head = `<div class="project-title fade">
     <h2>${p.nombre}</h2>
@@ -561,7 +569,7 @@ function paintProject() {
     ${p.producto ? `<span class="tag">${p.producto}</span>` : ""}
     ${p.estado ? `<span class="tag">${p.estado}</span>` : ""}
   </div>`;
-  const tabbar = `<div class="tabbar">${PROFILES.map(pr =>
+  const tabbar = `<div class="tabbar">${PROFILES.filter(pr => pr.id !== "controles" || ccObj).map(pr =>
     `<button class="tab${pr.id === PROFILE_TAB ? " on" : ""}" style="--tc:${pr.color}" onclick="selectProfile('${pr.id}')">${pr.icon} ${pr.label}</button>`).join("")}</div>`;
 
   // ---- fragmentos reutilizables (mismas fuentes, distinta curaduría por perfil) ----
@@ -660,6 +668,22 @@ function paintProject() {
       body = note("Vista operativa · ejecución por área y día a día del equipo") +
         wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
         split(cArea, cDonut) + cProdPD + cCarga + cAlertas + cFlujo + cPivot; break;
+    case "controles": {  // réplica de la vista general SOLO sobre las HU de control de cambio (Tags CC)
+      const ck = ccObj.kpis, restQAc = ck.dias_restantes?.QA;
+      const cc10 = (ccObj.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
+      const kkHU = kpi("HU de control de cambio", "🔧", "#e11d48", `<span data-count="${ck.hu_total}">0</span>`, `${fmt(ck.hu_pendientes)} pendientes de producción`);
+      const kkProd = kpi("En Producción", "✓", "#10b981", `<span data-count="${ck.hu_prod}">0</span>`, `de ${fmt(ck.hu_total)} HU CC`, ck.pct_prod);
+      const kkPct = kpi("% Puesta en Producción", "◎", "#38bdf8", `<span data-count="${(ck.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`, "HU CC en producción / totales", ck.pct_prod);
+      const kkAv = kpi("% Avance ponderado", "◔", "#a855f7", ck.pct_avance == null ? "—" : `<span data-count="${ck.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, ck.pct_avance == null ? "sin homologación" : "promedio por etapa", ck.pct_avance);
+      const kkVel = kpi("Velocidad", "⚡", "#f59e0b", `<span data-count="${ck.velocidad || 0}" data-dec="2">0</span> <small>HU/día</small>`, `${fmt(ck.dias_transcurridos)} días hábiles transcurridos`);
+      const kkCierre = kpi("Días hábiles a cierre QA", "⏳", restQAc != null && restQAc <= 10 ? "#ef4444" : "#38bdf8", restQAc == null ? "—" : `<span data-count="${restQAc}">0</span>`, ccObj.cierre?.QA ? `cierre QA ${ccObj.cierre.QA}` : "sin fecha de cierre");
+      const kkEst = kpi("HU +10 días sin avanzar", "⚠", "#ef4444", `<span data-count="${cc10}">0</span>`, "mismo estado · más de 10 días");
+      body = note("Controles de Cambios · réplica de la vista general sobre las HU de control de cambio (Tags CC) del proyecto") +
+        wrapKpis([kkHU, kkProd, kkPct, kkAv, kkVel, kkCierre, kkEst]) +
+        split(cArea, cDonut) + two(cLine, cGauge) + cFlujo + cPivot +
+        cargaCard(p.codigo, ccObj) + alertasCard(p.codigo, ccObj);
+      break;
+    }
     default:            // General: vista completa (nada se pierde) · productividad bajo la planta
       body = wrapKpis([kHU, kRem, kProd, kPctProd, kAvance, kVel, kCierre]) +
         cRecursos + cPlanta + cProd + split(cArea, cDonut) + two(cLine, cGauge) + cRqc + cFlujo + cPivot + cProdPD + cCarga + cAlertas + cSinHu;
@@ -668,13 +692,15 @@ function paintProject() {
   $("#content").innerHTML = head + tabbar + body;
   countUp();
   // dibuja/cablea SOLO lo que está presente en la pestaña activa
+  // fuente de datos HU: en la pestaña Controles de Cambios se usa el objeto CC (misma forma)
+  const dsrc = (PROFILE_TAB === "controles" && ccObj) ? ccObj : p;
   if ($("#recFecha")) setupRecursos(recObj);
-  if ($("#cArea")) drawArea($("#cArea"), p);
-  if ($("#cDonut")) drawDonut($("#cDonut"), p);
-  if ($("#cLine")) drawLine($("#cLine"), p);
-  if ($("#cGauge")) drawGauge($("#cGauge"), p, k);
-  if ($("#tblMode")) setupPivot(p);
-  if ($("#cFlujo")) drawFlujo($("#cFlujo"), p);
+  if ($("#cArea")) drawArea($("#cArea"), dsrc);
+  if ($("#cDonut")) drawDonut($("#cDonut"), dsrc);
+  if ($("#cLine")) drawLine($("#cLine"), dsrc);
+  if ($("#cGauge")) drawGauge($("#cGauge"), dsrc, dsrc.kpis);
+  if ($("#tblMode")) setupPivot(dsrc);
+  if ($("#cFlujo")) drawFlujo($("#cFlujo"), dsrc);
   if ($("#cProdPD")) setupProdPersona(p.codigo);
   if ($("#cPlanta")) setupPlantaEvol(recObj);
   if ($("#cRqcDonut")) drawRqcDonut($("#cRqcDonut"));
