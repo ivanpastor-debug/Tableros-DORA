@@ -578,6 +578,25 @@ function proyeccionCierre(p) {
   const exceso = rest != null ? Math.max(0, dias_nec - rest) : 0;
   return { sev, dias_nec, rest, estado, accion: sev >= 2 && exceso ? `Cierre proyectado supera el plazo por ~${fmt(exceso)} días hábiles — replanificar o sumar capacidad` : null };
 }
+/* KPI reutilizable: FECHA ESTIMADA DE CIERRE por velocidad de puesta en producción.
+   fecha = corte + (HU pendientes / velocidad) en días hábiles. "sin ritmo" si no hay producción. */
+function kpiCierreEstimado(p) {
+  const k = (p && p.kpis) || {}, proy = proyeccionCierre(p || { kpis: {} }), vel = k.velocidad || 0;
+  if (proy.dias_nec == null)
+    return kpi("Fecha estimada de cierre", "🗓", "#64748b", "sin ritmo", `${fmt(k.hu_pendientes || 0)} HU pend. · sin puesta en producción medible`);
+  const f = addBusDays(DATA.corte, proy.dias_nec);
+  const col = proy.sev >= 3 ? "#ef4444" : proy.sev >= 2 ? "#f59e0b" : "#10b981";
+  return kpi("Fecha estimada de cierre", "🗓", col, f, `${vel.toFixed(vel < 10 ? 1 : 0)} HU/día · ${fmt(proy.dias_nec)} d háb. · ${fmt(k.hu_pendientes || 0)} pend.`);
+}
+/* KPI reutilizable: FECHA DE CIERRE COMPROMETIDA (plan del maestro, cierre QA de la última fase). */
+function kpiCierreActual(p) {
+  const c = (p && p.cierre) || {}, k = (p && p.kpis) || {};
+  const fecha = c.QA || c.DEV || c.REQ || null;
+  const rest = k.dias_restantes ? k.dias_restantes.QA : null;
+  if (!fecha) return kpi("Fecha de cierre comprometida", "📌", "#64748b", "sin fecha", "sin fecha de cierre en el maestro");
+  const col = rest != null && rest <= 10 ? "#ef4444" : "#38bdf8";
+  return kpi("Fecha de cierre comprometida", "📌", col, fecha, rest == null ? "cierre QA comprometido" : `faltan ${fmt(rest)} d háb. al cierre QA`);
+}
 /* Eficiencia: costo unitario PROMEDIO por HU gestionada (reusa la tabla de costo/HU) */
 function eficienciaHu(p, recCod) {
   const cells = costoHuCells(p, recCod || p.codigo);
@@ -716,11 +735,9 @@ function paintProject() {
   const cFlujoTiempos = flujoTiemposCard(p.codigo);
   // Espacio dedicado a Sprints (solo en Operativo, y solo si el proyecto tiene calendario cargado)
   const cSprintSpace = sprintSpace(p.codigo);
-  // visuales gerenciales nuevos: proyección de cierre, eficiencia costo/HU, Top-3 decisiones
-  const _proy = proyeccionCierre(p);
-  const kProy = kpi("Proyección de cierre", "🗓", _proy.sev >= 3 ? "#ef4444" : _proy.sev >= 2 ? "#f59e0b" : "#10b981",
-    _proy.dias_nec == null ? "—" : `<span data-count="${_proy.dias_nec}">0</span> <small>días háb.</small>`,
-    `${_proy.estado}${_proy.rest != null ? " · faltan " + fmt(_proy.rest) + " al cierre QA" : ""}`);
+  // cierre: fecha estimada (por velocidad) y fecha comprometida (del maestro)
+  const kCierreEstim = kpiCierreEstimado(p);
+  const kCierreActual = kpiCierreActual(p);
   const _efic = eficienciaHu(p);
   const kEfic = kpi("Costo unitario por HU", "💲", "#10b981", _efic ? fmtCostoHu(_efic.avg) : "—", "promedio gestionado · REQ/DEV/QA");
   const cTop3 = cTop3Html(p);
@@ -733,15 +750,15 @@ function paintProject() {
   switch (PROFILE_TAB) {
     case "gerencial":   // TÁCTICO: Gerentes de Proyecto / Integral / Aseguramiento
       body = note("Gerencial · gestión del proyecto: avance vs plan, carga del equipo, calidad y cumplimiento") +
-        cTop3 + wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierre, kEstanc]) +
+        cTop3 + wrapKpis([kHU, kProd, kPctProd, kAvance, kVel, kCierreEstim, kCierreActual, kEstanc]) +
         cRecursos + split(cArea, cDonut) + cFlujoTiempos + cProd + two(cLine, cGauge) + cRqc + cCarga + cAlertas; break;
     case "operativo":   // EJECUCIÓN: Head de fábrica + Scrum
       body = note("Operativo · ejecución y día a día: flujo, capacidad, carga y costos de fábrica") +
-        cTop3 + wrapKpis([kHU, kProd, kEstanc, kAvance, kVel]) +
+        cTop3 + wrapKpis([kHU, kProd, kEstanc, kAvance, kVel, kCierreEstim, kCierreActual]) +
         split(cArea, cDonut) + cFlujoTiempos + cSprintSpace + cFlujo + cPivot + cCostoHu + cCostos + cProdPD + cRecursos + cPlanta + cCarga + cAlertas + cSinHu; break;
     default:            // DIRECTIVO (estratégico): Presidente / VP / CTO / Director de Operaciones
       body = note("Directivo · ¿vamos a cumplir? ¿cuánto cuesta? ¿dónde está el riesgo?") +
-        cTop3 + wrapKpis([kPctProd, kAvance, kProy, kEfic, kCierre, kEstanc]) +
+        cTop3 + wrapKpis([kPctProd, kAvance, kCierreEstim, kCierreActual, kEfic, kEstanc]) +
         two(cLine, cGauge) + cProd + cCostos + cRqc;
   }
 
@@ -1662,6 +1679,16 @@ function paintCronograma() {
       cPlanta + cargaCardMulti(["416", "355"], "Positiva Core 416 + 355") +
       filtro + tablas;
   } else {
+    // objeto-proyecto combinado 416+355 para las fechas de cierre (velocidad y pendientes sumadas; comparten cierre)
+    const _e416 = DATA.proyectos.find(x => x.codigo === "416"), _e355 = DATA.proyectos.find(x => x.codigo === "355");
+    const _cronoProy = {
+      kpis: {
+        velocidad: ((_e416?.kpis?.velocidad) || 0) + ((_e355?.kpis?.velocidad) || 0),
+        hu_pendientes: ((_e416?.kpis?.hu_pendientes) || 0) + ((_e355?.kpis?.hu_pendientes) || 0),
+        dias_restantes: _e416?.kpis?.dias_restantes || _e355?.kpis?.dias_restantes,
+      },
+      cierre: _e416?.cierre || _e355?.cierre,
+    };
     const kpis = `<div class="grid kpis">
       ${kpi("HU del cronograma", "▦", "#6366f1", `<span data-count="${C.total_hu}">0</span>`, `416: ${C.por_proyecto["416"] || 0} · 355: ${C.por_proyecto["355"] || 0}`)}
       ${kpi("% Avance ponderado", "◔", "#a855f7", last.avance == null ? "—" : `<span data-count="${last.avance * 100}" data-dec="1" data-suf="%">0</span>`, "promedio por etapa", last.avance)}
@@ -1669,6 +1696,8 @@ function paintCronograma() {
       ${kpi("En plazo", "◷", "#f59e0b", `<span data-count="${r.amarillo}">0</span>`, "pendientes dentro de fecha")}
       ${kpi("Vencidas", "⚠", "#ef4444", `<span data-count="${r.rojo}">0</span>`, "sin entregar y vencidas")}
       ${kpi("Sin fecha", "∅", "#94a3b8", `<span data-count="${r.sin_fecha}">0</span>`, "sin fecha comprometida")}
+      ${kpiCierreEstimado(_cronoProy)}
+      ${kpiCierreActual(_cronoProy)}
     </div>`;
     const c1 = `<div class="card fade" style="margin-top:16px"><h3>📈 Avance del cronograma · a diario</h3>
       <div class="hint">% avance ponderado por etapa (promedio de las ${C.total_hu} HU) por fecha de corte · medición desde ${C.inicio_medicion} · filtra el rango</div>
@@ -1721,6 +1750,7 @@ function paint419() {
   const kAv = kpi("% Avance ponderado", "◔", "#a855f7", k.pct_avance == null ? "—" : `<span data-count="${k.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, "promedio por etapa", k.pct_avance);
   const _c10 = (cargaObj("419-DEP")?.alertas || []).concat(cargaObj("419-RAMA")?.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
   const kEst = kpi("HU +10 días sin avanzar", "⚠", "#ef4444", `<span data-count="${_c10}">0</span>`, "mismo estado · más de 10 días");
+  const kCE = kpiCierreEstimado(m), kCA = kpiCierreActual(m);   // fecha estimada + comprometida
   const wrapKpis = (cards) => `<div class="grid kpis">${cards.join("")}</div>`;
   // gráficas COMBINADAS (siempre DEP+RAMA)
   const cArea = `<div class="card fade"><h3>Avance por proceso en el tiempo</h3><div class="hint">HU en cada etapa por fecha de corte (apilado) · DEP + RAMA</div><div id="cArea" class="chart tall"></div></div>`;
@@ -1753,7 +1783,7 @@ function paint419() {
   const tablas = src ? (pivotCard(src, "419", scopeLbl) + costoHuCard(src, recCod, "419") +
     (cos ? costosCard(cod, "419", scopeLbl, cos) : costosCard(cod, "419", scopeLbl))) : "";
 
-  const body = wrapKpis([kHU, kRem, kProd, kAv, kEst]) +
+  const body = wrapKpis([kHU, kRem, kProd, kAv, kEst, kCE, kCA]) +
     `<div class="grid charts" style="margin-top:16px">${cArea}${cDonut}</div>` + cFlujo +
     recursosCard(rec419, "419 (planta compartida)", RECURSOS ? "Planta " + RECURSOS.planta_archivo : null) +
     cPlanta + cargaCardMulti(["419-DEP", "419-RAMA"], "419 · DEP + RAMA") +
@@ -1784,6 +1814,7 @@ function renderCC(cod) {
     kpi("% Puesta en Producción", "◎", "#38bdf8", `<span data-count="${(ck.pct_prod || 0) * 100}" data-dec="1" data-suf="%">0</span>`, "en producción / totales", ck.pct_prod),
     kpi("% Avance ponderado", "◔", "#a855f7", ck.pct_avance == null ? "—" : `<span data-count="${ck.pct_avance * 100}" data-dec="0" data-suf="%">0</span>`, "promedio por etapa", ck.pct_avance),
     kpi("HU +10 días sin avanzar", "⚠", "#ef4444", `<span data-count="${cc10}">0</span>`, "mismo estado · más de 10 días"),
+    kpiCierreEstimado(cc), kpiCierreActual(cc),
   ];
   const cArea = `<div class="card fade"><h3>Avance por proceso en el tiempo</h3><div class="hint">HU CC en cada etapa por fecha de corte (apilado)</div><div id="cArea" class="chart tall"></div></div>`;
   const cDonut = `<div class="card fade"><h3>Distribución actual</h3><div class="hint">HU CC por proceso al ${DATA.corte}</div><div id="cDonut" class="chart tall"></div></div>`;
