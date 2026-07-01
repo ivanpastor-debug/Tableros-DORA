@@ -2189,10 +2189,18 @@ function scorecardRAGCard(allp) {
     const riesgoSev = c10 > 20 ? 3 : c10 > 5 ? 2 : 1;
     return { p, k, proy, sobre, costoSev, c10, riesgoSev, overall: Math.max(proy.sev || 1, costoSev, riesgoSev) };
   }).sort((a, b) => b.overall - a.overall);
+  const cierreEstim = (r) => {
+    const vel = r.k.velocidad || 0;
+    if (r.proy.dias_nec == null) return `<span class="muted">sin ritmo</span>`;
+    const f = addBusDays(DATA.corte, r.proy.dias_nec);
+    const col = r.proy.sev >= 3 ? "#ef4444" : r.proy.sev >= 2 ? "#f59e0b" : "#10b981";
+    return `<span style="color:${col};font-weight:600">${f}</span><br><span class="muted" style="font-size:11px">${vel.toFixed(vel < 10 ? 1 : 0)} HU/día · ${fmt(r.proy.dias_nec)} d háb.</span>`;
+  };
   const tr = rows.map(r => `<tr>
     <td style="font-size:15px">${sem(r.overall)}</td>
     <td><a href="#" onclick="render('${r.p.codigo}');return false" style="color:var(--text);font-weight:700">${r.p.codigo}</a> <span class="muted">${esc(r.p.nombre)}</span></td>
     <td>${sem(r.proy.sev)} <span class="muted">${r.proy.estado}</span></td>
+    <td class="num">${cierreEstim(r)}</td>
     <td class="num">${r.k.pct_avance == null ? "—" : Math.round(r.k.pct_avance * 100) + "%"}</td>
     <td class="num">${fmt(r.k.hu_pendientes)}</td>
     <td class="num" style="color:${r.sobre < 0 ? "#ef4444" : "var(--muted)"}">${r.sobre ? fmtMoney(r.sobre) : "—"}</td>
@@ -2202,8 +2210,9 @@ function scorecardRAGCard(allp) {
     <h3>🚦 Scorecard del portafolio · resumen ejecutivo</h3>
     <div class="hint">Semáforo por proyecto = peor de: cumplimiento de cierre (proyección a ritmo actual), sobrecosto de planta, riesgo de estancamiento (HU +10 días) · ordenado por mayor riesgo · <b>clic en el código</b> para el detalle</div>
     <div class="dwrap"><table class="dtbl"><thead><tr>
-      <th>Estado</th><th>Proyecto</th><th>Cierre (proyección)</th><th class="num">% Avance</th><th class="num">HU pend.</th><th class="num">Sobrecosto</th><th class="num">HU +10d</th>
-    </tr></thead><tbody>${tr}</tbody></table></div></div>`;
+      <th>Estado</th><th>Proyecto</th><th>Cierre (proyección)</th><th>Cierre estimado (ritmo)</th><th class="num">% Avance</th><th class="num">HU pend.</th><th class="num">Sobrecosto</th><th class="num">HU +10d</th>
+    </tr></thead><tbody>${tr}</tbody></table></div>
+    <div class="hint" style="margin:6px 0 0">Cierre estimado = fecha de corte + (HU pendientes ÷ velocidad de puesta en producción), en días hábiles. "Sin ritmo" = aún sin puestas en producción medibles.</div></div>`;
 }
 
 function renderPortfolio() {
