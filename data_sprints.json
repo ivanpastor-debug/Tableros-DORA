@@ -1,10 +1,10 @@
 {
- "generado": "2026-06-30 16:27",
- "corte_global": "2026-06-30",
+ "generado": "2026-07-01 08:47",
+ "corte_global": "2026-07-01",
  "proyectos": {
   "004": {
    "codigo": "004",
-   "corte": "2026-06-30",
+   "corte": "2026-07-01",
    "sprints": [
     {
      "sprint": "Sprint 0",
@@ -14,7 +14,7 @@
      "sp_total": 18.0,
      "sp_done": 1.0,
      "sin_sp": 79,
-     "dias": 37
+     "dias": 38
     },
     {
      "sprint": "Sprint 2",
@@ -130,7 +130,7 @@
   },
   "355": {
    "codigo": "355",
-   "corte": "2026-06-30",
+   "corte": "2026-07-01",
    "sprints": [
     {
      "sprint": "Sprint 1",
@@ -140,27 +140,27 @@
      "sp_total": 16.0,
      "sp_done": 0.0,
      "sin_sp": 0,
-     "dias": 1
+     "dias": 3
     },
     {
      "sprint": "Sprint 3",
      "num": 3,
      "n_hu": 123,
-     "n_done": 11,
+     "n_done": 13,
      "sp_total": 624.0,
-     "sp_done": 90.0,
+     "sp_done": 110.0,
      "sin_sp": 56,
-     "dias": 26
+     "dias": 27
     },
     {
      "sprint": "Sprint 4",
      "num": 4,
      "n_hu": 50,
-     "n_done": 1,
+     "n_done": 6,
      "sp_total": 422.0,
-     "sp_done": 8.0,
+     "sp_done": 56.0,
      "sin_sp": 7,
-     "dias": 15
+     "dias": 17
     },
     {
      "sprint": "Sprint 5",
@@ -170,7 +170,7 @@
      "sp_total": 10.0,
      "sp_done": 0.0,
      "sin_sp": 6,
-     "dias": 15
+     "dias": 18
     },
     {
      "sprint": "Sprint 6",
@@ -235,20 +235,20 @@
     {
      "sprint": "Sin sprint",
      "num": null,
-     "n_hu": 338,
-     "n_done": 216,
-     "sp_total": 2522.0,
-     "sp_done": 1970.0,
+     "n_hu": 340,
+     "n_done": 222,
+     "sp_total": 2548.0,
+     "sp_done": 2006.0,
      "sin_sp": 79,
-     "dias": 44
+     "dias": 46
     }
    ],
    "resumen": {
     "n_sprints": 10,
-    "sp_done_total": 2092.0,
-    "sp_total": 3663.0,
-    "n_done_total": 235,
-    "n_hu_total": 537,
+    "sp_done_total": 2196.0,
+    "sp_total": 3689.0,
+    "n_done_total": 248,
+    "n_hu_total": 539,
     "vel_prom_sp": 4.0,
     "vel_prom_hu": 0.8,
     "ultimo_sprint": "Sprint 45"
@@ -256,7 +256,7 @@
   },
   "397": {
    "codigo": "397",
-   "corte": "2026-06-30",
+   "corte": "2026-07-01",
    "sprints": [
     {
      "sprint": "Sprint 1",
@@ -542,7 +542,7 @@
   },
   "416": {
    "codigo": "416",
-   "corte": "2026-06-30",
+   "corte": "2026-07-01",
    "sprints": [
     {
      "sprint": "Sprint 0",
@@ -598,7 +598,7 @@
   },
   "419-DEP": {
    "codigo": "419-DEP",
-   "corte": "2026-06-30",
+   "corte": "2026-07-01",
    "sprints": [
     {
      "sprint": "Sprint 1",
@@ -653,12 +653,12 @@
     {
      "sprint": "Sprint 6",
      "num": 6,
-     "n_hu": 48,
+     "n_hu": 50,
      "n_done": 0,
      "sp_total": 29.0,
      "sp_done": 0.0,
-     "sin_sp": 45,
-     "dias": 13
+     "sin_sp": 47,
+     "dias": 14
     },
     {
      "sprint": "Sprint 7",
@@ -668,17 +668,17 @@
      "sp_total": 13.0,
      "sp_done": 0.0,
      "sin_sp": 24,
-     "dias": 11
+     "dias": 13
     },
     {
      "sprint": "Sprint 8",
      "num": 8,
-     "n_hu": 4,
+     "n_hu": 9,
      "n_done": 0,
      "sp_total": 0.0,
      "sp_done": 0.0,
-     "sin_sp": 4,
-     "dias": 12
+     "sin_sp": 9,
+     "dias": 3
     },
     {
      "sprint": "Sprint 9",
@@ -688,7 +688,7 @@
      "sp_total": 13.0,
      "sp_done": 0.0,
      "sin_sp": 16,
-     "dias": 1
+     "dias": 2
     },
     {
      "sprint": "Sin sprint",
@@ -698,7 +698,7 @@
      "sp_total": 33.0,
      "sp_done": 0.0,
      "sin_sp": 28,
-     "dias": 95
+     "dias": 31
     }
    ],
    "resumen": {
@@ -706,7 +706,7 @@
     "sp_done_total": 0.0,
     "sp_total": 2156.0,
     "n_done_total": 0,
-    "n_hu_total": 598,
+    "n_hu_total": 605,
     "vel_prom_sp": 0.0,
     "vel_prom_hu": 0.0,
     "ultimo_sprint": "Sprint 9"
@@ -714,7 +714,7 @@
   },
   "419-RAMA": {
    "codigo": "419-RAMA",
-   "corte": "2026-06-30",
+   "corte": "2026-07-01",
    "sprints": [
     {
      "sprint": "Sprint 1",
@@ -744,7 +744,7 @@
      "sp_total": 164.0,
      "sp_done": 0.0,
      "sin_sp": 71,
-     "dias": 30
+     "dias": 31
     },
     {
      "sprint": "Sprint 4",
@@ -769,12 +769,12 @@
     {
      "sprint": "Sprint 6",
      "num": 6,
-     "n_hu": 19,
+     "n_hu": 23,
      "n_done": 0,
      "sp_total": 0.0,
      "sp_done": 0.0,
-     "sin_sp": 19,
-     "dias": 14
+     "sin_sp": 23,
+     "dias": 16
     },
     {
      "sprint": "Sprint 7",
@@ -789,12 +789,12 @@
     {
      "sprint": "Sprint 8",
      "num": 8,
-     "n_hu": 15,
+     "n_hu": 16,
      "n_done": 0,
      "sp_total": 0.0,
      "sp_done": 0.0,
-     "sin_sp": 15,
-     "dias": 10
+     "sin_sp": 16,
+     "dias": 11
     }
    ],
    "resumen": {
@@ -802,7 +802,7 @@
     "sp_done_total": 0.0,
     "sp_total": 1177.0,
     "n_done_total": 0,
-    "n_hu_total": 283,
+    "n_hu_total": 288,
     "vel_prom_sp": 0.0,
     "vel_prom_hu": 0.0,
     "ultimo_sprint": "Sprint 8"
@@ -810,7 +810,7 @@
   },
   "421": {
    "codigo": "421",
-   "corte": "2026-06-30",
+   "corte": "2026-07-01",
    "sprints": [
     {
      "sprint": "Sprint 1",
@@ -1260,37 +1260,37 @@
      "sp_total": 353.0,
      "sp_done": 23.0,
      "sin_sp": 3,
-     "dias": 6
+     "dias": 8
     },
     {
      "sprint": "Sprint 52",
      "num": 52,
-     "n_hu": 70,
+     "n_hu": 68,
      "n_done": 5,
-     "sp_total": 356.0,
+     "sp_total": 340.0,
      "sp_done": 12.0,
      "sin_sp": 3,
-     "dias": 7
+     "dias": 8
     },
     {
      "sprint": "Sprint 53",
      "num": 53,
-     "n_hu": 1,
+     "n_hu": 2,
      "n_done": 0,
-     "sp_total": 0.0,
+     "sp_total": 5.0,
      "sp_done": 0.0,
      "sin_sp": 1,
-     "dias": 1
+     "dias": 2
     },
     {
      "sprint": "Sin sprint",
      "num": null,
-     "n_hu": 159,
+     "n_hu": 160,
      "n_done": 5,
-     "sp_total": 797.0,
+     "sp_total": 808.0,
      "sp_done": 52.0,
      "sin_sp": 74,
-     "dias": 41
+     "dias": 42
     }
    ],
    "resumen": {
