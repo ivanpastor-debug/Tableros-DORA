@@ -1843,10 +1843,10 @@ function sprintRefCard(cod) {
     <div id="srBoxes" class="grid kpis" style="margin:6px 0"></div>
     <div id="srScope"></div>
     <div style="margin:12px 0 4px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
-      <div class="hint" style="margin:0"><b>Tablero</b> · HU comprometidas por estado (${list[0].comprometido.hu})</div>
+      <div class="hint" style="margin:0"><b>Tablero</b> · HU comprometidas por estado</div>
       <div id="srBoardTgl"></div>
     </div>
-    <div id="srBoard" style="display:flex;gap:8px;overflow-x:auto;padding:6px 2px"></div>
+    <div id="srBoard" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(82px,1fr));gap:6px;padding:6px 2px"></div>
     <div id="srLegend" class="hint" style="margin:4px 0 0"></div>
     <div id="srPost"></div>
     <div id="srChart" class="chart" style="height:230px;margin-top:14px"></div>
@@ -1867,8 +1867,10 @@ function setupSprintRef(cod) {
     $("#srFin").innerHTML = s.fin ? (s.cerrado
       ? `🔒 Cerrado ${s.fin} · resultado <b>congelado</b>`
       : `⏳ En curso · cierra ${s.fin} (el resultado se congela ese día)`) : "";
-    // casillas: comprometido HU/SP por DEV y QA + ejecutado HU y SP
+    // casillas: total comprometidas + comprometido HU/SP por DEV y QA + ejecutado HU y SP
+    const totalHu = c.hu_ref != null ? c.hu_ref : c.hu;
     $("#srBoxes").innerHTML =
+      box("#6366f1", "🎯", "HU comprometidas", `${totalHu}`, c.dup ? `${c.hu} únicas · ${c.dup} ID duplicado` : `en el Sprint ${s.num}`) +
       box("#3b82f6", "💻", "Comprometido DEV", `${c.hu_dev} HU`, `${fmt(c.sp_dev)} SP presupuestados`) +
       box("#a855f7", "🔍", "Comprometido QA", `${c.hu_qa} HU`, `${fmt(c.sp_qa)} SP presupuestados`) +
       box(pcol(e.pct_hu), "▦", "Ejecutado HU", `${e.pct_hu.toFixed(0)}%`, `${e.hu_cump} / ${c.hu} comprometidas${e.es_cierre ? " · al cierre" : ""}`) +
@@ -1887,9 +1889,9 @@ function setupSprintRef(cod) {
     const maxN = Math.max(1, ...s.estados.map(col => dist[col.estado] || 0));
     $("#srBoard").innerHTML = s.estados.map(col => {
       const n = dist[col.estado] || 0, ac = SR_AREA_COL[col.area] || "#64748b";
-      return `<div style="min-width:104px;flex:0 0 auto;text-align:center;border-radius:10px;border:1px solid var(--border);border-top:3px solid ${ac};background:${ac}0e;padding:8px 6px">
-        <div style="font-size:10px;line-height:1.2;color:var(--muted);min-height:26px;display:flex;align-items:center;justify-content:center">${col.estado}</div>
-        <div style="font-size:24px;font-weight:800;color:${n ? ac : "var(--muted)"}">${n}</div>
+      return `<div style="text-align:center;border-radius:10px;border:1px solid var(--border);border-top:3px solid ${ac};background:${ac}0e;padding:7px 4px">
+        <div style="font-size:9.5px;line-height:1.15;color:var(--muted);min-height:30px;display:flex;align-items:center;justify-content:center">${col.estado}</div>
+        <div style="font-size:22px;font-weight:800;color:${n ? ac : "var(--muted)"}">${n}</div>
         <div class="bar-mini" style="margin-top:4px"><i style="width:${Math.round(n / maxN * 100)}%;background:${ac}"></i></div>
       </div>`;
     }).join("");

@@ -1,5 +1,5 @@
 {
- "generado": "2026-07-01 15:08",
+ "generado": "2026-07-01 15:45",
  "corte_global": "2026-07-01",
  "proyectos": {
   "421": {
@@ -12,6 +12,8 @@
      "cerrado": false,
      "comprometido": {
       "hu": 65,
+      "hu_ref": 66,
+      "dup": 1,
       "sp_total": 333.0,
       "sp_dev": 208.0,
       "sp_qa": 125.0,
