@@ -1,0 +1,749 @@
+{
+ "generado": "2026-07-01 15:08",
+ "corte_global": "2026-07-01",
+ "proyectos": {
+  "421": {
+   "codigo": "421",
+   "sprints": [
+    {
+     "num": 52,
+     "sprint": "Sprint 52",
+     "fin": "2026-07-02",
+     "cerrado": false,
+     "comprometido": {
+      "hu": 65,
+      "sp_total": 333.0,
+      "sp_dev": 208.0,
+      "sp_qa": 125.0,
+      "hu_dev": 52,
+      "hu_qa": 31,
+      "destinos": {
+       "6.1 Esperando Despliegue DEV-QA": 34,
+       "8. Esperando Despliegue QA-UAT": 27,
+       "10. En Producción": 4
+      }
+     },
+     "ejecutado": {
+      "hu_cump": 47,
+      "dev_done": 39,
+      "qa_done": 25,
+      "sp_dev": 156.0,
+      "sp_qa": 100.8,
+      "sp_total": 256.8,
+      "pct_hu": 72.3,
+      "pct_sp": 77.1,
+      "pct_dev": 75.0,
+      "pct_qa": 80.6,
+      "fecha": "2026-07-01",
+      "es_cierre": false
+     },
+     "estados": [
+      {
+       "estado": "4. Refinamiento",
+       "code": 4.0,
+       "area": "REQ"
+      },
+      {
+       "estado": "5. Backlog General",
+       "code": 5.0,
+       "area": "REQ"
+      },
+      {
+       "estado": "6. Desarrollo",
+       "code": 6.0,
+       "area": "DEV"
+      },
+      {
+       "estado": "6.1 Esperando Despliegue DEV-QA",
+       "code": 6.1,
+       "area": "DEV"
+      },
+      {
+       "estado": "7. Backlog QA",
+       "code": 7.0,
+       "area": "QA"
+      },
+      {
+       "estado": "7.1. Pruebas QA",
+       "code": 7.1,
+       "area": "QA"
+      },
+      {
+       "estado": "8. Esperando Despliegue QA-UAT",
+       "code": 8.0,
+       "area": "QA-UAT"
+      },
+      {
+       "estado": "8.1. Pruebas UAT",
+       "code": 8.1,
+       "area": "QA-UAT"
+      },
+      {
+       "estado": "9. Esperando Despliegue UAT.PROD",
+       "code": 9.0,
+       "area": "PROD"
+      },
+      {
+       "estado": "10. En Producción",
+       "code": 10.0,
+       "area": "PROD"
+      }
+     ],
+     "tablero": {
+      "8. Esperando Despliegue QA-UAT": 30,
+      "6. Desarrollo": 11,
+      "7. Backlog QA": 9,
+      "7.1. Pruebas QA": 4,
+      "10. En Producción": 4,
+      "6.1 Esperando Despliegue DEV-QA": 4,
+      "5. Backlog General": 2,
+      "8.1. Pruebas UAT": 1
+     },
+     "tablero_actual": {
+      "8. Esperando Despliegue QA-UAT": 30,
+      "6. Desarrollo": 11,
+      "7. Backlog QA": 9,
+      "7.1. Pruebas QA": 4,
+      "10. En Producción": 4,
+      "6.1 Esperando Despliegue DEV-QA": 4,
+      "5. Backlog General": 2,
+      "8.1. Pruebas UAT": 1
+     },
+     "cierre": null,
+     "posterior": null,
+     "scope": {
+      "actual_hu": 68,
+      "agregadas": 5,
+      "removidas": 2
+     },
+     "serie": [
+      {
+       "f": "2026-02-26",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-03",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-04",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-05",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-09",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-10",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-11",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-12",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-13",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-16",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-18",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-19",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-20",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-24",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-25",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-26",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-27",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-30",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-03-31",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-01",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-06",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-07",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-08",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-09",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-10",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-13",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-14",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-15",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-16",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-17",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-20",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-21",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-22",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-23",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-24",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-27",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-28",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-29",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-04-30",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-04",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-05",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-06",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-07",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-08",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-11",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-12",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-13",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-14",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-15",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-19",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-20",
+       "pct_hu": 1.5,
+       "pct_sp": 1.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-21",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-22",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-25",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-26",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-27",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-28",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-05-29",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-01",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-02",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-03",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-04",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-05",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-09",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-10",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-11",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-12",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-16",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-17",
+       "pct_hu": 0.0,
+       "pct_sp": 0.0,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-18",
+       "pct_hu": 1.5,
+       "pct_sp": 2.4,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-19",
+       "pct_hu": 1.5,
+       "pct_sp": 3.6,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-22",
+       "pct_hu": 4.6,
+       "pct_sp": 9.6,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-23",
+       "pct_hu": 13.8,
+       "pct_sp": 16.9,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-24",
+       "pct_hu": 18.5,
+       "pct_sp": 30.1,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-25",
+       "pct_hu": 35.4,
+       "pct_sp": 45.7,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-26",
+       "pct_hu": 40.0,
+       "pct_sp": 54.2,
+       "agregadas": 0,
+       "removidas": 0,
+       "actual_hu": 0
+      },
+      {
+       "f": "2026-06-30",
+       "pct_hu": 67.7,
+       "pct_sp": 73.5,
+       "agregadas": 7,
+       "removidas": 2,
+       "actual_hu": 70
+      },
+      {
+       "f": "2026-07-01",
+       "pct_hu": 72.3,
+       "pct_sp": 77.1,
+       "agregadas": 5,
+       "removidas": 2,
+       "actual_hu": 68
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
