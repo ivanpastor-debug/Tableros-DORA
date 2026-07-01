@@ -762,9 +762,8 @@ function paintProject() {
   if ($(".prodarea")) setupProdVar(p.codigo);
   if ($("#coIni")) setupCostos(p.codigo);
   if ($("#ftLead") || $("#ftWip") || $("#ftAge")) setupFlujoTiempos(p.codigo);
-  if ($("#srChart")) setupSprintRef(p.codigo);    // espacio de Sprints (solo Operativo)
-  if ($("#spChart")) setupSprints(p.codigo);
-  if ($("#bdChart")) setupBurndown(p.codigo);
+  if ($("#srChart")) setupSprintRef(p.codigo);       // espacio de Sprints (solo Operativo)
+  if ($("#spdChart")) setupSprintPredict(p.codigo);  // predictivo alineado a la referencia
   animateBars();
 }
 
@@ -1813,15 +1812,90 @@ function renderCC(cod) {
    proyectos con el CALENDARIO de sprints cargado (data_sprint_burndown — el "archivo de Sprint" que
    llena el usuario). Hoy únicamente 421 (Balú); devuelve "" para el resto. */
 function sprintSpace(cod) {
-  const B = BURNDOWN && BURNDOWN.proyectos ? BURNDOWN.proyectos[cod] : null;
-  if (!B || !(B.sprints || []).length) return "";
-  const cRef = sprintRefCard(cod), cSprints = sprintsCard(cod), cBurndown = burndownCard(cod);
-  if (!cRef && !cSprints && !cBurndown) return "";
+  const R = SPRINT_REF && SPRINT_REF.proyectos ? SPRINT_REF.proyectos[cod] : null;
+  if (!R || !(R.sprints || []).length) return "";
+  const cRef = sprintRefCard(cod), cPredict = sprintPredictCard(cod);
+  if (!cRef && !cPredict) return "";
   return `<div class="sprint-space" style="margin-top:18px;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--card2,rgba(99,102,241,.05))">
-      <h3 style="margin:0 0 4px;display:flex;align-items:center;gap:8px">🏃 Sprints<span class="tag" style="font-weight:500">${B.sprints.length} calendarizado${B.sprints.length === 1 ? "" : "s"}</span></h3>
-      <div class="hint" style="margin:0 0 6px">Espacio dedicado al seguimiento de sprints: cumplimiento comprometido vs ejecutado, alcance vs entregado, costo del equipo y predictivo de avance.</div>
-      ${cRef}${cSprints}${cBurndown}
+      <h3 style="margin:0 0 4px;display:flex;align-items:center;gap:8px">🏃 Sprints<span class="tag" style="font-weight:500">${R.sprints.length} sprint${R.sprints.length === 1 ? "" : "s"}</span></h3>
+      <div class="hint" style="margin:0 0 6px">Seguimiento del sprint contra la referencia: comprometido vs ejecutado (tablero) y predictivo de avance, con el mismo modelo (cumplida = alcanzó su destino comprometido).</div>
+      ${cRef}${cPredict}
     </div>`;
+}
+/* ===== PREDICTIVO alineado a la referencia (esperado ideal vs cumplimiento real) =====
+   Usa data_sprint_ref (serie de % cumplimiento HU/SP día a día en la ventana del sprint). Recta ideal
+   baseline→100 por días hábiles inicio→fin + proyección al ritmo actual. Toggle HU/SP. */
+function sprintPredictCard(cod) {
+  const list = sprintRefList(cod); if (!list.length) return "";
+  return `<div class="card fade" style="margin-top:16px">
+    <h3>📉 Predictivo de sprint · esperado vs ejecutado</h3>
+    <div class="hint">Cumplimiento real día a día (contra el destino comprometido de cada HU) vs la recta <b>ideal</b> (inicio→fin), con <b>proyección</b> de cierre al ritmo actual. Mismo modelo del tablero.</div>
+    <div class="filterbar"><label>Métrica <select id="spdMetric"><option value="hu">% HU cumplidas</option><option value="sp">% SP</option></select></label></div>
+    <div class="grid kpis" style="margin:2px 0">
+      ${ftStatBox("spdReal", "#10b981", "▶", "Avance real", "% hoy")}
+      ${ftStatBox("spdEsp", "#a855f7", "◎", "Avance esperado", "% ideal hoy")}
+      ${ftStatBox("spdGap", "#f59e0b", "Δ", "Brecha", "real − esperado")}
+      ${ftStatBox("spdProj", "#38bdf8", "🗓", "Cierre proyectado", "al ritmo actual")}
+    </div>
+    <div id="spdNota" class="hint" style="margin:2px 0 0"></div>
+    <div id="spdChart" class="chart tall"></div></div>`;
+}
+function setupSprintPredict(cod) {
+  const list = sprintRefList(cod); if (!list.length) return;
+  const st = SR_STATE[cod] || { idx: 0 };
+  const s = list[st.idx] || list[0]; if (!s || !s.inicio || !s.fin) return;
+  const sel = $("#spdMetric"), ch = mkChart($("#spdChart")), ax = axisBase();
+  const win = (s.serie || []).filter(x => x.f >= s.inicio);
+  function apply() {
+    const metric = sel ? sel.value : "hu";
+    const real = win.map(x => ({ f: x.f, pct: metric === "sp" ? x.pct_sp : x.pct_hu }));
+    const lastReal = real.length ? real[real.length - 1] : null;
+    const baseline = real.length ? real[0].pct : 0;
+    // días hábiles inicio..fin (aprox, sin festivos) -> recta ideal baseline->100
+    const dias = []; let d = new Date(s.inicio + "T00:00:00"); const end = new Date(s.fin + "T00:00:00");
+    while (d <= end) { const wd = d.getDay(); if (wd !== 0 && wd !== 6) dias.push(d.toISOString().slice(0, 10)); d.setDate(d.getDate() + 1); }
+    const nesp = dias.length;
+    const esp = dias.map((f, i) => ({ f, pct: +(baseline + (100 - baseline) * (nesp > 1 ? i / (nesp - 1) : 1)).toFixed(1) }));
+    let espHoy = null;
+    if (lastReal) { const e = esp.filter(x => x.f <= lastReal.f); espHoy = e.length ? e[e.length - 1].pct : esp[0].pct; if (lastReal.f > esp[esp.length - 1].f) espHoy = 100; }
+    let projDate = null;
+    if (real.length >= 2 && lastReal.pct < 100) {
+      const bd = busDaysBetween(real[0].f, lastReal.f) || (real.length - 1);
+      const slope = (lastReal.pct - real[0].pct) / Math.max(1, bd);
+      if (slope > 0.05) projDate = addBusDays(lastReal.f, Math.ceil((100 - lastReal.pct) / slope));
+    }
+    const allD = new Set([...esp.map(e => e.f), ...real.map(r => r.f)]); if (projDate) allD.add(projDate);
+    const dates = [...allD].sort();
+    const em = Object.fromEntries(esp.map(e => [e.f, e.pct])), rm = Object.fromEntries(real.map(r => [r.f, r.pct]));
+    const espData = dates.map(x => em[x] ?? null), realData = dates.map(x => rm[x] ?? null);
+    const projData = dates.map(x => (projDate && lastReal && x === lastReal.f) ? lastReal.pct : (x === projDate ? 100 : null));
+    const setT = (id, v) => { const el = $("#" + id); if (el) el.textContent = v; };
+    setT("spdReal", lastReal ? lastReal.pct.toFixed(0) + "%" : "—");
+    setT("spdEsp", espHoy != null ? espHoy.toFixed(0) + "%" : "—");
+    const gap = (lastReal && espHoy != null) ? (lastReal.pct - espHoy) : null;
+    setT("spdGap", gap == null ? "—" : (gap >= 0 ? "+" : "") + gap.toFixed(0) + " pts");
+    const gEl = $("#spdGap"); if (gEl) gEl.style.color = gap == null ? "" : (gap >= -2 ? "#10b981" : gap >= -10 ? "#f59e0b" : "#ef4444");
+    setT("spdProj", projDate || (lastReal && lastReal.pct >= 100 ? "completado" : "sin ritmo"));
+    const pEl = $("#spdProj"); if (pEl) pEl.style.color = projDate ? (projDate <= s.fin ? "#10b981" : "#ef4444") : "";
+    const nota = $("#spdNota");
+    if (nota) nota.innerHTML = `Comprometido <b>${s.comprometido.hu_ref || s.comprometido.hu}</b> HU · ${fmt(s.comprometido.sp_total)} SP · ventana ${s.inicio} → ${s.fin}`
+      + (s.cerrado ? ` · 🔒 cerrado (resultado congelado)` : "")
+      + (projDate ? ` · proyección 100%: <b>${projDate}</b> vs fin ${s.fin}` : "");
+    ch.setOption({
+      tooltip: { trigger: "axis", ...ax.tooltip, valueFormatter: v => v == null ? "—" : v.toFixed(0) + "%" },
+      legend: { data: ["Esperado (ideal)", "Ejecutado", "Proyección"], textStyle: { color: ax.textColor, fontSize: 11 }, top: 0, icon: "roundRect" },
+      grid: { left: 8, right: 16, top: 30, bottom: 6, containLabel: true },
+      xAxis: { type: "category", data: dates, axisLabel: { color: ax.textColor, fontSize: 10 }, axisLine: { lineStyle: { color: ax.line } } },
+      yAxis: { type: "value", max: 100, splitLine: { lineStyle: { color: ax.line } }, axisLabel: { color: ax.textColor, formatter: "{value}%" } },
+      series: [
+        { name: "Esperado (ideal)", type: "line", color: "#a855f7", symbol: "none", lineStyle: { width: 2, type: "dashed" }, connectNulls: true, data: espData },
+        { name: "Ejecutado", type: "line", color: "#10b981", smooth: true, symbol: "circle", symbolSize: 6, lineStyle: { width: 3 }, areaStyle: { opacity: .12 }, connectNulls: true, data: realData },
+        { name: "Proyección", type: "line", color: "#38bdf8", symbol: "none", lineStyle: { width: 2, type: "dotted" }, connectNulls: true, data: projData },
+      ],
+    });
+  }
+  if (sel) sel.onchange = apply;
+  apply();
 }
 
 /* ===== CUMPLIMIENTO DE SPRINT vs REFERENCIA (comprometido FIJO vs ejecutado) =====

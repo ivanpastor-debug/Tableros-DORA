@@ -1,5 +1,5 @@
 {
- "generado": "2026-07-01 15:45",
+ "generado": "2026-07-01 16:08",
  "corte_global": "2026-07-01",
  "proyectos": {
   "421": {
@@ -8,6 +8,7 @@
     {
      "num": 52,
      "sprint": "Sprint 52",
+     "inicio": "2026-06-17",
      "fin": "2026-07-02",
      "cerrado": false,
      "comprometido": {
