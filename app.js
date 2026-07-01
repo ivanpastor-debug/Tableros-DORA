@@ -2001,41 +2001,73 @@ function drawCronoSemaforo(el) {
 
 /* ---------- vista portafolio ---------- */
 /* Scorecard RAG del portafolio (resumen ejecutivo): semáforo por proyecto = max(cierre, costo, riesgo) */
+/* planta total (nº de personas) de un proyecto a la fecha de referencia (suma n de todas las áreas) */
+function plantaTotal(cod) {
+  if (!RECURSOS || !RECURSOS.proyectos) return null;
+  const s = snapRec(RECURSOS.proyectos[cod], RECURSOS.fechas, RECURSOS.fecha_ref);
+  if (!s || !s.por_area) return null;
+  return Object.values(s.por_area).reduce((n, a) => n + (a.n || 0), 0);
+}
 function scorecardRAGCard(allp) {
   const sem = (s) => s >= 3 ? "🔴" : s >= 2 ? "🟡" : "🟢";
-  const rows = allp.map(p => {
-    const k = p.kpis, proy = proyeccionCierre(p);
-    const C = COSTOS && COSTOS.proyectos ? COSTOS.proyectos[p.codigo] : null;
-    const sobre = C && C.total ? C.total.variacion : 0;
-    const costoSev = sobre < -50e6 ? 3 : sobre < -5e6 ? 2 : 1;
-    const c10 = (cargaObj(p.codigo)?.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length;
-    const riesgoSev = c10 > 20 ? 3 : c10 > 5 ? 2 : 1;
-    return { p, k, proy, sobre, costoSev, c10, riesgoSev, overall: Math.max(proy.sev || 1, costoSev, riesgoSev) };
-  }).sort((a, b) => b.overall - a.overall);
-  const cierreEstim = (r) => {
-    const vel = r.k.velocidad || 0;
-    if (r.proy.dias_nec == null) return `<span class="muted">sin ritmo</span>`;
-    const f = addBusDays(DATA.corte, r.proy.dias_nec);
-    const col = r.proy.sev >= 3 ? "#ef4444" : r.proy.sev >= 2 ? "#f59e0b" : "#10b981";
-    return `<span style="color:${col};font-weight:600">${f}</span><br><span class="muted" style="font-size:11px">${vel.toFixed(vel < 10 ? 1 : 0)} HU/día · ${fmt(r.proy.dias_nec)} d háb.</span>`;
+  const byCod = Object.fromEntries(allp.map(p => [p.codigo, p]));
+  const used = new Set(), entries = [];
+  // filas UNIFICADas: Positiva Core (416+355) y 419 (DEP+RAMA) comparten planta -> una sola fila
+  const unir = (cods, nombre, link, plantaCod) => {
+    if (!cods.every(c => byCod[c])) return;
+    const base = byCod[cods[0]];
+    const obj = mergeProy(cods, { nombre, cierre: base.cierre, dias_restantes: base.kpis && base.kpis.dias_restantes });
+    entries.push({ cod: cods.join("+"), nombre, link, obj, cods, plantaCod, costos: costosCombinado(cods) });
+    cods.forEach(c => used.add(c));
   };
-  const tr = rows.map(r => `<tr>
-    <td style="font-size:15px">${sem(r.overall)}</td>
-    <td><a href="#" onclick="render('${r.p.codigo}');return false" style="color:var(--text);font-weight:700">${r.p.codigo}</a> <span class="muted">${esc(r.p.nombre)}</span></td>
-    <td>${sem(r.proy.sev)} <span class="muted">${r.proy.estado}</span></td>
-    <td class="num">${cierreEstim(r)}</td>
-    <td class="num">${r.k.pct_avance == null ? "—" : Math.round(r.k.pct_avance * 100) + "%"}</td>
-    <td class="num">${fmt(r.k.hu_pendientes)}</td>
-    <td class="num" style="color:${r.sobre < 0 ? "#ef4444" : "var(--muted)"}">${r.sobre ? fmtMoney(r.sobre) : "—"}</td>
-    <td class="num">${sem(r.riesgoSev)} ${r.c10}</td>
+  unir(["416", "355"], "Positiva Core (416 + 355)", "__crono__", "416");
+  unir(["419-DEP", "419-RAMA"], "419 · Judicial (Dep. + Rama)", "__419__", "419-DEP");
+  allp.forEach(p => { if (!used.has(p.codigo)) entries.push({ cod: p.codigo, nombre: p.nombre, link: p.codigo, obj: p, cods: [p.codigo], plantaCod: p.codigo, costos: COSTOS && COSTOS.proyectos ? COSTOS.proyectos[p.codigo] : null }); });
+
+  entries.forEach(e => {
+    const k = Object.assign({}, e.obj.kpis);
+    // 397: sumar Controles de Cambios a HU pendientes y al % de avance (ponderado por HU)
+    if (e.cod === "397" && CONTROLES && CONTROLES.proyectos && CONTROLES.proyectos["397"]) {
+      const cc = CONTROLES.proyectos["397"].kpis, ht = e.obj.kpis.hu_total || 0, cht = cc.hu_total || 0;
+      k.hu_pendientes = (e.obj.kpis.hu_pendientes || 0) + (cc.hu_pendientes || 0);
+      k.pct_avance = (ht + cht) ? (((e.obj.kpis.pct_avance || 0) * ht + (cc.pct_avance || 0) * cht) / (ht + cht)) : e.obj.kpis.pct_avance;
+      k.velocidad = (e.obj.kpis.velocidad || 0) + (cc.velocidad || 0);
+      e.cc = true;
+    }
+    e.k = k;
+    e.cierre = (e.obj.cierre && (e.obj.cierre.QA || e.obj.cierre.DEV || e.obj.cierre.REQ)) || null;
+    e.proy = proyeccionCierre({ kpis: k });
+    e.planta = plantaTotal(e.plantaCod);
+    e.nomina = e.costos && e.costos.total ? e.costos.total.nomina : null;
+    e.c10 = e.cods.reduce((n, c) => n + ((cargaObj(c)?.alertas || []).filter(a => a.dias_sin_mov != null && a.dias_sin_mov > 10).length), 0);
+    e.riesgoSev = e.c10 > 20 ? 3 : e.c10 > 5 ? 2 : 1;
+    e.overall = Math.max(e.proy.sev || 1, e.riesgoSev);
+  });
+  entries.sort((a, b) => b.overall - a.overall);
+
+  const cEstim = (e) => {
+    if (e.proy.dias_nec == null) return `<span class="muted">sin ritmo</span>`;
+    const col = e.proy.sev >= 3 ? "#ef4444" : e.proy.sev >= 2 ? "#f59e0b" : "#10b981";
+    return `<span style="color:${col};font-weight:700">${addBusDays(DATA.corte, e.proy.dias_nec)}</span>`;
+  };
+  const tr = entries.map(e => `<tr>
+    <td style="font-size:15px">${sem(e.overall)}</td>
+    <td><a href="#" onclick="render('${e.link}');return false" style="color:var(--text);font-weight:700">${e.cod}</a> <span class="muted">${esc(e.nombre)}</span>${e.cc ? ` <span class="chip2" style="font-size:10px">+CC</span>` : ""}</td>
+    <td class="num">${e.k.pct_avance == null ? "—" : Math.round(e.k.pct_avance * 100) + "%"}</td>
+    <td class="num">${fmt(e.k.hu_pendientes)}</td>
+    <td class="num">${e.cierre || "<span class='muted'>—</span>"}</td>
+    <td class="num">${cEstim(e)}</td>
+    <td class="num">${e.planta == null ? "—" : fmt(e.planta)}</td>
+    <td class="num">${e.nomina ? fmtMoney(e.nomina) : "—"}</td>
+    <td class="num">${sem(e.riesgoSev)} ${e.c10}</td>
   </tr>`).join("");
   return `<div class="card fade" style="margin-top:16px">
     <h3>🚦 Scorecard del portafolio · resumen ejecutivo</h3>
-    <div class="hint">Semáforo por proyecto = peor de: cumplimiento de cierre (proyección a ritmo actual), sobrecosto de planta, riesgo de estancamiento (HU +10 días) · ordenado por mayor riesgo · <b>clic en el código</b> para el detalle</div>
-    <div class="dwrap"><table class="dtbl"><thead><tr>
-      <th>Estado</th><th>Proyecto</th><th>Cierre (proyección)</th><th>Cierre estimado (ritmo)</th><th class="num">% Avance</th><th class="num">HU pend.</th><th class="num">Sobrecosto</th><th class="num">HU +10d</th>
+    <div class="hint">Positiva (416+355) y 419 (Dep.+Rama) unificados · 397 incluye Controles de Cambios · semáforo = peor de cierre (a ritmo) y estancamiento (HU +10 días) · ordenado por riesgo · <b>clic en el código</b> para el detalle</div>
+    <div class="dwrap"><table class="dtbl" style="font-size:12.5px"><thead><tr>
+      <th>Estado</th><th>Proyecto</th><th class="num">% Avance</th><th class="num">HU pend.</th><th class="num">Cierre real</th><th class="num">Cierre proyectado</th><th class="num">Planta</th><th class="num">Nómina actual</th><th class="num">+10d</th>
     </tr></thead><tbody>${tr}</tbody></table></div>
-    <div class="hint" style="margin:6px 0 0">Cierre estimado = fecha de corte + (HU pendientes ÷ velocidad de puesta en producción), en días hábiles. "Sin ritmo" = aún sin puestas en producción medibles.</div></div>`;
+    <div class="hint" style="margin:6px 0 0"><b>Cierre real</b> = fecha comprometida (cierre QA del maestro). <b>Cierre proyectado</b> = corte + (HU pendientes ÷ velocidad de producción) en días hábiles ("sin ritmo" = sin producción medible). <b>Planta</b> = personas a la fecha (plantas compartidas contadas una vez). <b>Nómina</b> = costo mensual de la planta.</div></div>`;
 }
 
 function renderPortfolio() {
@@ -2080,13 +2112,20 @@ function renderPortfolio() {
       <button class="btn" id="fReset" style="padding:8px 12px;font-size:13px;font-weight:600">↺ Todo</button>
     </div>
   </div>`;
+  // personal total del portafolio (planta consolidada a la fecha de referencia, sin doble conteo)
+  const nPersonal = RECURSOS ? (() => { const s = snapRec(RECURSOS.portafolio, RECURSOS.fechas, RECURSOS.fecha_ref); return s && s.por_area ? Object.values(s.por_area).reduce((n, a) => n + (a.n || 0), 0) : null; })() : null;
+  // KPI centrado y uniforme (resultado centrado, mismo tamaño; sin mini-barra para altura pareja)
+  const pk = (label, icon, color, val, foot) => `<div class="card kpi fade" style="text-align:center">
+    <div class="label" style="justify-content:center"><span class="ic" style="background:${color}20;color:${color}">${icon}</span>${label}</div>
+    <div class="val">${val}</div>${foot ? `<div class="foot">${foot}</div>` : ""}</div>`;
   const kpis = `<div class="grid kpis">
-    ${kpi("Proyectos activos", "▦", "#6366f1", `<span data-count="${rows.length}">0</span>`, full ? "en medición" : "con datos " + alFecha)}
-    ${kpi("HU Totales", "∑", "#38bdf8", `<span data-count="${tot}">0</span>`, "sin removidas")}
-    ${kpi("HU Removidas", "✕", "#94a3b8", `<span data-count="${removidas}">0</span>`, "Removido/Cancelado · fuera del conteo")}
-    ${kpi("En Producción", "✓", "#10b981", `<span data-count="${prod}">0</span>`, `de ${fmt(tot)} HU`, pctProdG)}
-    ${kpi("% Producción global", "◎", "#a855f7", pctProdG == null ? "—" : `<span data-count="${pctProdG * 100}" data-dec="1" data-suf="%">0</span>`, "agregado", pctProdG)}
-    ${kpi("% Avance medio", "◔", "#f59e0b", avAvance == null ? "—" : `<span data-count="${avAvance * 100}" data-dec="0" data-suf="%">0</span>`, "ponderado por HU", avAvance)}
+    ${pk("Proyectos activos", "▦", "#6366f1", `<span data-count="${rows.length}">0</span>`, full ? "en medición" : "con datos " + alFecha)}
+    ${pk("Personal total", "👥", "#0ea5e9", nPersonal == null ? "—" : `<span data-count="${nPersonal}">0</span>`, "planta consolidada · sin doble conteo")}
+    ${pk("HU Totales", "∑", "#38bdf8", `<span data-count="${tot}">0</span>`, "sin removidas")}
+    ${pk("HU Removidas", "✕", "#94a3b8", `<span data-count="${removidas}">0</span>`, "Removido/Cancelado · fuera del conteo")}
+    ${pk("En Producción", "✓", "#10b981", `<span data-count="${prod}">0</span>`, `de ${fmt(tot)} HU`)}
+    ${pk("% Producción global", "◎", "#a855f7", pctProdG == null ? "—" : `<span data-count="${pctProdG * 100}" data-dec="1" data-suf="%">0</span>`, "agregado")}
+    ${pk("% Avance medio", "◔", "#f59e0b", avAvance == null ? "—" : `<span data-count="${avAvance * 100}" data-dec="0" data-suf="%">0</span>`, "ponderado por HU")}
   </div>`;
 
   const charts = `<div class="grid charts-2">
